@@ -366,3 +366,7 @@ The first build felt too close to today's velora.se. The brand is allowed to cha
 **Simpler pill icons (prompt log entry 49):** the chart and shield icons are replaced by a plain Phosphor **arrow-down** for "20 % viktnedgång i snitt" and a **check** for "30 dagars nöjdhetsgaranti". They keep the same 20 px, deep wine, bare treatment, and the text is unchanged.
 
 **Smaller section titles (prompt log entry 50):** every section `h2` is about 25% smaller, `clamp(2rem, 4.8vw, 3.75rem)`, in place of `clamp(2.5rem, 6.4vw, 5rem)`. That is 32 px on phones (was 40) and 60 px on desktop (was 80). Wording, font (Newsreader) and layout are unchanged. Line breaks stay the same because each title's max-width is set in `ch`, which scales with the font. The hero `h1` is sized separately and unaffected.
+
+**Circled pill icons, larger avatars (prompt log entry 52):** the arrow and checkmark in the hero pill now sit in 32 px outlined circles (1 px wine hairline, no fill), echoing the round avatars. The glyphs are 18 px. The avatars grew from 24 to 28 px.
+- **Size:** the pill grew from 638 to 674 px wide and 54 px tall.
+- **Tablets (768–1023 px):** the dividers tighten from 16 to 12 px, so the pill stays one row in the 673 px text column (658 px at 768).

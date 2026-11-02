@@ -352,3 +352,15 @@ Make the section titles smaller across the start page. Keep their wording, fonts
 ```
 Commit the start page build.
 ```
+
+## 52 – Circled icons, larger icons and avatars (Claude Code, 2026-11-02)
+
+```
+Let's put the arrow and the chexckark in circles, and incresase the sizing a little. Increase the sizing of the avatars as well
+```
+
+## 53 – Commit pill change (button reply, 2026-11-02)
+
+```
+Commit the pill icon and avatar change.
+```

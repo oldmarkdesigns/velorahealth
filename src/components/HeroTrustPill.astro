@@ -23,7 +23,7 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 					{item.avatars && (
 						<span class="avatars" aria-hidden="true">
 							{team.map((src) => (
-								<img src={src} alt="" width="24" height="24" loading="lazy" />
+								<img src={src} alt="" width="28" height="28" loading="lazy" />
 							))}
 						</span>
 					)}
@@ -98,28 +98,41 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 	}
 
 	/* Bare icon, no circle: wine, sized to the 17 px serif. */
+	/* Icons sit in thin outlined circles (entry 52), echoing the round avatars. */
 	.icon {
-		display: inline-flex;
-		margin-right: 7px;
+		display: inline-grid;
+		place-items: center;
+		width: 32px;
+		height: 32px;
+		margin-right: 8px;
+		border: 1px solid var(--line);
+		border-radius: 50%;
 		color: var(--wine);
 	}
 
 	.icon :global(svg) {
-		width: 20px;
-		height: 20px;
+		width: 18px;
+		height: 18px;
 	}
 
 	.avatars img {
-		width: 24px;
-		height: 24px;
+		width: 28px;
+		height: 28px;
 		border-radius: 50%;
 		object-fit: cover;
 		border: 2px solid var(--cream);
-		margin-left: -8px;
+		margin-left: -9px;
 		background: var(--stone);
 	}
 
 	.avatars img:first-child {
 		margin-left: 0;
+	}
+
+	/* Tablets: tighter dividers keep the larger pill on one row in the narrower text column. */
+	@media (min-width: 768px) and (max-width: 1023px) {
+		li + li::before {
+			margin-inline: 12px;
+		}
 	}
 </style>
