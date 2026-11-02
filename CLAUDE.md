@@ -92,11 +92,12 @@ Things the brief leaves open or that are missing from the PDF. Resolve by asking
 
 - [ ] **Assessment criteria ("Bedömning")** – the brief's nav has a BEDÖMNING section, but its content is not in the PDF export. The presentation timeline is also cut off after "0–5". Re-open the original artifact or ask Velora.
 - [ ] **What counts toward the 4 hours?** Does project setup, exploration and writing the decision doc/process log count, or only design/build?
-- [ ] **Ad format** – 1:1 or 9:16 (both given as examples). Pick one and motivate, or ask.
+- [x] **Ad format** – decided: **9:16** (Story/Reel), mobile-native like the page.
 - [ ] **Format of deliverables 03 and 04** – "en sida" for 03; no format given for either (web page in the Astro site, PDF, doc?).
 - [ ] **Hosting** – Vercel or Netlify (both given as examples). Public URL vs. unlisted?
 - [ ] **Audience** – no description given; my assumptions must be explicit.
-- [ ] **Medical/pharma marketing rules** – which claims are allowed about treatment and medicines (e.g. naming drugs, weight-loss outcomes, before/after). Brief only says rules exist; any assumption must be written out and should be checked against how velora.se phrases things today.
+- [x] **Medical/pharma marketing rules** – decided: **cautious stance**. No drug brand names on start page or ad; outcome numbers only as attributed study ranges with premises; no before/after, fear stats or unverifiable superlatives. Assumptions written out in `docs/direction.md` §3 (still assumptions – not verified legal fact).
+- [x] **Calculator** – decided: keep, as an interactive **range + premises** (16–25 % / 12 months, ~10 % / 4 months, per velora.se), not a single number.
 - [ ] **Image usage** – may velora.se images/logo be reused directly in the case build? The brief suggests yes ("utgå gärna från bilderna på velora.se") – confirm quality/availability when exploring.
 - [ ] **One version or several?** – my call; default to one well-made version unless exploration clearly argues for comparing approaches.
 - [ ] **Desktop** – brief stresses mobile; desktop quality is not mentioned. Decide how much desktop polish fits in 4 h.
@@ -124,8 +125,10 @@ Things the brief leaves open or that are missing from the PDF. Resolve by asking
 - **No AI-generated people that look like patients.** Any image choice needs a written motivation.
 - Site copy is **Swedish** (`lang="sv"`). Docs for this repo are in English unless written for Velora.
 - **Mobile first.** Check every change at phone width.
-- **Prompt log is a deliverable**: keep `docs/prompt-log.md` verbatim and in order. Don't rewrite past entries.
-  Record when AI suggestions are rejected or go wrong.
+- **Prompt log is a deliverable – keep it current**: at the start of every turn, append the user's new prompt to
+  `docs/prompt-log.md` verbatim (exact characters, incl. curly apostrophes) and in order; log multiple-choice answers and
+  plan approvals too. Never rewrite past entries. Record when AI suggestions are rejected or go wrong.
+- **Facts come only from `docs/facts.md`.** Add new facts there (with source URL and status) before using them.
 - Keep dependencies minimal; add one only when it clearly earns its place.
 - Respect the 4-hour budget: prefer one well-made version over breadth.
 
@@ -137,5 +140,10 @@ Things the brief leaves open or that are missing from the PDF. Resolve by asking
   - `npm run build` – static build to `dist/`
   - `npm run preview` – serve the build
   - `npm run check` – Astro type check (needs `@astrojs/check` + `typescript` installed on first run)
-- Layout: `src/pages/` (routes), `public/` (static assets), `docs/` (process material: facts, prompt log, decision doc).
+- Layout: `src/pages/` (routes), `public/` (static assets), `docs/` (process material).
+- Docs:
+  - `docs/prompt-log.md` – verbatim prompt log (deliverable 04)
+  - `docs/facts.md` – fact inventory with sources and use status (single source of truth for copy)
+  - `docs/audit.md` – current velora.se audit + benchmark patterns (Oura, Relivo, Tandem, Apple Health)
+  - `docs/direction.md` – audience + medical-rule assumptions, brand principles, page outline (approved 2026-11-02)
 - `src/pages/index.astro` is a placeholder only.
