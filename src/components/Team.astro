@@ -8,7 +8,7 @@ const team = [
 ];
 ---
 
-<section class="section" aria-labelledby="team-title">
+<section class="section" id="vardteam" aria-labelledby="team-title">
 	<div class="container">
 		<div class="head" data-reveal>
 			<div>
@@ -16,7 +16,8 @@ const team = [
 				<h2 id="team-title"><span class="line">Samma team följer dig</span> <em>hela vägen.</em></h2>
 			</div>
 			<blockquote>
-				<p>Medicinska beslut fattas av svensklegitimerade läkare, aldrig av en algoritm.</p>
+				<!-- Two lines, broken after the comma (entry 76). -->
+				<p><span>Medicinska beslut fattas av svensklegitimerade läkare,</span> <span>aldrig av en algoritm.</span></p>
 			</blockquote>
 		</div>
 		<ul class="team" role="list">
@@ -60,6 +61,7 @@ const team = [
 		padding-left: 20px;
 		border-left: 2px solid var(--wine);
 		align-self: end;
+		container-type: inline-size;
 	}
 
 	blockquote p {
@@ -68,6 +70,25 @@ const team = [
 		font-size: 1.5rem;
 		line-height: 1.3;
 		max-width: 22ch;
+		/* Trim the space above the capitals and below the baseline so the divider is as tall as the text. */
+		text-box: trim-both cap alphabetic;
+	}
+
+	/*
+	 * From 640 px the quote sits on exactly two lines, split after the comma. The first line is ~20.5em
+	 * wide, so 100cqi / 20.8 shrinks the type only where the column is too narrow for 24 px (around
+	 * 1024 px); phones keep the natural wrap.
+	 */
+	@media (min-width: 640px) {
+		blockquote p {
+			max-width: none;
+			font-size: min(1.5rem, 100cqi / 20.8);
+		}
+
+		blockquote p span {
+			display: block;
+			white-space: nowrap;
+		}
 	}
 
 	.team {

@@ -17,9 +17,13 @@ const DEFAULT_WEIGHT = 100;
 				<span>Din vikt i dag</span>
 				<output for="weight" class="weight" data-weight>{DEFAULT_WEIGHT} kg</output>
 			</label>
-			<input id="weight" type="range" min="70" max="180" step="1" value={DEFAULT_WEIGHT} data-input />
+			<!-- Pointer drags are handled on this wrapper so the thumb can ease after the finger (entry 74). -->
+			<div class="track" data-track>
+				<input id="weight" type="range" min="70" max="180" step="any" value={DEFAULT_WEIGHT} aria-valuetext={`${DEFAULT_WEIGHT} kg`} data-input />
+			</div>
+			<p class="visually-hidden" aria-live="polite" data-live></p>
 
-			<dl class="results" aria-live="polite">
+			<dl class="results">
 				<div>
 					<dt>Efter ungefär 4 månader</dt>
 					<dd class="value"><span data-four>ca 10</span> kg</dd>
@@ -62,16 +66,176 @@ const DEFAULT_WEIGHT = 100;
 		const four = root.querySelector<HTMLElement>('[data-four]')!;
 		const twelve = root.querySelector<HTMLElement>('[data-twelve]')!;
 
-		const update = () => {
-			const kg = Number(input.value);
-			const pct = ((kg - Number(input.min)) / (Number(input.max) - Number(input.min))) * 100;
-			input.style.setProperty('--fill', `${pct}%`);
-			weight.textContent = `${fmt.format(kg)} kg`;
-			four.textContent = `ca ${fmt.format(kg * 0.1)}`;
-			twelve.textContent = `${fmt.format(kg * 0.16)}–${fmt.format(kg * 0.25)}`;
+		const live = root.querySelector<HTMLElement>('[data-live]')!;
+		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+		const MIN = Number(input.min);
+		const MAX = Number(input.max);
+
+		// The thumb moves continuously (step="any"); the calculation uses the whole kilogram, as before.
+		const targets = (kg: number) => ({ four: kg * 0.1, low: kg * 0.16, high: kg * 0.25 });
+		let shown = targets(Number(input.value));
+		let goal = shown;
+		let frame = 0;
+
+		const render = () => {
+			four.textContent = `ca ${fmt.format(shown.four)}`;
+			twelve.textContent = `${fmt.format(shown.low)}–${fmt.format(shown.high)}`;
 		};
 
-		input.addEventListener('input', update);
+		// Results glide towards their new values instead of jumping.
+		const tick = () => {
+			let settled = true;
+			for (const key of ['four', 'low', 'high'] as const) {
+				const diff = goal[key] - shown[key];
+				if (Math.abs(diff) < 0.05) {
+					shown = { ...shown, [key]: goal[key] };
+				} else {
+					shown = { ...shown, [key]: shown[key] + diff * 0.2 };
+					settled = false;
+				}
+			}
+			render();
+			frame = settled ? 0 : requestAnimationFrame(tick);
+		};
+
+		const update = () => {
+			const raw = Number(input.value);
+			const kg = Math.round(raw);
+			input.style.setProperty('--fill', `${((raw - MIN) / (MAX - MIN)) * 100}%`);
+			input.setAttribute('aria-valuetext', `${kg} kg`);
+			weight.textContent = `${fmt.format(kg)} kg`;
+			goal = targets(kg);
+			if (reduced.matches) {
+				shown = goal;
+				render();
+			} else if (!frame) {
+				frame = requestAnimationFrame(tick);
+			}
+		};
+
+		// Screen readers hear the result once, when the value is committed, not on every movement.
+		const announce = () => {
+			const kg = Math.round(Number(input.value));
+			const t = targets(kg);
+			live.textContent = `${kg} kg: efter ungefär 4 månader ca ${fmt.format(t.four)} kg, efter 12 månader ${fmt.format(t.low)}–${fmt.format(t.high)} kg.`;
+		};
+
+		/*
+		 * Eased dragging (entry 74). The pointer sets a target and the thumb follows on a critically
+		 * damped spring: it speeds up when you start moving, slows into place when you stop, and a
+		 * quick flick glides a little further, like momentum scrolling. No overshoot past the target.
+		 */
+		const track = root.querySelector<HTMLElement>('[data-track]')!;
+		const THUMB = 28;
+		const STIFFNESS = 320;
+		const DAMPING = 2 * Math.sqrt(STIFFNESS);
+		const FLING_MS = 90;
+		const FLING_MAX_PX = 56;
+		const clamp = (v: number) => Math.min(MAX, Math.max(MIN, v));
+		let pos = Number(input.value);
+		let vel = 0;
+		let target = pos;
+		let springFrame = 0;
+		let last = 0;
+		let dragging = false;
+		let grabOffset = 0;
+		let lastMove = { x: 0, t: 0 };
+		let pointerVel = 0;
+
+		const valueAt = (clientX: number) => {
+			const rect = input.getBoundingClientRect();
+			return clamp(MIN + ((clientX - rect.left - THUMB / 2) / (rect.width - THUMB)) * (MAX - MIN));
+		};
+		const thumbX = () => {
+			const rect = input.getBoundingClientRect();
+			return rect.left + THUMB / 2 + ((pos - MIN) / (MAX - MIN)) * (rect.width - THUMB);
+		};
+
+		const step = (now: number) => {
+			const dt = Math.min(0.032, (now - last) / 1000 || 0.016);
+			last = now;
+			vel += (STIFFNESS * (target - pos) - DAMPING * vel) * dt;
+			pos = clamp(pos + vel * dt);
+			if ((pos === MIN && vel < 0) || (pos === MAX && vel > 0)) vel = 0;
+			const settled = !dragging && Math.abs(target - pos) < 0.01 && Math.abs(vel) < 0.05;
+			if (settled) pos = target;
+			input.value = String(pos);
+			update();
+			if (settled) {
+				springFrame = 0;
+				announce();
+			} else {
+				springFrame = requestAnimationFrame(step);
+			}
+		};
+		const moveTo = (value: number) => {
+			target = clamp(value);
+			if (reduced.matches) {
+				pos = target;
+				vel = 0;
+				input.value = String(pos);
+				update();
+				return;
+			}
+			if (!springFrame) {
+				last = performance.now();
+				springFrame = requestAnimationFrame(step);
+			}
+		};
+
+		track.addEventListener('pointerdown', (e) => {
+			if (e.button !== 0) return;
+			e.preventDefault();
+			input.focus({ preventScroll: true });
+			track.setPointerCapture(e.pointerId);
+			dragging = true;
+			track.classList.add('is-dragging');
+			// Grabbing the thumb keeps it under the pointer; a press elsewhere on the track glides there.
+			grabOffset = Math.abs(e.clientX - thumbX()) <= THUMB ? thumbX() - e.clientX : 0;
+			lastMove = { x: e.clientX, t: e.timeStamp };
+			pointerVel = 0;
+			moveTo(valueAt(e.clientX + grabOffset));
+		});
+		track.addEventListener('pointermove', (e) => {
+			if (!dragging) return;
+			const dt = e.timeStamp - lastMove.t;
+			if (dt > 0) pointerVel = pointerVel * 0.6 + ((e.clientX - lastMove.x) / dt) * 0.4;
+			lastMove = { x: e.clientX, t: e.timeStamp };
+			moveTo(valueAt(e.clientX + grabOffset));
+		});
+		const release = (e: PointerEvent) => {
+			if (!dragging) return;
+			dragging = false;
+			track.classList.remove('is-dragging');
+			// A flick carries on briefly; a slow release (or a pause before letting go) stays put.
+			const fresh = e.timeStamp - lastMove.t < 80;
+			const glidePx = fresh ? Math.max(-FLING_MAX_PX, Math.min(FLING_MAX_PX, pointerVel * FLING_MS)) : 0;
+			moveTo(valueAt(lastMove.x + grabOffset + glidePx));
+		};
+		track.addEventListener('pointerup', release);
+		track.addEventListener('pointercancel', release);
+
+		// step="any" would make arrow keys move in tiny increments; keep whole-kilogram keyboard steps.
+		input.addEventListener('keydown', (e) => {
+			const now = Math.round(Number(input.value));
+			const next = { ArrowRight: now + 1, ArrowUp: now + 1, ArrowLeft: now - 1, ArrowDown: now - 1, PageUp: now + 10, PageDown: now - 10, Home: MIN, End: MAX }[e.key];
+			if (next === undefined) return;
+			e.preventDefault();
+			input.value = String(Math.min(MAX, Math.max(MIN, next)));
+			pos = target = Number(input.value);
+			vel = 0;
+			update();
+			announce();
+		});
+
+		// Assistive tech can still set the value directly; keep the spring in sync with it.
+		input.addEventListener('input', () => {
+			pos = target = Number(input.value);
+			vel = 0;
+			update();
+		});
+		// The thumb stays where it is released (no snap); the label already shows the whole kilogram.
+		input.addEventListener('change', announce);
 		update();
 
 		// Premises overlay: native <dialog> gives focus trapping, Escape to close and focus return.
@@ -111,14 +275,28 @@ const DEFAULT_WEIGHT = 100;
 		color: var(--on-dark);
 	}
 
+	/* The wrapper takes pointer input; vertical swipes still scroll the page on touch screens. */
+	.track {
+		margin: 24px 0 16px;
+		cursor: grab;
+		touch-action: pan-y;
+		user-select: none;
+		-webkit-user-select: none;
+	}
+
+	.track.is-dragging {
+		cursor: grabbing;
+	}
+
 	input[type='range'] {
 		--fill: 27%;
+		display: block;
 		width: 100%;
-		margin: 24px 0 16px;
+		margin: 0;
+		pointer-events: none;
 		height: 36px;
 		appearance: none;
 		background: transparent;
-		cursor: pointer;
 	}
 
 	input[type='range']::-webkit-slider-runnable-track {

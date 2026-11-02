@@ -1,21 +1,24 @@
 ---
-import { IMG, VELORA } from '../data/site';
+import { IMG } from '../data/site';
 import CtaButton from './CtaButton.astro';
 
 // Mirrors velora.se's own Viktmediciner menu (prompt log entry 29). Descriptions are the substance
 // and form only, as stated on velora.se/viktmediciner; no effect claims.
+// Every link jumps within this page (entry 80): the page has no section per medicine, so the
+// medicines open the FAQ answer "Vilka läkemedel förskriver ni?".
+const MEDICINES_FAQ = '#faq-lakemedel';
 const medicines = [
-	{ name: 'Mounjaro', meta: 'Tirzepatid, injektionspenna', href: `${VELORA}/viktmediciner/mounjaro` },
-	{ name: 'Ozempic', meta: 'Semaglutid, injektionspenna', href: `${VELORA}/viktmediciner/ozempic` },
-	{ name: 'Rybelsus', meta: 'Semaglutid, tablett', href: `${VELORA}/viktmediciner/rybelsus` },
-	{ name: 'Wegovy', meta: 'Semaglutid, injektionspenna', href: `${VELORA}/viktmediciner/wegovy` },
+	{ name: 'Mounjaro', meta: 'Tirzepatid, injektionspenna', href: MEDICINES_FAQ },
+	{ name: 'Ozempic', meta: 'Semaglutid, injektionspenna', href: MEDICINES_FAQ },
+	{ name: 'Rybelsus', meta: 'Semaglutid, tablett', href: MEDICINES_FAQ },
+	{ name: 'Wegovy', meta: 'Semaglutid, injektionspenna', href: MEDICINES_FAQ },
 ];
 
 const cards = [
-	{ label: 'Om viktmediciner', href: `${VELORA}/viktmediciner`, img: IMG.pen, alt: 'Läkare håller i en injektionspenna' },
+	{ label: 'Om viktmediciner', href: '#faq-varfor-lakemedel', img: IMG.pen, alt: 'Läkare håller i en injektionspenna' },
 	{
 		label: 'Så fungerar behandlingen',
-		href: `${VELORA}/behandling`,
+		href: '#sa-fungerar-det',
 		img: IMG.videoMeeting,
 		alt: 'Kvinna som pratar med en läkare via datorn',
 	},
@@ -24,14 +27,15 @@ const cards = [
 
 <!-- Sits over the full-bleed hero, so it has no background of its own (until a menu opens). -->
 <!-- 1px marker at the top of the page: once it scrolls out of view, the navbar turns into a floating bar. -->
-<div class="scroll-sentinel" data-scroll-sentinel aria-hidden="true"></div>
+<!-- Also the logo's jump target: the very top of the page. -->
+<div class="scroll-sentinel" id="top" data-scroll-sentinel aria-hidden="true"></div>
 <header class="header" data-header>
 	<div class="container inner">
-		<a href={VELORA} class="logo" aria-label="Velora, till startsidan">
+		<a href="#top" class="logo" aria-label="Velora, till toppen av sidan">
 			<span class="mark" style={`--logo: url(${IMG.logoPlum})`}></span>
 		</a>
 		<nav aria-label="Huvudmeny" class="nav">
-			<a class="nav-link" href={`${VELORA}/behandling`}>Behandlingen</a>
+			<a class="nav-link" href="#sa-fungerar-det">Behandlingen</a>
 
 			<!-- Oura-inspired menu, adapted to Velora: the bar and panel become one cream surface. -->
 			<div class="menu" data-menu>
@@ -74,7 +78,7 @@ const cards = [
 								))
 							}
 							<li>
-								<a class="row all" href={`${VELORA}/viktmediciner`}>
+								<a class="row all" href={MEDICINES_FAQ}>
 									<span class="all-dot" aria-hidden="true">
 										<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
 									</span>
@@ -86,8 +90,10 @@ const cards = [
 				</div>
 			</div>
 
-			<a class="nav-link" href={`${VELORA}/patientberattelser`}>Patientberättelser</a>
-			<a class="nav-link" href={`${VELORA}/om-oss`}>Om Velora</a>
+			<a class="nav-link" href="#patientberattelser">Patientberättelser</a>
+			<a class="nav-link" href="#vardteam">Om Velora</a>
+			<a class="nav-link" href="#pris">Pris</a>
+			<a class="nav-link" href="#vanliga-fragor">Vanliga frågor</a>
 		</nav>
 		<div class="actions">
 			<a class="login" href="https://velora.kaddio.com/login">Logga in</a>
@@ -152,6 +158,11 @@ const cards = [
 		};
 
 		button.addEventListener('click', () => setOpen(!isOpen()));
+
+		// A link in the panel jumps within the page, so close the menu behind it.
+		menu.querySelector('[data-menu-panel]')?.addEventListener('click', (e) => {
+			if ((e.target as Element).closest('a')) setOpen(false);
+		});
 
 		// Hover intent on mouse devices only: a short delay in, a longer grace period out.
 		if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
@@ -505,6 +516,29 @@ const cards = [
 		.nav,
 		.header-cta {
 			display: flex;
+		}
+	}
+
+	/* Six links since entry 80: keep them, "Logga in" and the CTA on one row on small laptops. */
+	.nav-link,
+	.login {
+		white-space: nowrap;
+	}
+
+	@media (min-width: 1024px) and (max-width: 1279px) {
+		.nav {
+			gap: 16px;
+			margin-left: 0;
+		}
+
+		.nav-link,
+		.trigger,
+		.login {
+			font-size: 0.875rem;
+		}
+
+		.actions {
+			gap: 16px;
 		}
 	}
 

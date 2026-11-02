@@ -414,3 +414,120 @@ All three keep the step text, heading and lede unchanged, and use Phosphor icons
 - **Plan name:** the small name label above the price was removed because the switch names the plan. It remains only in the no-JS fallback, where both plans are listed.
 - **Unchanged:** the rest of the pricing section.
 - **Verified:** at 375 px (two 143 px halves, labels on one line) and 1440 px (528 px switch). Click and keyboard both work.
+
+**Pricing as three visible cards (prompt log entry 66, replacing the plan switch from entry 64):** inspired by the attached three-tier layout.
+- **Velorametoden (left):** the featured card on solid deep wine, with a large cream "från 795 kr/mån", rose Phosphor checkmarks, the student price, and a cream booking button pinned to the bottom of the card.
+- **Right column:**
+  - **Velora Underhåll:** white and compact. The label and intro sit beside a 44 px "495 kr/mån", with the four points in a 2 × 2 checklist and "läkemedel ingår inte".
+  - **Det här tillkommer:** still stroke-only with no fill, tightened (28 px padding, 14 px rows, smaller amounts and descriptions). All prices, conditions and the Villkor link are kept.
+- **Removed:**
+  - the extras card's line "När du nått din målvikt: Velora Underhåll, 495 kr/mån", which the Underhåll card now shows
+  - the tabs switch and its script
+- **Decided against:** the reference's "MEST POPULÄR" badge, because it is a claim we can't verify.
+- **Verified:** at 1440 px the featured card (734 px) exactly matches the right column. At 375 px the cards stack (featured, Underhåll, extras) with no overflow.
+
+**FAQ from velora.se with a sticky heading (prompt log entry 67):**
+- **Questions:** 12 in total. Our two booking questions come first, then every question from velora.se's start-page FAQ with Velora's own answers. Their versions replace our two duplicates (side effects, which medicine).
+- **Links:** "Fler frågor och svar på velora.se" is removed, and no answer links to velora.se. The 1177 and testmottagningen.se links stay.
+- **Cautious stance (§3) kept:** in "Vilka läkemedel förskriver ni?" and "Vad kostar medicinen?" the brand names and per-drug prices are replaced by "GLP-1-analoger" and the general 1 050–4 800 kr/mån range. Every other fact is as on velora.se.
+- **Layout:** on desktop, "Vanliga frågor" and "Bra att veta innan du bokar." stick 120 px from the top (below the navbar) while the questions scroll on the right. On mobile the heading scrolls normally.
+- **Verified:** 12 items; sticky holds over 600 px of scroll; no overflow at 375 px.
+
+**Smoother calculator slider (prompt log entry 68):** the calculation is unchanged.
+- **Thumb:** it now moves continuously (`step="any"`) instead of snapping between 110 whole kilograms. The weight shown and the calculation still use the whole kilogram (`Math.round`). The thumb stays where it is released.
+- **Results:** they glide to their new values (one requestAnimationFrame lerp, factor 0.2, settling within 0.05). With reduced motion turned on they update instantly.
+- **Keyboard:** arrows still move 1 kg and Page Up/Down 10 kg; Home and End go to 70 and 180.
+- **Screen readers:** `aria-valuetext` reads "N kg". The results are announced once, in a polite live region, when the value is committed, instead of on every frame; the old `aria-live` on the results list was removed.
+- **Verified:** 70/100/130/180 kg give the same results as before (7/11–18, 10/16–25, 13/21–33, 18/29–45). The glide passed through 13 intermediate values from 100 to 130 kg.
+
+### Expandable extras card, aligned columns (entries 69–70)
+- "Det här tillkommer" is a `<details>` card, collapsed by default. Its summary keeps the label and adds the question "Vad tillkommer utöver månadsavgiften?". The three cost rows and the Villkor link inside are unchanged.
+- It animates open and closed where the browser supports `interpolate-size` and `::details-content`. Other browsers snap open, and reduced motion turns the animation off.
+- Entry 70 replaced entry 69's height behaviour. From 1024px, the right column is a flex column and the collapsed extras card stretches to meet the bottom of the Velorametoden card. Opening it pushes the grid row taller, and the featured card follows, so the bottoms stay aligned on every frame.
+- Measured at 1440px: the section is 1058px collapsed (the old always-open version was ~1300px) and 1300px open.
+
+### Pricing layouts explored (entries 71–73)
+- Round 1 (A–C) only rearranged the same cards: two plans side by side with a costs strip, cost over time in three phases, and a main band with two cards beneath. Samuel rejected all three ("none of those are talking to me"), which is a case where AI produced variations on its first idea instead of new concepts.
+- Round 2 follows Samuel's choice, "Receipt / total cost". D is one receipt for the first month with a total. E keeps the wine Velorametoden card beside a receipt grouped by when you pay. D's total (ca 2 840–6 590 kr) is arithmetic on velora.se figures, not a stated fact, so it needs approval before use. Not yet built into the page.
+
+### Slider with eased momentum (entry 74)
+- Pointer drags go to a wrapper around the native range input. The thumb follows a critically damped spring (stiffness 320), so it accelerates and decelerates without overshooting. A flick at release glides a little further, capped at 56px (about 7.6 kg).
+- Keyboard steps (whole kilograms, Home/End) and the screen-reader announcement are unchanged. Reduced motion moves the thumb directly. On touch screens, vertical swipes still scroll the page (`touch-action: pan-y`).
+- The calculation is unchanged (10 % and 16–25 % of the rounded weight). I checked it at 136, 180 and 70 kg.
+- AI got it wrong: my first version had no cap on the flick glide, so a fast drag that ended at about 130 kg ran all the way to 180 kg. Sampling the value every frame exposed it. After I added the cap, the next test still hit 180 because the dev server was serving the old script. Logging the pointer positions showed the mismatch, and restarting the server fixed it.
+
+### Pricing option E built (entry 75)
+- `Pricing.astro` now has the wine Velorametoden card (5fr) beside one receipt (7fr). The receipt groups costs into "En gång" (health check), "Varje månad" (Velorametoden and medicine) and "Efter målvikten" (Underhåll with its four inclusions), and ends with a 30-day guarantee stamp and the Villkor link. All wording and figures come from the earlier cards. There's no computed total.
+- It replaces the expandable extras card from entries 69–70. Both columns share one grid row, so the receipt's torn edge always lines up with the wine card's bottom (checked at 1440 and 1024px).
+- On phones, when a name and its amount don't fit on one line, the amount wraps to its own right-aligned line, so names aren't squeezed. No overflow at 320 or 375px.
+
+### Team quote on two lines (entry 76)
+- Split after the comma: "Medicinska beslut fattas av svensklegitimerade läkare," / "aldrig av en algoritm." The wording is unchanged.
+- From 640px the two halves never wrap. The type shrinks only where the column is too narrow for 24px (19px at 1024px). On phones, the first half doesn't fit at a readable size, so the quote wraps naturally onto three lines.
+- `text-box: trim-both cap alphabetic` trims the space above the capitals and below the baseline, so the divider is as tall as the text. Browsers without support keep the old line box.
+
+### Pricing layout F built (entries 77–78)
+- Samuel found option E's white receipt too busy. In round 3 (F, G, H), Underhåll became its own card and the receipt was cut down to what comes on top of the monthly fee. Samuel picked F, with Underhåll moved above the receipt.
+- Desktop: the wine Velorametoden card spans both rows on the left (5fr). On the right (7fr), the white Underhåll card sits above the receipt. The receipt holds the health check and the medicine, and ends with the 30-day guarantee stamp and the Villkor link. The receipt's row takes the remaining height, so its torn edge meets the bottom of the wine card (checked at 1440 and 1024px).
+- The Försäkringskassan reimbursement is removed from the pricing section at Samuel's request. The sentence about Velora's utlåtande went with it, since it only makes sense alongside the reimbursement. The FAQ answer "Vad kostar medicinen?" still mentions Försäkringskassan.
+- Phones: the cards stack in the order wine card, Underhåll, receipt. A long amount wraps to its own line. No overflow at 375px.
+
+### Trial hero image (entry 79)
+- Samuel supplied a new hero photo: a person seen from behind with arms raised on a coastal hillside at sunset. It's saved as `public/images/hero-sunset.webp` (1376×768) and replaces the velora.se sofa photo. The old `IMG.hero` srcset and crop positions are noted in `Hero.astro` so it can be reverted.
+- Crops: phones 92% 50% (keeps both raised hands in frame), tablets 80% 50%, desktop 82% 50%. The figure stays to the right of the headline at every width.
+- Open questions to settle before keeping it:
+  - **Source.** The image looks AI-generated (styling and lens flare). The brief forbids AI-generated people who look like patients. The person is seen from behind and isn't identifiable, but the choice still needs a written motivation and a confirmed source (stock licence or AI).
+  - **Medical stance.** A celebrating figure in a weight-loss hero can read as an implied outcome. That conflicts with the cautious stance (direction.md §3: no before/after, outcomes only with premises).
+  - **Resolution.** At 1376px wide it's softer than the original on large screens (scaled about 1.2× at 1440px).
+
+### Navbar jumps within the page (entries 80–81)
+- The navbar now has six links, all jumping to sections on this page:
+  - Behandlingen → `#sa-fungerar-det`
+  - Patientberättelser → `#patientberattelser`
+  - Om Velora → `#vardteam` (the care-team section)
+  - Pris → `#pris`
+  - Vanliga frågor → `#vanliga-fragor`
+- The page has no section per medicine, so the Viktmediciner menu points into the FAQ:
+  - The four medicines and "Allt om viktmediciner" → the answer "Vilka läkemedel förskriver ni?" (`#faq-lakemedel`)
+  - "Om viktmediciner" → "Varför läkemedel för att gå ner i vikt?"
+  - "Så fungerar behandlingen" → the steps section
+  - A jump to a question opens it, lands it 112px below the top (clearing the navbar) and closes the menu.
+- The logo jumps to `#top`. Lenis (`anchors: true`) smooths every jump.
+- Samuel's answers (entry 81): "Logga in" is unchanged (patient login), and "Kom igång" keeps the booking link to velora.se/kom-igang that the brief requires.
+- With six links the bar overflowed by 38px at 1024px. Between 1024 and 1279px the links are now 14px with 16px gaps, so it fits on one row. Phones still have no nav links (unchanged); the sticky CTA covers booking.
+
+### Hero without the left fade (entry 82, trial)
+- On tablet and desktop the sunset photo now fills the whole panel with no cream fade on the left. Only the light top wash under the navbar remains. Phones are unchanged (that layout puts the text below the photo).
+- Result: the headline's italic second line and the intro text sit on the dark hillside and are hard to read at 1440 and 820px. At 820px the headline also runs into the figure. It needs a decision: lighter text, a softer local scrim, or the fade back.
+
+### Cream hero text (entry 83)
+- From 768px, on the unfaded photo, the headline and intro are light cream with a soft wine-black shadow (a tight 1px layer plus a wide 24px glow). The italic second line is at 88 % cream. Phones keep wine text on cream, below the photo.
+- Readable on both the bright sky and the dark hillside at 1440 and 820px. At 820px the headline still overlaps the figure a little.
+- The trust pill, the CTA and the navbar are unchanged.
+
+### Story link hover (entry 84)
+- "Läs …s berättelse" shows a Phosphor arrow on hover (and on keyboard focus), and the underline runs on under it. The arrow's slot is a no-break space plus an em space, so the link's own underline covers it; the icon is a masked pseudo-element that fades in and slides 4px. The resting state is unchanged, and touch screens get no arrow.
+
+### Expandable receipt again (entry 86)
+- "Det här tillkommer" in layout F is a `<details>` card again, collapsed by default. Its head (label, the italic "utöver månadsavgiften" and a plus/minus sign) is the toggle. The two cost lines and the 30-day stamp are unchanged inside. The dashed rule under the head only shows when it's open. It animates where `::details-content` is supported, with no motion under reduced motion.
+- The receipt is now a plain block. As a flex container it stayed at its collapsed height when opened, and the flex layout was only there to push the stamp to the bottom.
+- Desktop 1440px: closed, the section's cards are 569px tall (was 790px); open, 790px. The receipt's torn edge meets the wine card's bottom both ways, because the receipt stretches to fill when closed.
+- Phones: closed 103px, open 487px, no overflow.
+- Testing note: the browser pane froze every animation at 0ms, so I took these measurements with transitions switched off. The animation itself wasn't verified here.
+
+### Booking tile beside step 04 (entry 87)
+- New white tile in the "Så går det till" bento: the title "Börja med ett gratis samtal", the shared note "Kostnadsfritt · Du binder dig inte" and a small "Kom igång" button to velora.se/kom-igang. The short label is the navbar's, so it fits the narrow tile.
+- Desktop: the grid has five tracks (`1.25fr 0.5fr 0.5fr 0.2fr 0.8fr`, each `minmax(0, …)`). Steps 02 and 03 each span two tracks that add up to 1fr, so they stay equal (390px at 1440, 287px at 1024). Step 04 spans three tracks, and the booking tile gets the narrow last one (299px at 1440, 217px at 1024).
+- The first version used plain `fr` tracks. At 1024px the button's width widened its column, which made step 02 274px and step 03 316px. `minmax(0, …)` fixed that; the regular-size button still didn't fit at 1024px, so the tile uses the small one.
+- Tablet: the tile spans the full width under step 04. Phones: it stacks last. No overflow at 375 or 768px. Step 04's look is unchanged, though it's a little narrower on desktop now that it shares the row.
+
+### Pricing: two plans side by side, cost table below (entry 88, kept in entry 89)
+- Velorametoden (wine) and Underhåll (white) now share one structure: the label, a large serif price, a ruled checklist and the note at the foot. From 1024px they sit side by side at equal width and height (630×539px at 1440). Below that they stack, because the full-width booking button doesn't fit in half a tablet column.
+- "Det här tillkommer" is a ruled table on the section background, following the "Våra planer i detalj" reference: a header row (title, with "utöver månadsavgiften" at the right), then one row per cost with name | explanation | amount columns (4:5:3; 3:4:4 on tablets so the medicine range fits). The 30-day stamp row closes the table. On phones each row shows name and amount above the explanation, and the amount wraps when it doesn't fit.
+- All wording is unchanged. Since this is a table, the expandable card (entry 86) and the receipt styling (torn edge, dotted leaders) are gone. Layout F (entry 86) is saved at `scratchpad/Pricing.layoutF-entry86.astro`, outside the repo, for a quick revert.
+- Samuel called the section "Kostnader som tillkommer". The on-page title is still the existing "Det här tillkommer".
+
+### Narrower cost table, centered guarantee (entry 90)
+- The cost table is capped at 880px and centered under the plan cards (which span 1280px). Rows are tighter: 16px padding (was 22px). Type is smaller: names 17px (was 20), amounts 20px (was 22), explanations 13px (was 14). Desktop columns are 3:5:3 with 28px gaps; tablets keep 3:4:4.
+- The 30-day guarantee row is one centered group (stamp plus text, text capped at 46ch) instead of being aligned to the table columns. It's within 3px of center at 1440, 768 and 375px.
+- At 1440px the table is 302px tall. No overflow at 1440, 768 or 375px. On phones the medicine row now fits name and amount on one line. Wording and plan cards are unchanged.

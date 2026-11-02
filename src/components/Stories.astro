@@ -1,5 +1,9 @@
 ---
+import arrowIcon from '@phosphor-icons/core/assets/light/arrow-right-light.svg?raw';
 import { IMG, VELORA } from '../data/site';
+
+// The hover arrow on "Läs …s berättelse" is the Phosphor icon used as a mask (entry 84).
+const arrowMask = `url("data:image/svg+xml,${encodeURIComponent(arrowIcon)}")`;
 
 // Real patient stories from velora.se, summarised faithfully. Individual results, not promises.
 const stories = [
@@ -36,7 +40,7 @@ const stories = [
 ];
 ---
 
-<section class="section stone" aria-labelledby="stories-title">
+<section class="section stone" id="patientberattelser" aria-labelledby="stories-title">
 	<div class="container head" data-reveal>
 		<div>
 			<p class="label">Patientberättelser</p>
@@ -59,8 +63,8 @@ const stories = [
 						{s.name}, {s.age} år, {s.city}
 					</p>
 					<p class="text">{s.text}</p>
-					<a href={s.href}>
-						Läs {s.name}s berättelse<span class="visually-hidden"> på velora.se</span>
+					<a class="read" href={s.href} style={`--arrow: ${arrowMask}`}>
+						Läs {s.name}s berättelse<span class="arrow" aria-hidden="true">&nbsp;&emsp;</span><span class="visually-hidden"> på velora.se</span>
 					</a>
 				</li>
 			))
@@ -167,6 +171,60 @@ const stories = [
 		margin-top: 16px;
 		font-weight: 600;
 		font-size: 0.9375rem;
+	}
+
+	/*
+	 * Hover (entry 84): an arrow appears after the label and the underline runs on beneath it. The
+	 * arrow's slot is a no-break space plus an em space, so the link's own underline covers it; the
+	 * icon itself is drawn on top as a masked pseudo-element. Hidden by default, so the resting
+	 * state is unchanged.
+	 */
+	.arrow {
+		display: none;
+		position: relative;
+	}
+
+	.arrow::after {
+		content: '';
+		position: absolute;
+		right: 0;
+		top: 50%;
+		width: 1em;
+		height: 1em;
+		translate: -4px -50%;
+		background: currentColor;
+		mask: var(--arrow) center / contain no-repeat;
+		-webkit-mask: var(--arrow) center / contain no-repeat;
+		opacity: 0;
+		transition:
+			translate 240ms var(--ease),
+			opacity 240ms var(--ease);
+	}
+
+	@media (hover: hover) {
+		.read:hover .arrow,
+		.read:focus-visible .arrow {
+			display: inline;
+		}
+	}
+
+	@starting-style {
+		.arrow::after {
+			opacity: 0;
+			translate: -4px -50%;
+		}
+	}
+
+	.read:hover .arrow::after,
+	.read:focus-visible .arrow::after {
+		opacity: 1;
+		translate: 0 -50%;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.arrow::after {
+			transition: none;
+		}
 	}
 
 	@media (min-width: 768px) {

@@ -1,49 +1,152 @@
 ---
-import { VELORA } from '../data/site';
+// FAQ (prompt log entry 67): the two booking questions from velora.se/om-oss, then every question in
+// the FAQ on velora.se's start page, with Velora's own answers. No links back to velora.se.
+// Cautious stance (docs/direction.md §3): drug brand names in two answers are replaced by
+// "GLP-1-analoger" and a general price range; all other facts are as on velora.se.
+// Answers are authored HTML strings (paragraphs; optional list after the first paragraph).
+// `id` makes a question a jump target from the navbar's Viktmediciner menu (entry 80).
+type Faq = { q: string; a: string[]; list?: string[]; id?: string };
 
-// The real objections, answered in Velora's own wording (velora.se, /behandling, /om-oss).
-const faqs = [
+const faqs: Faq[] = [
 	{
 		q: 'Vad händer i bedömningssamtalet?',
-		a: 'Du fyller i ett kort formulär och träffar sedan en läkare eller sjuksköterska i ett videomöte. Ni går igenom hälsa, viktutveckling, tidigare försök, läkemedel och vad du vill uppnå. Det är helt gratis och du binder dig inte till något.',
+		a: [
+			'Du fyller i ett kort formulär och träffar sedan en läkare eller sjuksköterska i ett videomöte. Ni går igenom hälsa, viktutveckling, tidigare försök, läkemedel och vad du vill uppnå. Det är helt gratis och du binder dig inte till något.',
+		],
 	},
 	{
 		q: 'Behöver jag åka någonstans?',
-		a: 'Nej. Alla möten med läkare, sjuksköterska, dietist och coach sker via video eller chatt. Det enda du gör på plats är blodprovet, som du lämnar på något av fler än 165 provtagningsställen i hela Sverige.',
+		a: [
+			'Nej. Alla möten med läkare, sjuksköterska, dietist och coach sker via video eller chatt. Det enda du gör på plats är blodprovet, som du lämnar på något av fler än 165 provtagningsställen i hela Sverige.',
+		],
 	},
 	{
-		q: 'Finns det biverkningar?',
-		a: 'Som vid all läkemedelsbehandling kan biverkningar förekomma. De är vanligtvis milda och övergående, oftast besvär från mage och tarm i början av behandlingen. Din läkare hjälper dig att mildra dem, till exempel genom att justera dosen.',
+		q: 'Vilka kan få medicinsk behandling från Velora?',
+		a: [
+			'För att använda GLP-1-analoger för viktminskning behöver du uppfylla något av följande tre kriterier:',
+			'Läs mer om <a href="https://www.1177.se/sjukdomar--besvar/hormoner/obesitas--fetma-och-overvikt/obesitas--fetma-och-overvikt-hos-vuxna/">behandling med läkemedel vid obesitas på 1177</a>.',
+		],
+		list: [
+			'Du har ett BMI på 30 eller högre.',
+			'Du har ett BMI på 27 eller högre och minst en viktrelaterad sjukdom, såsom t.ex. högt blodtryck, diabetes typ 2, förhöjda blodfetter, sömnapnésyndrom eller åderförkalkning.',
+			'Du har tidigare uppfyllt något av ovanstående kriterier men nu lyckats gå ned i vikt och önskar hjälp med att behålla din nuvarande vikt.',
+		],
 	},
 	{
-		q: 'Vilket läkemedel får jag?',
-		a: 'Det avgör din läkare efter en personlig bedömning. Läkaren väljer det läkemedel som passar dig och din hälsa bäst, och sätter upp en individuell behandlingsplan.',
+		id: 'faq-varfor-lakemedel',
+		q: 'Varför läkemedel för att gå ner i vikt?',
+		a: [
+			'Människan är genetiskt programmerad för att förhindra viktnedgång och gör allt för att återgå till sin högsta vikt. Det är därför det är så svårt att behålla en viktnedgång med endast diet och träning utan medicinsk hjälp.',
+			'Enligt studier är det endast 1 av 5 som klarar av en långsiktig viktnedgång med diet och träning. Övervikt är alltså inte en fråga om lättja eller dålig motivation och inget som man ska skämmas över.',
+			'Tack vare upptäckten av läkemedelsgruppen GLP-1-analoger finns det nu för första gången en lösning på detta som inte kräver riskfylld kirurgi. Vi är mitt inne i en revolution inom behandling av övervikt och fetma och vi är mycket glada att kunna erbjuda en behandling som faktiskt fungerar, allt baserat på gedigen forskning.',
+		],
+	},
+	{
+		id: 'faq-lakemedel',
+		q: 'Vilka läkemedel förskriver ni?',
+		a: [
+			'Vi utgår alltid från dina individuella förutsättningar och väljer det läkemedel som passar dig bäst. Vanligtvis förskriver vi läkemedel ur gruppen GLP-1-analoger, de nyaste och mest effektiva läkemedlen som finns på den svenska marknaden.',
+		],
+	},
+	{
+		q: 'Finns det några biverkningar av behandlingen?',
+		a: [
+			'Som vid all läkemedelsbehandling kan det förekomma biverkningar. Biverkningarna av GLP-1-analoger är dock sällsynta och oftast milda. Om det förekommer består det oftast av övergående symptom från mage och tarm i början av behandlingen.',
+			'Vid problem finns alltid våra läkare tillgängliga för hjälp och stöd. Bra att veta är att hälsovinsterna med en viktnedgång kraftigt överstiger de små riskerna som finns med behandlingen.',
+		],
+	},
+	{
+		q: 'Hur mycket kommer jag att gå ner i vikt av Veloras behandling?',
+		a: [
+			'Enligt stora studier är den genomsnittliga viktnedgången 16–25 % första 12 månaderna beroende på läkemedel. Viktnedgången går snabbast i början och man tappar i snitt cirka 10 % av sin vikt under de första 4 månaderna. Målsättningen med behandlingen är att du ska uppnå din målvikt, vilket för de flesta är en hälsosam vikt (BMI 20–25).',
+		],
+	},
+	{
+		q: 'Varför behöver jag göra en hälsokontroll innan jag startar behandlingen?',
+		a: [
+			'För att kunna ge dig trygg och säker vård och bästa möjliga behandling behöver vi veta mer om din hälsa, vilket görs via blodprovstagning och en läkarbedömning. Provtagning görs på något av våra provtagningsställen och läkarbedömningen sker digitalt.',
+			'Vi undersöker underliggande orsaker till din övervikt, mäter funktionen på dina organ och bedömer riskfaktorer för din hälsa kopplade till övervikt. Att hitta underliggande sjukdom i tid är avgörande för ett långt och friskt liv.',
+			'Vilka prov som tas beror på din underliggande hälsa och vilka eventuella prover du tagit nyligen i annat sammanhang. Vanligtvis utreds blodstatus (Hb, vita blodkroppar, blodplättar), blodfetter, leverfunktion, vitaminer, sköldkörtelfunktion, blodsocker (fP-glukos och HbA1c) samt njurfunktion.',
+		],
+	},
+	{
+		q: 'På vilka orter kan jag lämna prover?',
+		a: [
+			'Vi har det mest heltäckande utbudet av mottagningar i Sverige som finns tack vare samarbeten med flera leverantörer, med över 165 platser. Här följer några exempel på vanliga orter men vi har många fler möjligheter: Stockholm, Göteborg, Malmö, Uppsala, Västerås, Örebro, Linköping, Jönköping, Lund, Norrköping, Umeå, Karlstad, Östersund, Kiruna, Växjö, Gävle, Eskilstuna, Kalmar, Mölndal, Kungälv, Sundsvall, Uddevalla, Borlänge, Falun, Nyköping, Lidköping, Ängelholm, Katrineholm, Nässjö och Skurup.',
+			'På <a href="https://www.testmottagningen.se/mottagningar/">testmottagningen.se/mottagningar</a> kan du se samtliga ställen vi har möjlighet att boka in dig på.',
+		],
+	},
+	{
+		q: 'Kan man äta som vanligt under behandlingen?',
+		a: [
+			'Du kan äta som vanligt. Det viktiga är att du äter mindre än vanligt, vilket är precis det den förskrivna medicinen hjälper dig med. Det är fortfarande ett kaloriunderskott som behövs för viktminskning. GLP-1-analoger minskar hungern och suget vilket gör det enklare att själv bestämma över sitt ätande. När hungern och suget minskar är det lättare att få in hållbara och hälsosamma vanor för ett långt och friskt liv.',
+		],
+	},
+	{
+		q: 'Vad kostar medicinen?',
+		a: [
+			'I Sverige ingår de moderna viktnedgångsmedicinerna ännu inte i högkostnadsskyddet. Som patient betalar man därför hela läkemedelskostnaden själv. Vi på Velora arbetar för att förändra detta. Vi anser att patienter med obesitas ska ha samma förutsättningar till effektiv medicinsk behandling som andra patienter. Apoteken i Sverige bestämmer själva priset på medicin utanför förmånssystemet, vilket gör att priset kan skilja sig åt mellan olika apotek.',
+			'Kostnaden varierar mellan läkemedel och dos, i dagsläget cirka 1 050–4 800 kronor per månad (oktober 2026). Genom individuell dosering och smart användning av pennorna går det ofta att hålla nere priset betydligt. Under konsultationen går vi igenom vilken behandling som passar dig bäst och hur du kan optimera både effekt och kostnad.',
+			'Däremot finns möjlighet att få ersättning av Försäkringskassan för läkemedels- samt behandlingskostnaden upp till 3 343 kronor per månad. Vi hjälper självfallet till med ett utlåtande. Vi kan dock inte garantera ett godkännande då bedömningen ligger hos Försäkringskassan, vilka ofta är hårda i bedömningen.',
+		],
+	},
+	{
+		q: 'Hur fungerar er nöjdhetsgaranti?',
+		a: [
+			'Om du avslutar behandlingen och meddelar oss skriftligen inom 30 dagar från att din första betalning drogs, återbetalar vi hela den första månadsavgiften. Garantin gäller en gång per person och omfattar inte läkemedel, blodprov eller andra externa kostnader.',
+			'Mejla hej@velora.se från den e-postadress du registrerade kontot med så hanterar vi din begäran inom 14 dagar. Fullständiga villkor hittar du i våra användarvillkor.',
+		],
 	},
 ];
 ---
 
-<section class="section" aria-labelledby="faq-title">
+<section class="section" id="vanliga-fragor" aria-labelledby="faq-title">
 	<div class="container grid">
-		<div data-reveal>
+		<!-- Sticky on desktop while the questions scroll past (entry 67). -->
+		<div class="intro" data-reveal>
 			<p class="label">Vanliga frågor</p>
 			<h2 id="faq-title">Bra att veta <em>innan</em> du bokar.</h2>
 		</div>
-		<div data-reveal>
+		<div class="list" data-reveal>
 			{
 				faqs.map((f) => (
-					<details>
+					<details id={f.id}>
 						<summary>
 							{f.q}
 							<span class="sign" aria-hidden="true" />
 						</summary>
-						<p>{f.a}</p>
+						<div class="answer">
+							<p set:html={f.a[0]} />
+							{f.list && (
+								<ul>
+									{f.list.map((item) => (
+										<li>{item}</li>
+									))}
+								</ul>
+							)}
+							{f.a.slice(1).map((para) => (
+								<p set:html={para} />
+							))}
+						</div>
 					</details>
 				))
 			}
-			<a class="more" href={`${VELORA}/#vanliga-fragor`}>Fler frågor och svar på velora.se</a>
 		</div>
 	</div>
 </section>
+
+<script>
+	// A jump to a question (e.g. from the navbar) opens it, on click and on page load with the hash.
+	const openTarget = (hash: string) => {
+		const target = hash.length > 1 ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
+		if (target instanceof HTMLDetailsElement) target.open = true;
+	};
+	document.addEventListener('click', (e) => {
+		const link = (e.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');
+		if (link) openTarget(link.hash);
+	});
+	openTarget(location.hash);
+</script>
 
 <style>
 	.grid {
@@ -53,6 +156,8 @@ const faqs = [
 
 	details {
 		border-bottom: 1px solid var(--line);
+		/* Clears the fixed navbar when a question is the jump target. */
+		scroll-margin-top: 112px;
 	}
 
 	details:first-of-type {
@@ -102,22 +207,37 @@ const faqs = [
 		transform: rotate(0deg);
 	}
 
-	details p {
+	.answer {
+		display: grid;
+		gap: 12px;
 		padding-bottom: 28px;
+		max-width: 62ch;
 		color: var(--ink-soft);
-		max-width: 60ch;
 	}
 
-	.more {
-		display: inline-block;
-		margin-top: 28px;
+	.answer ul {
+		margin: 0;
+		padding-left: 1.2em;
+		display: grid;
+		gap: 6px;
+	}
+
+	.answer :global(a) {
+		color: var(--ink);
 		font-weight: 600;
 	}
 
+	/* Desktop: the heading sticks on the left while the questions scroll on the right. */
 	@media (min-width: 1024px) {
 		.grid {
 			grid-template-columns: 5fr 7fr;
 			gap: 96px;
+		}
+
+		.intro {
+			position: sticky;
+			top: 120px;
+			align-self: start;
 		}
 	}
 </style>

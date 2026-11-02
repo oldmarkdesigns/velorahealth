@@ -1,6 +1,22 @@
 ---
+import checkIcon from '@phosphor-icons/core/assets/light/check-light.svg?raw';
 import { VELORA } from '../data/site';
 import CtaButton from './CtaButton.astro';
+
+// Layout from entry 88: Velorametoden and Underhåll side by side, then the extra costs as a ruled
+// table beneath them (after the "Våra planer i detalj" reference). Same content as layout F.
+// All figures as on velora.se (docs/facts.md).
+const method = [
+	'Din egen läkare, expert på medicinsk viktnedgång',
+	'Personlig coach och dietist',
+	'Tillgång dygnet runt till vår webbapp för stöd och rådgivning',
+];
+const maintenance = [
+	'Hjälp med att behålla din målvikt',
+	'Optimerad läkemedelsdosering för lägre kostnad',
+	'Fortsatt support från hela Veloras expertteam',
+	'Flexibelt upplägg utan bindningstid',
+];
 ---
 
 <section class="section stone" id="pris" aria-labelledby="price-title">
@@ -10,213 +26,81 @@ import CtaButton from './CtaButton.astro';
 			<h2 id="price-title">Hela kostnaden. <em>Inga dolda avgifter.</em></h2>
 		</div>
 
-		<div class="grid">
-			<div class="plan" data-reveal data-plan-card>
-				<!-- Two-option plan switch (entry 64): tabs pattern. Shown by JS; without it both plans are listed. -->
-				<div class="plan-tabs" role="tablist" aria-label="Välj abonnemang" data-plan-tabs hidden>
-					<button type="button" role="tab" id="tab-standard" aria-controls="plan-standard" aria-selected="true" data-tab="standard">
-						Velorametoden
-					</button>
-					<button type="button" role="tab" id="tab-underhall" aria-controls="plan-underhall" aria-selected="false" tabindex="-1" data-tab="underhall">
-						Underhåll
-					</button>
-				</div>
-
-				<div class="plan-body" id="plan-standard" role="tabpanel" aria-labelledby="tab-standard" data-plan="standard">
-					<p class="plan-name no-js-only">Velorametoden</p>
-					<p class="price"><span class="from">från</span> 795<span class="unit"> kr/mån</span></p>
-					<ul role="list">
-						<li>Din egen läkare, expert på medicinsk viktnedgång</li>
-						<li>Personlig coach och dietist</li>
-						<li>Tillgång dygnet runt till vår webbapp för stöd och rådgivning</li>
-					</ul>
+		<div class="plans">
+			<!-- Featured plan -->
+			<div class="featured" data-reveal>
+				<p class="plan-name">Velorametoden</p>
+				<p class="price"><span class="unit">från</span> 795<span class="unit"> kr/mån</span></p>
+				<ul class="checks" role="list">
+					{
+						method.map((item) => (
+							<li>
+								<span class="check" aria-hidden="true" set:html={checkIcon} />
+								{item}
+							</li>
+						))
+					}
+				</ul>
+				<div class="featured-foot">
 					<p class="small">Du kan välja upplägg utan bindningstid. Studerar du på heltid: 695 kr/mån.</p>
+					<CtaButton tone="cream" />
 				</div>
-
-				<!-- Velora Underhåll, as described on velora.se (docs/facts.md). -->
-				<div class="plan-body" id="plan-underhall" role="tabpanel" aria-labelledby="tab-underhall" data-plan="underhall">
-					<p class="plan-name no-js-only">Velora Underhåll</p>
-					<p class="intro">När du uppnått din målvikt och vill bygga vidare på dina framgångar.</p>
-					<p class="price">495<span class="unit"> kr/mån</span></p>
-					<ul role="list">
-						<li>Hjälp med att behålla din målvikt</li>
-						<li>Optimerad läkemedelsdosering för lägre kostnad</li>
-						<li>Fortsatt support från hela Veloras expertteam</li>
-						<li>Flexibelt upplägg utan bindningstid</li>
-					</ul>
-					<p class="small">Kostnaden för läkemedel ingår inte i priset.</p>
-				</div>
-
-				<CtaButton />
 			</div>
 
-			<div class="extra" data-reveal>
-				<p class="plan-name">Det här tillkommer</p>
-				<dl>
-					<div>
-						<dt>Hälsokontroll, innan start</dt>
-						<dd class="amount">995 kr</dd>
-						<dd class="desc">Blodprover och läkargenomgång. Har du nyligen tagit proverna betalar du bara för genomgången, 495 kr.</dd>
-					</div>
-					<div>
-						<dt>Läkemedel, köps på apotek</dt>
-						<dd class="amount">ca 1 050–4 800 kr/mån</dd>
-						<dd class="desc">
-							Beror på läkemedel och dos (oktober 2026). Försäkringskassan kan ersätta upp till 3 343 kr/mån. Vi
-							hjälper dig med ett utlåtande, men kan inte garantera beslutet.
-						</dd>
-					</div>
-					<div>
-						<dt>Nöjdhetsgaranti i 30 dagar</dt>
-						<dd class="desc">
-							Avslutar du inom 30 dagar får du tillbaka din första månadsavgift. Gäller inte läkemedel eller prover.{' '}
-							<a href={`${VELORA}/anvandarvillkor`}>Villkor</a>
-						</dd>
-					</div>
-				</dl>
-				<p class="small">När du nått din målvikt: Velora Underhåll, 495 kr/mån.</p>
+			<!-- Velora Underhåll, its own card. -->
+			<div class="maintenance" data-reveal>
+				<p class="plan-name">Velora Underhåll</p>
+				<p class="price">495<span class="unit"> kr/mån</span></p>
+				<p class="intro">När du uppnått din målvikt och vill bygga vidare på dina framgångar.</p>
+				<ul class="checks" role="list">
+					{
+						maintenance.map((item) => (
+							<li>
+								<span class="check" aria-hidden="true" set:html={checkIcon} />
+								{item}
+							</li>
+						))
+					}
+				</ul>
+				<p class="small foot">Kostnaden för läkemedel ingår inte i priset.</p>
+			</div>
+		</div>
+
+		<!-- What comes on top of the monthly fee: a ruled table, one row per cost. -->
+		<div class="costs" data-reveal>
+			<div class="costs-head">
+				<p class="costs-title">Det här tillkommer</p>
+				<p class="aside">utöver månadsavgiften</p>
+			</div>
+			<dl>
+				<div class="row">
+					<dt>Hälsokontroll <span class="when">en gång</span></dt>
+					<dd class="desc">Blodprover och läkargenomgång. Har du nyligen tagit proverna betalar du bara för genomgången, 495 kr.</dd>
+					<dd class="amount">995 <span class="unit">kr</span></dd>
+				</div>
+				<div class="row">
+					<dt>Läkemedel <span class="when">apotek</span></dt>
+					<dd class="desc">Beror på läkemedel och dos (oktober 2026).</dd>
+					<dd class="amount"><span class="unit">ca</span> 1 050–4 800 <span class="unit">kr/mån</span></dd>
+				</div>
+			</dl>
+			<div class="guarantee">
+				<span class="stamp" aria-hidden="true"><b>30</b>dagars<br />garanti</span>
+				<p class="desc">
+					<strong>Nöjdhetsgaranti i 30 dagar.</strong> Avslutar du inom 30 dagar får du tillbaka din första
+					månadsavgift. Gäller inte läkemedel eller prover. <a href={`${VELORA}/anvandarvillkor`}>Villkor</a>
+				</p>
 			</div>
 		</div>
 	</div>
 </section>
 
-<script>
-	document.querySelectorAll<HTMLElement>('[data-plan-card]').forEach((card) => {
-		const tablist = card.querySelector<HTMLElement>('[data-plan-tabs]')!;
-		const tabs = [...tablist.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
-		const panels = [...card.querySelectorAll<HTMLElement>('[data-plan]')];
-
-		const select = (index: number, focus = false) => {
-			tabs.forEach((tab, i) => {
-				const active = i === index;
-				tab.setAttribute('aria-selected', String(active));
-				tab.tabIndex = active ? 0 : -1;
-				panels[i].hidden = !active;
-			});
-			tablist.dataset.active = String(index);
-			if (focus) tabs[index].focus();
-		};
-
-		tabs.forEach((tab, i) => {
-			tab.addEventListener('click', () => select(i));
-			tab.addEventListener('keydown', (e) => {
-				const keys: Record<string, number> = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 };
-				if (!(e.key in keys)) return;
-				e.preventDefault();
-				select((keys[e.key] + tabs.length) % tabs.length, true);
-			});
-		});
-
-		card.classList.add('has-switch');
-		tablist.hidden = false;
-		select(0);
-	});
-</script>
-
 <style>
-	.grid {
+	/* Mobile: Velorametoden, Underhåll, then the cost table, stacked. */
+	.plans {
 		display: grid;
-		gap: 20px;
+		gap: 16px;
 		margin-top: 64px;
-	}
-
-	.plan,
-	.extra {
-		border-radius: var(--radius);
-		padding: 32px 24px;
-	}
-
-	.plan {
-		background: var(--card);
-		display: grid;
-		gap: 24px;
-		align-content: start;
-	}
-
-	.extra {
-		border: 1px solid var(--line);
-	}
-
-	.plan-body {
-		display: grid;
-		gap: 24px;
-	}
-
-	/* The display values here would otherwise override the hidden attribute. */
-	.plan-body[hidden],
-	.plan-tabs[hidden] {
-		display: none;
-	}
-
-	.intro {
-		font-size: 0.9375rem;
-		color: var(--ink-soft);
-	}
-
-	/* With JS the tabs name the plan; the label is only for the no-JS listing. */
-	.has-switch .no-js-only {
-		display: none;
-	}
-
-	/* Large two-option switch: a deep wine indicator slides behind the selected plan. */
-	.plan-tabs {
-		position: relative;
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		padding: 4px;
-		border: 1px solid var(--line);
-		border-radius: 999px;
-		background: var(--stone);
-	}
-
-	.plan-tabs::before {
-		content: '';
-		position: absolute;
-		top: 4px;
-		bottom: 4px;
-		left: 4px;
-		width: calc(50% - 4px);
-		border-radius: 999px;
-		background: var(--wine);
-		transition: transform 320ms var(--ease);
-	}
-
-	.plan-tabs[data-active='1']::before {
-		transform: translateX(100%);
-	}
-
-	.plan-tabs button {
-		all: unset;
-		box-sizing: border-box;
-		position: relative;
-		z-index: 1;
-		display: grid;
-		place-items: center;
-		min-height: 48px;
-		padding: 0 12px;
-		border-radius: 999px;
-		font-size: 0.9375rem;
-		font-weight: 600;
-		text-align: center;
-		color: var(--ink-soft);
-		cursor: pointer;
-		transition: color 320ms var(--ease);
-	}
-
-	.plan-tabs button[aria-selected='true'] {
-		color: var(--cream);
-	}
-
-	.plan-tabs button:focus-visible {
-		outline: 2px solid var(--wine);
-		outline-offset: 3px;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.plan-tabs::before,
-		.plan-tabs button {
-			transition: none;
-		}
 	}
 
 	.plan-name {
@@ -227,85 +111,294 @@ import CtaButton from './CtaButton.astro';
 		color: var(--ink-soft);
 	}
 
-	.price {
-		font-family: var(--serif);
-		font-weight: 300;
-		font-size: clamp(4.5rem, 14vw, 6.5rem);
-		line-height: 0.9;
-		letter-spacing: -0.04em;
-	}
-
-	.from,
 	.unit {
 		font-family: var(--sans);
-		font-size: 1rem;
+		font-size: 0.8125rem;
 		font-weight: 500;
 		letter-spacing: 0;
 		color: var(--ink-soft);
 	}
 
-	.plan ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		border-top: 1px solid var(--line);
-	}
-
-	.plan li {
-		padding: 14px 0;
-		border-bottom: 1px solid var(--line);
-		font-size: 0.9375rem;
-	}
-
 	.small {
-		font-size: 0.875rem;
+		font-size: 0.8125rem;
 		color: var(--ink-soft);
 	}
 
-	dl {
-		margin: 8px 0 24px;
+	.checks {
+		list-style: none;
+		margin: 0;
+		padding: 24px 0 0;
+		border-top: 1px solid var(--line);
+		display: grid;
+		gap: 14px;
 	}
 
-	dl > div {
-		padding: 22px 0;
-		border-bottom: 1px solid var(--line);
+	.checks li {
 		display: grid;
-		gap: 6px;
+		grid-template-columns: 20px 1fr;
+		gap: 12px;
+		align-items: start;
+		font-size: 0.9375rem;
+		line-height: 1.45;
+	}
+
+	.check {
+		display: flex;
+		padding-top: 1px;
+		color: var(--wine);
+	}
+
+	.check :global(svg) {
+		width: 20px;
+		height: 20px;
+	}
+
+	.price {
+		font-family: var(--serif);
+		font-weight: 300;
+		font-size: clamp(4.5rem, 12vw, 7rem);
+		line-height: 0.9;
+		letter-spacing: -0.04em;
+	}
+
+	.price .unit {
+		font-size: 1rem;
+	}
+
+	/* ---- The two plan cards: same structure, wine and white ---- */
+	.featured,
+	.maintenance {
+		border-radius: var(--radius);
+		display: flex;
+		flex-direction: column;
+		gap: 28px;
+		padding: 32px 24px;
+	}
+
+	.featured {
+		background: var(--wine);
+		color: var(--on-dark);
+		--ink-soft: var(--on-dark-soft);
+		--line: var(--line-dark);
+	}
+
+	.featured .check {
+		color: var(--rose);
+	}
+
+	.maintenance {
+		background: var(--card);
+	}
+
+	.intro {
+		margin-top: -12px;
+		font-size: 0.9375rem;
+		color: var(--ink-soft);
+		max-width: 40ch;
+	}
+
+	/* The note (and, on the wine card, the booking button) sit at the foot, so the cards line up. */
+	.featured-foot,
+	.foot {
+		margin-top: auto;
+	}
+
+	.featured-foot {
+		display: grid;
+		gap: 20px;
+		justify-items: start;
+	}
+
+	/* ---- Cost table (after "Våra planer i detalj"): no card, ruled rows on the section ---- */
+	/* Entry 90: narrower than the plan cards and centered beneath them. */
+	.costs {
+		max-width: 880px;
+		margin: 56px auto 0;
+	}
+
+	.costs-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 4px 16px;
+		flex-wrap: wrap;
+		padding-bottom: 12px;
+	}
+
+	.costs-title {
+		font-weight: 600;
+		font-size: 0.9375rem;
+	}
+
+	.aside,
+	.when {
+		font-family: var(--serif);
+		font-style: italic;
+		font-weight: 400;
+		color: var(--ink-soft);
+	}
+
+	.aside {
+		font-size: 0.9375rem;
+	}
+
+	dl,
+	dd {
+		margin: 0;
+	}
+
+	/*
+	 * Mobile: name and amount on one line, the explanation beneath. When both don't fit, the amount
+	 * wraps to its own right-aligned line instead of breaking the name.
+	 */
+	.row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 4px 16px;
+		padding: 16px 0;
+		border-top: 1px solid var(--line);
 	}
 
 	dt {
-		font-weight: 600;
+		flex: 1 0 auto;
+		font-size: 1.0625rem;
+		font-weight: 500;
+		white-space: nowrap;
 	}
 
-	dd {
-		margin: 0;
+	.when {
+		margin-left: 6px;
+		font-size: 0.9375rem;
+		white-space: nowrap;
 	}
 
 	.amount {
 		font-family: var(--serif);
 		font-weight: 340;
-		font-size: 1.75rem;
+		font-size: 1.25rem;
 		letter-spacing: -0.01em;
+		white-space: nowrap;
+		text-align: right;
+		margin-left: auto;
 	}
 
 	.desc {
-		font-size: 0.875rem;
+		font-size: 0.8125rem;
+		line-height: 1.5;
 		color: var(--ink-soft);
+		max-width: 52ch;
 	}
 
-	.desc a {
+	.row .desc {
+		flex-basis: 100%;
+		order: 1;
+	}
+
+	.desc a,
+	.desc strong {
 		color: var(--ink);
 		font-weight: 600;
 	}
 
-	@media (min-width: 1024px) {
-		.grid {
-			grid-template-columns: 1fr 1fr;
-			gap: 32px;
+	/* Entry 90: the stamp and its text centered as one group under the table. */
+	.guarantee {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 20px;
+		padding-top: 24px;
+		border-top: 1px solid var(--line);
+	}
+
+	.guarantee .desc {
+		max-width: 46ch;
+	}
+
+	/* A rubber stamp for the guarantee: double ring, slight tilt. */
+	.stamp {
+		flex: none;
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 96px;
+		height: 96px;
+		border: 1.5px solid var(--wine);
+		border-radius: 50%;
+		outline: 1px solid var(--wine);
+		outline-offset: -6px;
+		transform: rotate(-8deg);
+		color: var(--wine);
+		font-size: 0.625rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		line-height: 1.3;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	.stamp b {
+		font-family: var(--serif);
+		font-size: 1.75rem;
+		font-weight: 400;
+		letter-spacing: -0.02em;
+		line-height: 1;
+		text-transform: none;
+	}
+
+	/* Tablet+: the table gets its columns (the plans stay stacked until 1024 px, where the button fits). */
+	@media (min-width: 768px) {
+		.featured,
+		.maintenance {
+			padding: 40px;
 		}
 
-		.plan,
-		.extra {
+		/* Name | explanation | amount, like a plan-comparison table. */
+		.row,
+		.costs-head {
+			display: grid;
+			grid-template-columns: minmax(0, 3fr) minmax(0, 5fr) minmax(0, 3fr);
+			column-gap: 28px;
+		}
+
+		dt {
+			white-space: normal;
+		}
+
+		.row .desc {
+			grid-column: 2;
+			grid-row: 1;
+			order: 0;
+		}
+
+		.amount {
+			margin-left: 0;
+		}
+
+		.costs-head .aside {
+			grid-column: 3;
+			text-align: right;
+		}
+	}
+
+	/* Tablets: a wider amount column so "ca 1 050–4 800 kr/mån" stays on one line. */
+	@media (min-width: 768px) and (max-width: 1023px) {
+		.row,
+		.costs-head {
+			grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 4fr);
+		}
+	}
+
+	/* Desktop: the two plans side by side, equal width and height. */
+	@media (min-width: 1024px) {
+		.plans {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			gap: 20px;
+		}
+
+		.featured,
+		.maintenance {
 			padding: 48px;
 		}
 	}

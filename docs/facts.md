@@ -49,6 +49,13 @@ Sources:
 | ⚠ The start page shows **3 steps** while /om-oss shows **4**. The 4-step version is newer and includes follow-up. | H vs O | Pick one: we recommend O |
 | No treatment starts before the doctor knows it's right for you | O | OK |
 
+## FAQ (used in the FAQ section, prompt log entry 67)
+
+| Content | Source | Status |
+|---------|--------|--------|
+| "Vad händer i bedömningssamtalet?", "Behöver jag åka någonstans?" | O (FAQ / steps) | OK |
+| The ten questions in velora.se's start-page FAQ, with Velora's answers (eligibility, why medicine, which medicines, side effects, expected weight loss, health check, sampling locations, eating, medicine cost, guarantee) | H (FAQ) | OK. Two answers are adapted under the cautious stance: "Vilka läkemedel förskriver ni?" and "Vad kostar medicinen?" use "GLP-1-analoger" and the 1 050–4 800 kr/mån range (B) instead of brand names and per-drug prices. Links back to velora.se are removed; the 1177 and testmottagningen.se links stay |
+
 ## Social proof
 
 | Fact | Source | Status |
