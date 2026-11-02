@@ -1,0 +1,91 @@
+---
+import { IMG } from '../data/site';
+import CtaButton from './CtaButton.astro';
+---
+
+<!-- Bookends the page: a second full-bleed photo with the same cream veil as the hero. -->
+<section class="final" aria-labelledby="final-title">
+	<img src={IMG.sofa} alt="Ung kvinna som sitter i soffan och ler" width="1024" height="1024" loading="lazy" />
+	<div class="veil" aria-hidden="true"></div>
+	<div class="container content" data-reveal>
+		<h2 id="final-title">Första steget är <em>ett samtal.</em></h2>
+		<p class="lede">Med legitimerad läkare eller sjuksköterska, via video. Ni pratar om dig, inte om en siffra på vågen.</p>
+		<div class="cta"><CtaButton /></div>
+	</div>
+</section>
+
+<style>
+	.final {
+		position: relative;
+		display: flex;
+		align-items: flex-end;
+		min-height: 100svh;
+		overflow: hidden;
+		background: var(--stone);
+	}
+
+	img {
+		position: absolute;
+		inset: 0 0 auto;
+		width: 100%;
+		height: 55%;
+		object-fit: cover;
+		object-position: 50% 30%;
+	}
+
+	.veil {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to bottom, rgba(247, 242, 236, 0) 36%, var(--cream) 55%);
+	}
+
+	.content {
+		position: relative;
+		padding-block: 96px 64px;
+	}
+
+	h2 {
+		max-width: 10ch;
+	}
+
+	.lede {
+		color: var(--ink);
+		opacity: 0.82;
+	}
+
+	.cta {
+		margin-top: 32px;
+	}
+
+	@media (min-width: 768px) {
+		.final {
+			align-items: center;
+		}
+
+		img {
+			height: 100%;
+			object-position: 70% 35%;
+		}
+
+		.veil {
+			background: linear-gradient(to right, var(--cream) 0%, rgba(247, 242, 236, 0.9) 32%, rgba(247, 242, 236, 0) 60%);
+		}
+
+		.content {
+			padding-block: 120px;
+		}
+	}
+
+	/* Same split-bleed as the hero on wide screens. */
+	@media (min-width: 1024px) {
+		img {
+			inset: 0 0 0 auto;
+			width: 60%;
+			object-position: 50% 30%;
+		}
+
+		.veil {
+			background: linear-gradient(to right, var(--cream) 40%, rgba(247, 242, 236, 0.6) 48%, rgba(247, 242, 236, 0) 60%);
+		}
+	}
+</style>

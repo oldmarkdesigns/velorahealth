@@ -1,0 +1,185 @@
+---
+import '@fontsource-variable/cormorant-garamond/wght.css';
+import '@fontsource-variable/cormorant-garamond/wght-italic.css';
+import { IMG } from '../data/site';
+import CtaButton from './CtaButton.astro';
+import HeroTrustPill from './HeroTrustPill.astro';
+---
+
+<!--
+  Full-viewport cover (Relivo / Oura / Tandem pattern). The photo is light, so a cream
+  gradient carries wine text instead of a dark scrim; it also softens the 1024 px source
+  when it is scaled up. Swap IMG.hero for an extended/high-res version when available.
+-->
+<section class="hero" aria-labelledby="hero-title">
+	<img
+		class="photo"
+		src={IMG.hero}
+		srcset={`${IMG.heroSmall} 800w, ${IMG.heroMedium} 1080w, ${IMG.hero} 1500w`}
+		sizes="100vw"
+		alt="Leende kvinna i soffan som har videomöte på mobilen"
+		width="1024"
+		height="925"
+		fetchpriority="high"
+	/>
+	<div class="veil" aria-hidden="true"></div>
+	<div class="container content">
+		<HeroTrustPill />
+		<h1 id="hero-title">
+			<span class="line-1">Medicinsk viktnedgång</span>
+			<span class="line-2">när dieter inte räcker</span>
+		</h1>
+		<p class="lede">
+			Velora är en svensk digital vårdgivare. Ett legitimerat vårdteam bedömer om medicinsk behandling passar dig,
+			och följer dig hela vägen.
+		</p>
+		<div class="cta-wrap" data-hero-cta><CtaButton /></div>
+	</div>
+</section>
+
+<style>
+	/*
+	 * Inset, rounded panel (Hemmapartner-inspired): the photo sits like a framed image on the page,
+	 * with the static trust bar directly beneath it.
+	 */
+	.hero {
+		position: relative;
+		min-height: calc(100svh - 16px);
+		margin: 8px;
+		border-radius: 16px;
+		display: flex;
+		align-items: flex-end;
+		overflow: hidden;
+		background: var(--stone);
+	}
+
+	/*
+	 * Mobile: a full-height cover zooms into her face and the headline lands on it.
+	 * So the photo bleeds edge to edge across the top and dissolves into cream; the text sits below.
+	 */
+	.photo {
+		position: absolute;
+		inset: 0 0 auto;
+		width: 100%;
+		height: 56%;
+		object-fit: cover;
+		object-position: 55% 35%;
+	}
+
+	.veil {
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(to bottom, rgba(247, 242, 236, 0) 34%, var(--cream) 56%),
+			linear-gradient(to bottom, rgba(247, 242, 236, 0.75) 0%, rgba(247, 242, 236, 0) 14%);
+	}
+
+	.content {
+		position: relative;
+		padding-top: 120px;
+		padding-bottom: 32px;
+		/* Lets the title size itself against the text column (cqi), not the window. */
+		container-type: inline-size;
+	}
+
+	/*
+	 * Hero title has its own serif (Cormorant Garamond), distinct from the Newsreader used for every
+	 * other heading. Two fixed lines: upright statement, then the italic, softer qualifier.
+	 */
+	h1 {
+		font-family: 'Cormorant Garamond Variable', var(--serif);
+		/*
+		 * The widest line ("Medicinsk viktnedgång") measures ~8.9em in this face, so 100cqi / 9.2 is the
+		 * largest size that keeps each line on one line in any column width, with a small safety margin.
+		 */
+		font-size: clamp(1.5rem, 100cqi / 9.2, 4.5rem);
+		line-height: 1.05;
+		letter-spacing: -0.01em;
+	}
+
+	h1 span {
+		display: block;
+	}
+
+	.line-1 {
+		font-weight: 600;
+		color: var(--ink);
+	}
+
+	/* Italic of the same family, lighter and softer: a change of voice, not a second typeface. */
+	.line-2 {
+		font-style: italic;
+		font-weight: 500;
+		color: var(--ink-soft);
+	}
+
+	.lede {
+		margin-top: 16px;
+		font-size: 1.0625rem;
+		color: var(--ink);
+		opacity: 0.82;
+	}
+
+	.cta-wrap {
+		margin-top: 24px;
+	}
+
+	@media (min-width: 768px) {
+		.photo {
+			inset: 0;
+			height: 100%;
+		}
+
+		.content {
+			padding-bottom: 72px;
+		}
+
+		.lede {
+			font-size: 1.1875rem;
+		}
+
+		.veil {
+			background:
+				linear-gradient(to right, var(--cream) 0%, rgba(247, 242, 236, 0.9) 30%, rgba(247, 242, 236, 0) 58%),
+				linear-gradient(to bottom, rgba(247, 242, 236, 0.75) 0%, rgba(247, 242, 236, 0) 16%);
+		}
+
+		.photo {
+			object-position: 70% 35%;
+		}
+	}
+
+	/*
+	 * Wide screens: a full-width cover scales the photo by width, leaving no room to move her
+	 * away from the headline. So the photo bleeds off the right/top/bottom edges at ~64% width and
+	 * dissolves into cream on its left edge. This also keeps the 1024 px source close to 1:1.
+	 */
+	@media (min-width: 1024px) {
+		/* Fills the first screen together with the bar: flexes inside .first-screen (index.astro). */
+		.hero {
+			align-items: center;
+			flex: 1 0 auto;
+			min-height: 0;
+			border-radius: 20px;
+		}
+
+		.photo {
+			inset: 0 0 0 auto;
+			width: 64%;
+			object-position: 45% 30%;
+		}
+
+		.veil {
+			background:
+				linear-gradient(to right, var(--cream) 36%, rgba(247, 242, 236, 0.6) 44%, rgba(247, 242, 236, 0) 56%),
+				linear-gradient(to bottom, rgba(247, 242, 236, 0.75) 0%, rgba(247, 242, 236, 0) 14%);
+		}
+
+		.content {
+			padding-top: 80px;
+			padding-bottom: 0;
+		}
+
+
+	}
+</style>

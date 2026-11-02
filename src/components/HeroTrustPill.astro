@@ -1,0 +1,125 @@
+---
+import arrowDown from '@phosphor-icons/core/assets/light/arrow-down-light.svg?raw';
+import check from '@phosphor-icons/core/assets/light/check-light.svg?raw';
+import { IMG } from '../data/site';
+
+// Frosted trust pill at the top of the hero's text stack (prompt log entries 33–35, 47).
+// "20 % viktnedgång i snitt" is Samuel's wording (entry 47); velora.se states 16–25 %, so it is
+// flagged in docs/facts.md. Icons: Phosphor (light), bare, no circle.
+const items = [
+	{ label: 'Eget vårdteam', avatars: true },
+	{ label: '20 % viktnedgång i snitt', icon: arrowDown },
+	{ label: '30 dagars nöjdhetsgaranti', icon: check },
+];
+// The care team's portraits stay beside the first statement (prompt log entry 34).
+const team = [IMG.mina, IMG.daniel, IMG.sandra];
+---
+
+<aside class="pill" aria-label="Det här får du hos Velora">
+	<ul role="list">
+		{
+			items.map((item) => (
+				<li>
+					{item.avatars && (
+						<span class="avatars" aria-hidden="true">
+							{team.map((src) => (
+								<img src={src} alt="" width="24" height="24" loading="lazy" />
+							))}
+						</span>
+					)}
+					{item.icon && <span class="icon" aria-hidden="true" set:html={item.icon} />}
+					{item.label}
+				</li>
+			))
+		}
+	</ul>
+</aside>
+
+<style>
+	/* From 768 px: on phones three statements don't fit one row, and the CTA must stay above the fold. */
+	.pill {
+		display: none;
+	}
+
+	@media (min-width: 768px) {
+		.pill {
+			display: inline-block;
+			margin-bottom: 28px;
+			padding: 10px 24px 10px 10px;
+			border-radius: 999px;
+			/* Sits on cream now, so a fine wine outline gives it its edge; the frost still softens the photo fade. */
+			background: rgba(255, 253, 250, 0.6);
+			backdrop-filter: blur(16px) saturate(140%);
+			-webkit-backdrop-filter: blur(16px) saturate(140%);
+			border: 1px solid var(--line);
+			box-shadow: 0 16px 32px -24px rgba(44, 0, 21, 0.35);
+		}
+	}
+
+	@media (prefers-reduced-transparency: reduce) {
+		.pill {
+			background: var(--card);
+			backdrop-filter: none;
+			-webkit-backdrop-filter: none;
+		}
+	}
+
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		align-items: center;
+	}
+
+	li {
+		display: flex;
+		align-items: center;
+		font-family: 'Cormorant Garamond Variable', var(--serif);
+		font-weight: 600;
+		font-size: 1.0625rem;
+		line-height: 1;
+		letter-spacing: -0.005em;
+		white-space: nowrap;
+	}
+
+	/* Thin vertical divider between statements. */
+	li + li::before {
+		content: '';
+		width: 1px;
+		height: 16px;
+		margin-inline: 16px;
+		background: rgba(44, 0, 21, 0.2);
+	}
+
+	.avatars {
+		display: flex;
+		margin-right: 8px;
+	}
+
+	/* Bare icon, no circle: wine, sized to the 17 px serif. */
+	.icon {
+		display: inline-flex;
+		margin-right: 7px;
+		color: var(--wine);
+	}
+
+	.icon :global(svg) {
+		width: 20px;
+		height: 20px;
+	}
+
+	.avatars img {
+		width: 24px;
+		height: 24px;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 2px solid var(--cream);
+		margin-left: -8px;
+		background: var(--stone);
+	}
+
+	.avatars img:first-child {
+		margin-left: 0;
+	}
+</style>

@@ -1,0 +1,184 @@
+---
+import { IMG, VELORA } from '../data/site';
+
+// Real patient stories from velora.se, summarised faithfully. Individual results, not promises.
+const stories = [
+	{
+		name: 'Caroline',
+		age: 47,
+		city: 'Jönköping',
+		kg: '−15 kg',
+		time: 'på 10 månader',
+		text: 'Hade testat flera bantningskurer utan resultat. Med medicinsk viktminskning hos Velora gick hon ner 15 kg, och för första gången höll det i sig.',
+		img: IMG.caroline,
+		href: `${VELORA}/patientberattelser/carolines-viktresa`,
+	},
+	{
+		name: 'Manga',
+		age: 35,
+		city: 'Tierp',
+		kg: '−23 kg',
+		time: 'på 10 månader',
+		text: 'Var trött på dieter som inte fungerade. Hittade stöd, gick ner 23 kg och fick tillbaka energin och självförtroendet.',
+		img: IMG.manga,
+		href: `${VELORA}/patientberattelser/mangas-viktresa`,
+	},
+	{
+		name: 'Roger',
+		age: 59,
+		city: 'Norrköping',
+		kg: '−25 kg',
+		time: 'på 6 månader',
+		text: 'När sjukdom satte stopp för träningen ökade vikten. Med rätt stöd hittade han tillbaka till styrka, energi och hälsa.',
+		img: IMG.roger,
+		href: `${VELORA}/patientberattelser/rogers-viktresa`,
+	},
+];
+---
+
+<section class="section stone" aria-labelledby="stories-title">
+	<div class="container head" data-reveal>
+		<div>
+			<p class="label">Patientberättelser</p>
+			<h2 id="stories-title">Tre personer.<br />Tre <em>egna</em> vägar.</h2>
+		</div>
+		<a class="all" href={`${VELORA}/patientberattelser`}>Fler berättelser</a>
+	</div>
+	<ul class="rail container" role="list">
+		{
+			stories.map((s, i) => (
+				<li class="story" data-reveal style={`transition-delay: ${i * 120}ms`}>
+					<div class="photo">
+						<img src={s.img} alt={`${s.name}, ${s.age} år`} width="600" height="800" loading="lazy" />
+					</div>
+					<p class="result">
+						<span class="kg">{s.kg}</span>
+						<span class="time">{s.time}</span>
+					</p>
+					<p class="who">
+						{s.name}, {s.age} år, {s.city}
+					</p>
+					<p class="text">{s.text}</p>
+					<a href={s.href}>
+						Läs {s.name}s berättelse<span class="visually-hidden"> på velora.se</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+	<div class="container">
+		<p class="footnote">Berättelserna är enskilda personers erfarenheter. Resultat varierar från person till person.</p>
+	</div>
+</section>
+
+<style>
+	.head {
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 24px;
+	}
+
+	.all {
+		display: none;
+		font-weight: 600;
+		font-size: 0.9375rem;
+	}
+
+	.rail {
+		list-style: none;
+		margin: 56px auto 40px;
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: 78%;
+		gap: 20px;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-padding-inline: var(--gutter);
+		scrollbar-width: none;
+	}
+
+	.rail::-webkit-scrollbar {
+		display: none;
+	}
+
+	.story {
+		/* Contains the absolutely positioned visually-hidden text inside the scroller. */
+		position: relative;
+		scroll-snap-align: start;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.photo {
+		overflow: hidden;
+		border-radius: var(--radius);
+	}
+
+	.photo img {
+		width: 100%;
+		aspect-ratio: 3 / 4;
+		object-fit: cover;
+		object-position: center 20%;
+		transition: transform 1200ms var(--ease);
+	}
+
+	.story:hover .photo img {
+		transform: scale(1.03);
+	}
+
+	.result {
+		display: flex;
+		align-items: baseline;
+		gap: 10px;
+		margin-top: 24px;
+		padding-top: 20px;
+		border-top: 1px solid var(--line);
+	}
+
+	.kg {
+		font-family: var(--serif);
+		font-weight: 300;
+		font-size: 3rem;
+		line-height: 1;
+		letter-spacing: -0.03em;
+	}
+
+	.time {
+		font-size: 0.875rem;
+		color: var(--ink-soft);
+	}
+
+	.who {
+		margin-top: 14px;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.text {
+		margin-top: 10px;
+		color: var(--ink-soft);
+		font-size: 0.9375rem;
+	}
+
+	.story a {
+		margin-top: 16px;
+		font-weight: 600;
+		font-size: 0.9375rem;
+	}
+
+	@media (min-width: 768px) {
+		.all {
+			display: inline;
+		}
+
+		.rail {
+			grid-auto-flow: row;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 32px;
+			overflow: visible;
+		}
+	}
+</style>

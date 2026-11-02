@@ -1,0 +1,129 @@
+---
+import CtaButton from './CtaButton.astro';
+
+const criteria = [
+	'Du har ett BMI på 30 eller högre.',
+	'Du har ett BMI på 27 eller högre och minst en viktrelaterad sjukdom, till exempel högt blodtryck, typ 2‑diabetes, förhöjda blodfetter eller sömnapné.',
+	'Du har tidigare uppfyllt något av kriterierna, har gått ner i vikt och vill ha hjälp att behålla den.',
+];
+---
+
+<section class="section" aria-labelledby="forwho-title">
+	<div class="container grid">
+		<div data-reveal>
+			<p class="label">Vem det passar</p>
+			<h2 id="forwho-title">Passar Velora <em>dig?</em></h2>
+			<p class="lede">Medicinsk behandling för viktminskning kan vara aktuell om något av det här stämmer in på dig.</p>
+		</div>
+		<div data-reveal>
+			<ol class="criteria" role="list">
+				{
+					criteria.map((c, i) => (
+						<li>
+							<span class="num">{String(i + 1).padStart(2, '0')}</span>
+							<span>{c}</span>
+						</li>
+					))
+				}
+			</ol>
+			<p class="doctor">
+				Det är alltid din läkare som gör den slutliga bedömningen. Ingen behandling startar innan läkaren vet att den är
+				rätt för dig.{' '}
+				<a
+					href="https://www.1177.se/sjukdomar--besvar/hormoner/obesitas--fetma-och-overvikt/obesitas--fetma-och-overvikt-hos-vuxna/"
+					>Läs om behandling vid obesitas på 1177</a
+				>
+			</p>
+			<aside class="switch">
+				<p class="switch-title">Redan i behandling någon annanstans?</p>
+				<p>
+					Vi hjälper dig att byta, smidigt. Hälsokontrollen behövs bara om din tidigare vårdgivare inte redan har gjort
+					den.
+				</p>
+				<!-- Same flow as velora.se's own "Byt idag" (/kom-igang). -->
+				<div class="switch-cta"><CtaButton size="sm" label="Byt vårdgivare idag" /></div>
+			</aside>
+		</div>
+	</div>
+</section>
+
+<style>
+	.grid {
+		display: grid;
+		gap: 56px;
+	}
+
+	.criteria {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.criteria li {
+		display: grid;
+		grid-template-columns: 56px 1fr;
+		gap: 8px;
+		padding: 28px 0;
+		border-top: 1px solid var(--line);
+		font-family: var(--serif);
+		font-size: 1.5rem;
+		line-height: 1.3;
+		font-weight: 340;
+	}
+
+	.criteria li:last-child {
+		border-bottom: 1px solid var(--line);
+	}
+
+	.num {
+		font-style: italic;
+		font-size: 1rem;
+		color: var(--ink-soft);
+		padding-top: 6px;
+	}
+
+	.doctor {
+		margin-top: 28px;
+		color: var(--ink-soft);
+		font-size: 0.9375rem;
+		max-width: 52ch;
+	}
+
+	.doctor a {
+		color: var(--ink);
+		font-weight: 600;
+	}
+
+	.switch {
+		margin-top: 40px;
+		padding-left: 20px;
+		border-left: 2px solid var(--wine);
+	}
+
+	.switch-title {
+		font-weight: 600;
+		margin-bottom: 4px;
+	}
+
+	.switch-title + p {
+		color: var(--ink-soft);
+		font-size: 0.9375rem;
+	}
+
+	.switch-cta {
+		margin-top: 20px;
+	}
+
+	@media (min-width: 1024px) {
+		.grid {
+			grid-template-columns: 5fr 7fr;
+			gap: 96px;
+		}
+
+		.grid > div:first-child {
+			position: sticky;
+			top: 48px;
+			align-self: start;
+		}
+	}
+</style>

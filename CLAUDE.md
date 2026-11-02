@@ -100,6 +100,8 @@ Things the brief leaves open or that are missing from the PDF. Resolve by asking
 - [x] **Calculator** – decided: keep, as an interactive **range + premises** (16–25 % / 12 months, ~10 % / 4 months, per velora.se), not a single number.
 - [ ] **Image usage** – may velora.se images/logo be reused directly in the case build? The brief suggests yes ("utgå gärna från bilderna på velora.se") – confirm quality/availability when exploring.
 - [ ] **One version or several?** – my call; default to one well-made version unless exploration clearly argues for comparing approaches.
+- [ ] **"20 % viktnedgång i snitt"** – in the hero pill at Samuel's request; velora.se states 16–25 %, so confirm with Velora (prompt log entry 47).
+- [ ] **"5 000+ patienter"** – used in the hero bar but not found on velora.se; Samuel to confirm with Velora (prompt log entry 39).
 - [ ] **Desktop** – brief stresses mobile; desktop quality is not mentioned. Decide how much desktop polish fits in 4 h.
 
 ## 6. Plan (proposal – time boxes sum to ~4 h)
@@ -146,4 +148,13 @@ Things the brief leaves open or that are missing from the PDF. Resolve by asking
   - `docs/facts.md` – fact inventory with sources and use status (single source of truth for copy)
   - `docs/audit.md` – current velora.se audit + benchmark patterns (Oura, Relivo, Tandem, Apple Health)
   - `docs/direction.md` – audience + medical-rule assumptions, brand principles, page outline (approved 2026-11-02)
-- `src/pages/index.astro` is a placeholder only.
+- Start page: `src/pages/index.astro` assembles one component per section in `src/components/` (order follows
+  `docs/direction.md` §8). Shared constants (CTA label/link/note, image URLs) live in `src/data/site.ts`;
+  design tokens in `src/styles/global.css`. Client JS only in `Calculator.astro` and `StickyCta.astro`.
+- Fonts are self-hosted via `@fontsource-variable/newsreader` (section headings), `@fontsource-variable/cormorant-garamond` (hero title only) and `@fontsource-variable/manrope` (body) –
+  no Google Fonts calls, consistent with the privacy story.
+- Smooth wheel scrolling via `lenis` (set up in `src/layouts/Base.astro`; skipped for reduced motion, paused while a `<dialog>` is open).
+- Icons: `@phosphor-icons/core` (light weight, imported as raw SVG); no hand-drawn icons.
+- Images are hotlinked from velora.se's CDN (see `docs/facts.md`, Images).
+- The page sets `noindex` and carries a work-sample disclaimer in the footer.
+- Preview in the app: `.claude/launch.json` → `astro-dev` (port 4321).

@@ -1,0 +1,345 @@
+---
+// Range + premises, never a single promise. Figures from velora.se FAQ:
+// ~10 % in the first 4 months, 16–25 % over the first 12 months (study averages).
+const DEFAULT_WEIGHT = 100;
+---
+
+<section class="section dark" aria-labelledby="calc-title">
+	<div class="container grid">
+		<div data-reveal>
+			<p class="label">Vad du kan förvänta dig</p>
+			<h2 id="calc-title">Ett räkneexempel, <em>inte ett löfte.</em></h2>
+			<p class="lede">Dra i reglaget för att se vad genomsnitten från stora studier skulle betyda för dig.</p>
+		</div>
+
+		<div class="panel" data-calc data-reveal>
+			<label for="weight" class="row">
+				<span>Din vikt i dag</span>
+				<output for="weight" class="weight" data-weight>{DEFAULT_WEIGHT} kg</output>
+			</label>
+			<input id="weight" type="range" min="70" max="180" step="1" value={DEFAULT_WEIGHT} data-input />
+
+			<dl class="results" aria-live="polite">
+				<div>
+					<dt>Efter ungefär 4 månader</dt>
+					<dd class="value"><span data-four>ca 10</span> kg</dd>
+					<dd class="basis">Omkring 10 % av kroppsvikten</dd>
+				</div>
+				<div>
+					<dt>Efter 12 månader</dt>
+					<dd class="value"><span data-twelve>16–25</span> kg</dd>
+					<dd class="basis">16–25 % av kroppsvikten, beroende på läkemedel</dd>
+				</div>
+			</dl>
+
+			<button type="button" class="premises-open" aria-haspopup="dialog" aria-controls="premises" data-premises-open>
+				Vad bygger siffrorna på?
+			</button>
+
+			<dialog class="premises" id="premises" aria-labelledby="premises-title" data-premises data-lenis-prevent>
+				<div class="sheet">
+					<p class="premises-title" id="premises-title">Det här bygger siffrorna på</p>
+					<ul role="list">
+						<li>Genomsnitt i stora studier. Din viktnedgång kan bli större eller mindre.</li>
+						<li>Medicinen kombineras med förändrade vanor kring mat och rörelse.</li>
+						<li>Viktnedgången går oftast snabbast i början.</li>
+						<li>Din läkare bedömer om behandling passar dig, och vilken.</li>
+					</ul>
+					<p class="footnote">Källa: velora.se, vanliga frågor om behandlingen.</p>
+					<button type="button" class="premises-close" data-premises-close>Stäng</button>
+				</div>
+			</dialog>
+		</div>
+	</div>
+</section>
+
+<script>
+	const fmt = new Intl.NumberFormat('sv-SE', { maximumFractionDigits: 0 });
+
+	document.querySelectorAll<HTMLElement>('[data-calc]').forEach((root) => {
+		const input = root.querySelector<HTMLInputElement>('[data-input]')!;
+		const weight = root.querySelector<HTMLElement>('[data-weight]')!;
+		const four = root.querySelector<HTMLElement>('[data-four]')!;
+		const twelve = root.querySelector<HTMLElement>('[data-twelve]')!;
+
+		const update = () => {
+			const kg = Number(input.value);
+			const pct = ((kg - Number(input.min)) / (Number(input.max) - Number(input.min))) * 100;
+			input.style.setProperty('--fill', `${pct}%`);
+			weight.textContent = `${fmt.format(kg)} kg`;
+			four.textContent = `ca ${fmt.format(kg * 0.1)}`;
+			twelve.textContent = `${fmt.format(kg * 0.16)}–${fmt.format(kg * 0.25)}`;
+		};
+
+		input.addEventListener('input', update);
+		update();
+
+		// Premises overlay: native <dialog> gives focus trapping, Escape to close and focus return.
+		const dialog = root.querySelector<HTMLDialogElement>('[data-premises]')!;
+		root.querySelector('[data-premises-open]')!.addEventListener('click', () => dialog.showModal());
+		dialog.querySelector('[data-premises-close]')!.addEventListener('click', () => dialog.close());
+		// A click on the dimmed backdrop (the dialog element itself, outside the sheet) closes it.
+		dialog.addEventListener('click', (e) => {
+			if (e.target === dialog) dialog.close();
+		});
+	});
+</script>
+
+<style>
+	.grid {
+		display: grid;
+		gap: 56px;
+	}
+
+	.row {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--on-dark-soft);
+	}
+
+	.weight {
+		font-family: var(--serif);
+		font-size: 2.5rem;
+		font-weight: 300;
+		letter-spacing: -0.02em;
+		text-transform: none;
+		color: var(--on-dark);
+	}
+
+	input[type='range'] {
+		--fill: 27%;
+		width: 100%;
+		margin: 24px 0 16px;
+		height: 36px;
+		appearance: none;
+		background: transparent;
+		cursor: pointer;
+	}
+
+	input[type='range']::-webkit-slider-runnable-track {
+		height: 2px;
+		background: linear-gradient(to right, var(--on-dark) var(--fill), var(--line-dark) var(--fill));
+	}
+
+	input[type='range']::-moz-range-track {
+		height: 2px;
+		background: linear-gradient(to right, var(--on-dark) var(--fill), var(--line-dark) var(--fill));
+	}
+
+	input[type='range']::-webkit-slider-thumb {
+		appearance: none;
+		width: 28px;
+		height: 28px;
+		margin-top: -13px;
+		border-radius: 50%;
+		background: var(--cream);
+		box-shadow: 0 0 0 6px rgba(247, 242, 236, 0.12);
+	}
+
+	input[type='range']::-moz-range-thumb {
+		width: 28px;
+		height: 28px;
+		border: 0;
+		border-radius: 50%;
+		background: var(--cream);
+	}
+
+	input[type='range']:focus-visible {
+		outline: none;
+	}
+
+	input[type='range']:focus-visible::-webkit-slider-thumb {
+		box-shadow: 0 0 0 3px var(--wine), 0 0 0 5px var(--cream);
+	}
+
+	.results {
+		display: grid;
+		/* minmax(0, …) lets the cells shrink below the numbers' natural width instead of overflowing. */
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 20px;
+		margin: 24px 0 0;
+	}
+
+	.results > div {
+		container-type: inline-size;
+	}
+
+	dt {
+		font-size: 0.8125rem;
+		color: var(--on-dark-soft);
+	}
+
+	dd {
+		margin: 0;
+	}
+
+	.value {
+		margin: 10px 0 8px;
+		font-family: var(--serif);
+		font-weight: 300;
+		/*
+		 * The widest full result ("16–25 kg", including " kg") measures ~3.9em, so 100cqi / 4.1 caps the
+		 * size to the cell. Where that cap is larger, the original viewport-based size applies unchanged.
+		 */
+		font-size: min(clamp(2.125rem, 9vw, 4.5rem), 100cqi / 4.1);
+		line-height: 1;
+		letter-spacing: -0.03em;
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+
+	.value span {
+		color: var(--rose);
+	}
+
+	.basis {
+		font-size: 0.8125rem;
+		line-height: 1.45;
+		color: var(--on-dark-soft);
+	}
+
+	.premises-open {
+		all: unset;
+		box-sizing: border-box;
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		margin-top: 40px;
+		min-height: 44px;
+		padding: 0 20px;
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		font-size: 0.9375rem;
+		font-weight: 600;
+		color: var(--on-dark);
+		cursor: pointer;
+		transition:
+			background-color 240ms var(--ease),
+			border-color 240ms var(--ease);
+	}
+
+	.premises-open::before {
+		content: 'i';
+		display: grid;
+		place-items: center;
+		width: 20px;
+		height: 20px;
+		border: 1px solid currentColor;
+		border-radius: 50%;
+		font-family: var(--serif);
+		font-style: italic;
+		font-size: 0.8125rem;
+		font-weight: 400;
+	}
+
+	.premises-open:hover {
+		background: rgba(247, 242, 236, 0.08);
+		border-color: var(--on-dark-soft);
+	}
+
+	.premises-open:focus-visible {
+		outline: 2px solid var(--on-dark);
+		outline-offset: 4px;
+	}
+
+	/* Overlay: a cream sheet over the dimmed page, the inverse of the dark section it opens from. */
+	.premises {
+		width: min(520px, calc(100% - 32px));
+		max-height: calc(100svh - 32px);
+		padding: 0;
+		border: 0;
+		border-radius: var(--radius);
+		background: var(--cream);
+		color: var(--ink);
+		--ink-soft: #6b5560;
+	}
+
+	.premises::backdrop {
+		background: rgba(44, 0, 21, 0.62);
+		backdrop-filter: blur(4px);
+	}
+
+	.premises[open] {
+		animation: rise 360ms var(--ease);
+	}
+
+	.premises[open]::backdrop {
+		animation: fade 360ms var(--ease);
+	}
+
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: translateY(16px);
+		}
+	}
+
+	@keyframes fade {
+		from {
+			opacity: 0;
+		}
+	}
+
+	.sheet {
+		padding: 32px 28px 28px;
+	}
+
+	.premises-title {
+		font-family: var(--serif);
+		font-weight: 340;
+		font-size: 1.75rem;
+		line-height: 1.15;
+		margin-bottom: 18px;
+	}
+
+	.premises ul {
+		margin: 0 0 18px;
+		padding-left: 1.1em;
+		color: var(--ink-soft);
+		font-size: 0.9375rem;
+		display: grid;
+		gap: 8px;
+	}
+
+	.premises-close {
+		all: unset;
+		box-sizing: border-box;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		margin-top: 24px;
+		min-height: 48px;
+		padding: 0 24px;
+		border-radius: 999px;
+		background: var(--wine);
+		color: var(--cream);
+		font-weight: 600;
+		font-size: 0.9375rem;
+		cursor: pointer;
+	}
+
+	.premises-close:focus-visible {
+		outline: 2px solid var(--wine);
+		outline-offset: 3px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.premises[open],
+		.premises[open]::backdrop {
+			animation: none;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.grid {
+			grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+			gap: 96px;
+			align-items: start;
+		}
+	}
+</style>

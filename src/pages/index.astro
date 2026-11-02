@@ -1,14 +1,56 @@
 ---
-// Placeholder. The real start page is built after the brand direction is set (see CLAUDE.md).
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import Stories from '../components/Stories.astro';
+import ForWho from '../components/ForWho.astro';
+import Steps from '../components/Steps.astro';
+import Calculator from '../components/Calculator.astro';
+import Team from '../components/Team.astro';
+import Privacy from '../components/Privacy.astro';
+import Pricing from '../components/Pricing.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import Footer from '../components/Footer.astro';
+import StickyCta from '../components/StickyCta.astro';
+
+// Section order follows the journey in the brief: Landar → Förstår → Litar på oss → Bokar möte.
+// See docs/direction.md §8.
 ---
 
-<html lang="sv">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Velora</title>
-	</head>
-	<body>
-		<p>Velora – arbetsprov. Startsidan byggs här.</p>
-	</body>
-</html>
+<Base
+	title="Velora – medicinsk viktminskning med legitimerat vårdteam"
+	description="Svensk digital vårdgivare för medicinsk viktminskning. Boka ett gratis bedömningssamtal med legitimerad läkare eller sjuksköterska."
+>
+	<Header />
+	<main id="main">
+		<!-- Hero panel + key-information bar together fill the first screen on desktop. -->
+		<div class="first-screen">
+			<Hero />
+			<TrustStrip />
+		</div>
+		<Stories />
+		<ForWho />
+		<Steps />
+		<Calculator />
+		<Team />
+		<Privacy />
+		<Pricing />
+		<Faq />
+		<FinalCta />
+	</main>
+	<Footer />
+	<StickyCta />
+</Base>
+
+<style>
+	/* Desktop: the hero flexes to fill whatever height the bar leaves, so together they are exactly one screen. */
+	@media (min-width: 1024px) {
+		.first-screen {
+			min-height: 100svh;
+			display: flex;
+			flex-direction: column;
+		}
+	}
+</style>

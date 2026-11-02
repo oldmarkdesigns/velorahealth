@@ -1,0 +1,154 @@
+---
+import { IMG } from '../data/site';
+
+// The 4-step version from velora.se/om-oss (newer than the start page's 3 steps).
+const steps = [
+	{
+		title: 'Gratis bedömningssamtal',
+		text: 'Du svarar på några korta frågor och träffar sedan en läkare eller sjuksköterska i ett videomöte. Ni går igenom din hälsa, tidigare försök och vad du vill uppnå. Kostnadsfritt, och du binder dig inte till något.',
+	},
+	{
+		title: 'Hälsokontroll',
+		text: 'Du lämnar blodprover på något av fler än 165 provtagningsställen. En läkare går igenom svaren, så att behandlingen är säker för dig.',
+	},
+	{
+		title: 'Din personliga plan',
+		text: 'Du får en medicinsk plan gjord för dig, med stöd från dietist och coach för vanor som håller i vardagen.',
+	},
+	{
+		title: 'Vi finns kvar hela vägen',
+		text: 'Regelbundna avstämningar, och du kan skriva till ditt vårdteam när som helst. Behandlingen anpassas när livet eller kroppen förändras.',
+	},
+];
+---
+
+<!-- Same scroll pattern as "Vem det passar": one column sticks while the other scrolls past it. -->
+<section class="section stone" id="sa-fungerar-det" aria-labelledby="steps-title">
+	<div class="container">
+		<div class="head" data-reveal>
+			<p class="label">Så går det till</p>
+			<h2 id="steps-title">Från första samtal till <em>långsiktig</em> uppföljning.</h2>
+			<p class="lede">Allt sker via video och chatt, var du än bor i Sverige. Det enda du gör på plats är ett blodprov.</p>
+		</div>
+
+		<div class="module">
+			<ol class="steps" role="list">
+				{
+					steps.map((s, i) => (
+						<li class="step" data-reveal style={`transition-delay: ${i * 100}ms`}>
+							<span class="num">{String(i + 1).padStart(2, '0')}</span>
+							<h3>{s.title}</h3>
+							<p>{s.text}</p>
+						</li>
+					))
+				}
+			</ol>
+			<figure class="media" data-reveal>
+				<img
+					src={IMG.videoMeeting}
+					alt="Kvinna med hörlurar som pratar med en läkare via datorn i sitt kök"
+					width="1024"
+					height="683"
+					loading="lazy"
+				/>
+			</figure>
+		</div>
+	</div>
+</section>
+
+<style>
+	.head h2 {
+		max-width: 14ch;
+	}
+
+	.module {
+		display: grid;
+		gap: 40px;
+		margin-top: 56px;
+	}
+
+	.steps {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.step {
+		display: grid;
+		grid-template-columns: 46px 1fr;
+		column-gap: 0;
+		padding: 28px 0 32px;
+		border-top: 1px solid var(--line);
+	}
+
+	.step:last-child {
+		border-bottom: 1px solid var(--line);
+	}
+
+	.num {
+		grid-row: span 2;
+		font-family: var(--serif);
+		font-style: italic;
+		font-size: 1rem;
+		color: var(--ink-soft);
+		padding-top: 8px;
+	}
+
+	h3 {
+		font-size: 1.625rem;
+		margin-bottom: 12px;
+	}
+
+	.step p {
+		color: var(--ink-soft);
+		font-size: 0.9375rem;
+		max-width: 46ch;
+	}
+
+	.media {
+		margin: 0;
+	}
+
+	.media img {
+		width: 100%;
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		border-radius: var(--radius);
+	}
+
+	/* Mobile and tablet: image above the steps. */
+	@media (max-width: 1023px) {
+		.media {
+			order: -1;
+		}
+
+		h3 {
+			font-size: 1.375rem;
+		}
+	}
+
+	/* Desktop: steps scroll on the left while the image sticks on the right. */
+	@media (min-width: 1024px) {
+		.module {
+			grid-template-columns: 5fr 6fr;
+			gap: 96px;
+			margin-top: 72px;
+		}
+
+		.media {
+			position: sticky;
+			top: 48px;
+			align-self: start;
+		}
+
+		/* The image must be shorter than the steps column, or there is nothing for it to stick past. */
+		.media img {
+			aspect-ratio: auto;
+			height: 64svh;
+		}
+
+		.step {
+			padding: 44px 0 52px;
+		}
+	}
+</style>

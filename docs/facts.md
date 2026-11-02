@@ -49,6 +49,23 @@ Sources:
 | ⚠ The start page shows **3 steps** while /om-oss shows **4**. The 4-step version is newer and includes follow-up. | H vs O | Pick one: we recommend O |
 | No treatment starts before the doctor knows it's right for you | O | OK |
 
+## Social proof
+
+| Fact | Source | Status |
+|------|--------|--------|
+| "5 000+ patienter" | Trustpilot snippet in a screenshot supplied by Samuel (prompt log entry 37). **Not found** on velora.se (start page, /om-oss, /patientberattelser, /behandling, /kom-igang, static and rendered, checked 2026-11-02) | ⚠ **Confirm with Velora.** Kept in the hero bar by Samuel's decision (entry 39); Samuel will confirm the figure with Velora |
+| "20 % viktnedgång i snitt" | Samuel's wording (prompt log entry 47). **Not stated as an average** on velora.se: the site gives 16–25 % (FAQ). The only "20 %" is one study, in which "nästan en tredjedel hade gått ner 20 %" (/behandling) | ⚠ **Confirm with Velora.** Used in the hero pill at Samuel's request; outside the cautious stance (§3), as it is a single figure without its premise |
+| "4,7 på Trustpilot" | /om-oss; also in the same screenshot | OK (not used yet) |
+| LegitScript seal image | static.legitscript.com/seals/9675475.png, linked from velora.se's footer | OK, shown in the hero bar |
+
+## Switching provider
+
+| Fact | Source | Status |
+|------|--------|--------|
+| "Vi hjälper dig med en smidig & snabb övergång" | H ("Byt" block) | OK |
+| Blood tests and their review are needed only if the previous provider hasn't done them | H ("Byt" footnote) | OK |
+| "Vi utgår från människan, inte bara från en siffra på vågen" | O | OK, paraphrased in the final CTA |
+
 ## Who it's for (eligibility)
 
 One of the following must apply [H, B, O], status **OK**:
@@ -88,6 +105,15 @@ One of the following must apply [H, B, O], status **OK**:
 | "13 olika cancerformer", "5,3 miljoner i riskzonen" | H, B | **Avoid** on the start page: these use fear |
 | "Högst patientnöjdhet på marknaden" | H | **Avoid**: a superlative we can't verify |
 
+## Medicines as listed on velora.se/viktmediciner (navbar menu only)
+
+| Drug | Substance and form | Source | Status |
+|------|--------------------|--------|--------|
+| Mounjaro | Tirzepatid, injektionspenna | /viktmediciner | Navbar only (exception, entry 29); no effect claims |
+| Ozempic | Semaglutid, injektionspenna | /viktmediciner | Same as above |
+| Rybelsus | Semaglutid, tablett | /viktmediciner | Same as above |
+| Wegovy | Semaglutid, injektionspenna | /viktmediciner | Same as above |
+
 ## Patient stories (real stories on velora.se)
 
 | Story | Source | Status |
@@ -108,6 +134,19 @@ All statuses **OK**.
 | Video meetings are recorded only if you say yes; saying no doesn't affect your care; audio and video are deleted once transcribed | P §3 |
 | AI is used only for transcription and de-identification; "Beslut om din vård fattas alltid av vårdpersonal" | P §6 |
 | You can see who has read your record and block it from other care providers | P §7 |
+
+## Images used on the page (hotlinked from velora.se's CDN)
+
+These are Velora's own photographs; no AI-generated people. URLs are in `src/data/site.ts`.
+
+| Image | Used in | Why |
+|-------|---------|-----|
+| Woman on a sofa in a video meeting on her phone (`velora-hero.avif`) | Hero | Shows the care itself (a video meeting at home) |
+| Woman with headphones talking to a doctor on a laptop (`online-doktor.avif`) | How it works | The first step, made concrete |
+| Woman smiling on a sofa (`Velora-abonnemang.avif`) | Final action | Warm and everyday, no product in shot |
+| Caroline, Manga and Roger | Patient stories | The real patients behind the stories |
+| Mina, Daniel and Sandra | Care team | The real clinicians |
+| Not used: GLP-1 pen, loose jeans | n/a | The pen puts the medicine first; the jeans read as a before/after shot |
 
 ## Brand as it is today (observed on velora.se and /om-oss)
 

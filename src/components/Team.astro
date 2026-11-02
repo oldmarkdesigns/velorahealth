@@ -1,0 +1,136 @@
+---
+import { IMG } from '../data/site';
+
+const team = [
+	{ name: 'Mina Munktell', title: 'Specialistsjuksköterska inom viktnedgång och hälsa', img: IMG.mina },
+	{ name: 'Daniel da Fonte', title: 'Legitimerad läkare och expert på hållbar viktnedgång', img: IMG.daniel },
+	{ name: 'Sandra Merei', title: 'Legitimerad läkare och expert på medicinsk viktbehandling', img: IMG.sandra },
+];
+---
+
+<section class="section" aria-labelledby="team-title">
+	<div class="container">
+		<div class="head" data-reveal>
+			<div>
+				<p class="label">Ditt vårdteam</p>
+				<h2 id="team-title">Samma team följer dig <em>hela vägen.</em></h2>
+			</div>
+			<blockquote>
+				<p>Medicinska beslut fattas av svensklegitimerade läkare, aldrig av en algoritm.</p>
+			</blockquote>
+		</div>
+		<ul class="team" role="list">
+			{
+				team.map((p, i) => (
+					<li data-reveal style={`transition-delay: ${i * 120}ms`}>
+						<img src={p.img} alt={p.name} width="1024" height="733" loading="lazy" />
+						<div>
+							<h3>{p.name}</h3>
+							<p>{p.title}</p>
+						</div>
+					</li>
+				))
+			}
+		</ul>
+		<p class="footnote">
+			Läkare, sjuksköterska, dietist och coach. Ett urval av våra legitimerade kliniker. Alla legitimationer är registrerade
+			hos Socialstyrelsen.
+		</p>
+	</div>
+</section>
+
+<style>
+	.head {
+		display: grid;
+		gap: 40px;
+	}
+
+	.head h2 {
+		max-width: 12ch;
+	}
+
+	blockquote {
+		margin: 0;
+		padding-left: 20px;
+		border-left: 2px solid var(--wine);
+		align-self: end;
+	}
+
+	blockquote p {
+		font-family: var(--serif);
+		font-style: italic;
+		font-size: 1.5rem;
+		line-height: 1.3;
+		max-width: 22ch;
+	}
+
+	.team {
+		list-style: none;
+		padding: 0;
+		margin: 56px 0 32px;
+		display: grid;
+		gap: 0;
+	}
+
+	/* Mobile: compact rows, so three portraits don't take three screens. */
+	.team li {
+		display: grid;
+		grid-template-columns: 96px 1fr;
+		gap: 20px;
+		align-items: center;
+		padding: 20px 0;
+		border-top: 1px solid var(--line);
+	}
+
+	.team li:last-child {
+		border-bottom: 1px solid var(--line);
+	}
+
+	.team img {
+		width: 100%;
+		aspect-ratio: 1;
+		object-fit: cover;
+		border-radius: 50%;
+		background: var(--stone);
+	}
+
+	h3 {
+		font-size: 1.5rem;
+	}
+
+	.team p {
+		margin-top: 6px;
+		color: var(--ink-soft);
+		font-size: 0.9375rem;
+	}
+
+	@media (min-width: 768px) {
+		.team {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 32px;
+		}
+
+		.team li {
+			display: block;
+			padding: 0;
+			border: 0;
+		}
+
+		.team li:last-child {
+			border: 0;
+		}
+
+		.team img {
+			aspect-ratio: 4 / 5;
+			border-radius: var(--radius);
+			margin-bottom: 20px;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.head {
+			grid-template-columns: 1fr 1fr;
+			gap: 96px;
+		}
+	}
+</style>

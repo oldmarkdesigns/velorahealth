@@ -1,0 +1,80 @@
+---
+import { IMG, VELORA } from '../data/site';
+---
+
+<footer class="footer dark">
+	<div class="container">
+		<span class="mark" style={`--logo: url(${IMG.logoWhite})`} role="img" aria-label="Velora"></span>
+		<div class="cols">
+			<p>Velora drivs och ägs av Velora Health AB, org.nr 559455-0724, och är en IVO-registrerad vårdgivare.</p>
+			<p>
+				<a href="tel:+46852513273">08-525 132 73</a> (vardagar 08–17)<br />
+				<a href="mailto:hej@velora.se">hej@velora.se</a>
+			</p>
+			<p class="links">
+				<a href={`${VELORA}/integritetspolicy`}>Integritetspolicy</a>
+				<a href={`${VELORA}/anvandarvillkor`}>Användarvillkor</a>
+				<a href={`${VELORA}/cookies`}>Cookies</a>
+			</p>
+		</div>
+		<p class="disclaimer">Arbetsprov för rollen Design Engineer, Brand &amp; Growth. Inte en officiell Velora-sida.</p>
+	</div>
+</footer>
+
+<style>
+	.footer {
+		padding-block: 96px 56px;
+		font-size: 0.875rem;
+		color: var(--on-dark-soft);
+	}
+
+	.mark {
+		display: block;
+		height: 56px;
+		aspect-ratio: 817 / 213;
+		background: var(--on-dark);
+		mask: var(--logo) left center / contain no-repeat;
+		-webkit-mask: var(--logo) left center / contain no-repeat;
+	}
+
+	.cols {
+		display: grid;
+		gap: 24px;
+		margin-top: 56px;
+		padding-top: 28px;
+		border-top: 1px solid var(--line);
+	}
+
+	a {
+		color: var(--on-dark);
+	}
+
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 24px;
+	}
+
+	.disclaimer {
+		margin-top: 56px;
+		font-size: 0.8125rem;
+	}
+
+	@media (min-width: 768px) {
+		.mark {
+			height: 88px;
+		}
+
+		.cols {
+			grid-template-columns: 2fr 1fr 1fr;
+			gap: 48px;
+		}
+	}
+
+	/* Leave room for the sticky bar on mobile. */
+	@media (max-width: 767px) {
+		.footer {
+			padding-bottom: calc(56px + 100px + env(safe-area-inset-bottom));
+		}
+	}
+</style>

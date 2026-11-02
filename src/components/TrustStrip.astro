@@ -1,0 +1,168 @@
+---
+// Static key-information bar directly under the hero (prompt log entry 37), inspired by
+// Hemmapartner's achievements bar. Replaces the earlier drifting trust carousel.
+// - "5 000+ patienter": from a Trustpilot snippet supplied by Samuel; not found on velora.se, so
+//   flagged in docs/facts.md for confirmation with Velora.
+// - Services and certifications: velora.se (docs/facts.md).
+const services = ['Läkarmöten via video', 'Hälsokontroll', 'Dietist och coach'];
+const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
+---
+
+<div class="bar">
+	<div class="container inner">
+		<p class="stat">
+			<span class="figure">5 000+</span>
+			<span class="unit">patienter</span>
+		</p>
+
+		<ul class="services" role="list" aria-label="Det här ingår">
+			{services.map((s) => <li>{s}</li>)}
+		</ul>
+
+		<div class="cert">
+			<img src={LEGITSCRIPT_SEAL} alt="LegitScript-sigill" width="34" height="37" loading="lazy" />
+			<p>
+				<span>LegitScript-certifierad</span>
+				<span>IVO-registrerad vårdgivare med legitimerad personal</span>
+			</p>
+		</div>
+	</div>
+</div>
+
+<style>
+	.bar {
+		padding-block: 20px 28px;
+	}
+
+	.inner {
+		display: grid;
+		gap: 20px;
+	}
+
+	/* "patienter" sits on the vertical centre of the figure, not its baseline (entry 48). */
+	.stat {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.figure {
+		font-family: var(--serif);
+		font-weight: 300;
+		font-size: 2.25rem;
+		line-height: 1;
+		letter-spacing: -0.02em;
+	}
+
+	.unit {
+		font-size: 0.9375rem;
+		color: var(--ink-soft);
+		/* Optical correction: the serif digits' box reserves descender space, so their visible middle sits higher. */
+		transform: translateY(-0.3em);
+	}
+
+	/* Plain labels, no pills (entry 46). Narrow phones: a short stacked list. */
+	.services {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 6px;
+	}
+
+	.services li {
+		display: flex;
+		align-items: center;
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--ink-soft);
+		white-space: nowrap;
+	}
+
+	/* Just the seal and the text, no card around them. */
+	.cert {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		justify-self: start;
+	}
+
+	.cert img {
+		width: 34px;
+		height: auto;
+	}
+
+	.cert p {
+		display: grid;
+		font-size: 0.8125rem;
+		line-height: 1.35;
+	}
+
+	.cert span:first-child {
+		font-weight: 600;
+	}
+
+	.cert span:last-child {
+		color: var(--ink-soft);
+	}
+
+	/* From 560 px: one row of labels with thin vertical dividers between them. */
+	@media (min-width: 560px) {
+		.services {
+			display: flex;
+			flex-wrap: nowrap;
+			gap: 0;
+		}
+
+		.services li + li::before {
+			content: '';
+			width: 1px;
+			height: 14px;
+			margin-inline: 18px;
+			background: var(--line);
+		}
+	}
+
+	/* Desktop: one row, stat | services | certification, like Hemmapartner's bar. */
+	@media (min-width: 1024px) {
+		.bar {
+			padding-block: 18px 22px;
+		}
+
+		.inner {
+			grid-template-columns: auto 1fr auto;
+			align-items: center;
+			gap: 32px;
+		}
+
+		.stat {
+			padding-right: 32px;
+			border-right: 1px solid var(--line);
+		}
+	}
+
+	/* Narrow desktops: tighter pills and a one-line badge so the bar stays a single row. */
+	@media (min-width: 1024px) and (max-width: 1279px) {
+		.inner {
+			gap: 24px;
+		}
+
+		.stat {
+			padding-right: 24px;
+		}
+
+		.services li {
+			font-size: 0.6875rem;
+		}
+
+		.services li + li::before {
+			margin-inline: 14px;
+		}
+
+		.cert span:last-child {
+			display: none;
+		}
+	}
+</style>

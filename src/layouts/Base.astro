@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="sv">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<!-- Work sample, not an official Velora page: keep it out of search results. -->
+		<meta name="robots" content="noindex, nofollow" />
+		<meta name="theme-color" content="#f7f2ec" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<script is:inline>
+			document.documentElement.classList.add('js');
+		</script>
+	</head>
+	<body>
+		<a class="skip-link" href="#main">Hoppa till innehållet</a>
+		<slot />
+		<script>
+			import Lenis from 'lenis';
+
+			// Smooth, eased wheel scrolling. Touch keeps native scrolling (Lenis default), and it is
+			// skipped entirely for visitors who prefer reduced motion.
+			if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+				const lenis = new Lenis({ autoRaf: true, anchors: true, lerp: 0.1 });
+
+				// Pause while any <dialog> is open, so the page behind an overlay stays put.
+				const syncWithDialogs = () => (document.querySelector('dialog[open]') ? lenis.stop() : lenis.start());
+				new MutationObserver(syncWithDialogs).observe(document.body, {
+					subtree: true,
+					attributes: true,
+					attributeFilter: ['open'],
+				});
+			}
+
+			const io = new IntersectionObserver(
+				(entries) => {
+					for (const e of entries) {
+						if (e.isIntersecting) {
+							e.target.classList.add('is-in');
+							io.unobserve(e.target);
+						}
+					}
+				},
+				{ rootMargin: '0px 0px -10% 0px' },
+			);
+			document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+		</script>
+	</body>
+</html>
