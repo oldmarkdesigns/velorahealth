@@ -12,24 +12,18 @@ import CtaButton from './CtaButton.astro';
 
 		<div class="grid">
 			<div class="plan" data-reveal data-plan-card>
-				<div class="plan-head">
-					<p class="plan-name" data-plan-name>Velorametoden</p>
-					<!-- Shown by JS; without it both plans are simply listed. -->
-					<button
-						type="button"
-						class="switch"
-						role="switch"
-						aria-checked="false"
-						aria-controls="plan-standard plan-underhall"
-						data-plan-switch
-						hidden
-					>
-						<span class="track" aria-hidden="true"><span class="thumb"></span></span>
-						<span>Underhåll</span>
+				<!-- Two-option plan switch (entry 64): tabs pattern. Shown by JS; without it both plans are listed. -->
+				<div class="plan-tabs" role="tablist" aria-label="Välj abonnemang" data-plan-tabs hidden>
+					<button type="button" role="tab" id="tab-standard" aria-controls="plan-standard" aria-selected="true" data-tab="standard">
+						Velorametoden
+					</button>
+					<button type="button" role="tab" id="tab-underhall" aria-controls="plan-underhall" aria-selected="false" tabindex="-1" data-tab="underhall">
+						Underhåll
 					</button>
 				</div>
 
-				<div class="plan-body" id="plan-standard" data-plan="standard">
+				<div class="plan-body" id="plan-standard" role="tabpanel" aria-labelledby="tab-standard" data-plan="standard">
+					<p class="plan-name no-js-only">Velorametoden</p>
 					<p class="price"><span class="from">från</span> 795<span class="unit"> kr/mån</span></p>
 					<ul role="list">
 						<li>Din egen läkare, expert på medicinsk viktnedgång</li>
@@ -39,8 +33,8 @@ import CtaButton from './CtaButton.astro';
 					<p class="small">Du kan välja upplägg utan bindningstid. Studerar du på heltid: 695 kr/mån.</p>
 				</div>
 
-				<!-- Velora Underhåll, as described on velora.se (docs/facts.md). Hidden until the switch is on. -->
-				<div class="plan-body" id="plan-underhall" data-plan="underhall">
+				<!-- Velora Underhåll, as described on velora.se (docs/facts.md). -->
+				<div class="plan-body" id="plan-underhall" role="tabpanel" aria-labelledby="tab-underhall" data-plan="underhall">
 					<p class="plan-name no-js-only">Velora Underhåll</p>
 					<p class="intro">När du uppnått din målvikt och vill bygga vidare på dina framgångar.</p>
 					<p class="price">495<span class="unit"> kr/mån</span></p>
@@ -88,22 +82,34 @@ import CtaButton from './CtaButton.astro';
 
 <script>
 	document.querySelectorAll<HTMLElement>('[data-plan-card]').forEach((card) => {
-		const toggle = card.querySelector<HTMLButtonElement>('[data-plan-switch]')!;
-		const name = card.querySelector<HTMLElement>('[data-plan-name]')!;
-		const standard = card.querySelector<HTMLElement>('[data-plan="standard"]')!;
-		const underhall = card.querySelector<HTMLElement>('[data-plan="underhall"]')!;
+		const tablist = card.querySelector<HTMLElement>('[data-plan-tabs]')!;
+		const tabs = [...tablist.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+		const panels = [...card.querySelectorAll<HTMLElement>('[data-plan]')];
 
-		const set = (on: boolean) => {
-			toggle.setAttribute('aria-checked', String(on));
-			name.textContent = on ? 'Velora Underhåll' : 'Velorametoden';
-			standard.hidden = on;
-			underhall.hidden = !on;
+		const select = (index: number, focus = false) => {
+			tabs.forEach((tab, i) => {
+				const active = i === index;
+				tab.setAttribute('aria-selected', String(active));
+				tab.tabIndex = active ? 0 : -1;
+				panels[i].hidden = !active;
+			});
+			tablist.dataset.active = String(index);
+			if (focus) tabs[index].focus();
 		};
 
+		tabs.forEach((tab, i) => {
+			tab.addEventListener('click', () => select(i));
+			tab.addEventListener('keydown', (e) => {
+				const keys: Record<string, number> = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 };
+				if (!(e.key in keys)) return;
+				e.preventDefault();
+				select((keys[e.key] + tabs.length) % tabs.length, true);
+			});
+		});
+
 		card.classList.add('has-switch');
-		toggle.hidden = false;
-		toggle.addEventListener('click', () => set(toggle.getAttribute('aria-checked') !== 'true'));
-		set(false);
+		tablist.hidden = false;
+		select(0);
 	});
 </script>
 
@@ -131,21 +137,14 @@ import CtaButton from './CtaButton.astro';
 		border: 1px solid var(--line);
 	}
 
-	.plan-head {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 16px;
-	}
-
 	.plan-body {
 		display: grid;
 		gap: 24px;
 	}
 
-	/* The display values below would otherwise override the hidden attribute. */
+	/* The display values here would otherwise override the hidden attribute. */
 	.plan-body[hidden],
-	.switch[hidden] {
+	.plan-tabs[hidden] {
 		display: none;
 	}
 
@@ -154,65 +153,68 @@ import CtaButton from './CtaButton.astro';
 		color: var(--ink-soft);
 	}
 
-	/* With JS the header already names the plan; the extra label is only for the no-JS listing. */
+	/* With JS the tabs name the plan; the label is only for the no-JS listing. */
 	.has-switch .no-js-only {
 		display: none;
 	}
 
-	.switch {
-		all: unset;
-		box-sizing: border-box;
-		display: inline-flex;
-		align-items: center;
-		gap: 10px;
-		/* 44 px tap target; the visible track stays 22 px. */
-		min-height: 44px;
-		font-size: 0.8125rem;
-		font-weight: 600;
-		color: var(--ink);
-		cursor: pointer;
-	}
-
-	.switch:focus-visible {
-		outline: 2px solid var(--wine);
-		outline-offset: 4px;
-		border-radius: 999px;
-	}
-
-	.track {
+	/* Large two-option switch: a deep wine indicator slides behind the selected plan. */
+	.plan-tabs {
 		position: relative;
-		width: 38px;
-		height: 22px;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		padding: 4px;
+		border: 1px solid var(--line);
 		border-radius: 999px;
 		background: var(--stone);
-		border: 1px solid var(--line);
-		transition: background-color 240ms var(--ease);
 	}
 
-	.thumb {
+	.plan-tabs::before {
+		content: '';
 		position: absolute;
-		top: 2px;
-		left: 2px;
-		width: 16px;
-		height: 16px;
-		border-radius: 50%;
-		background: var(--card);
-		box-shadow: 0 1px 3px rgba(44, 0, 21, 0.25);
-		transition: transform 240ms var(--ease);
-	}
-
-	.switch[aria-checked='true'] .track {
+		top: 4px;
+		bottom: 4px;
+		left: 4px;
+		width: calc(50% - 4px);
+		border-radius: 999px;
 		background: var(--wine);
-		border-color: var(--wine);
+		transition: transform 320ms var(--ease);
 	}
 
-	.switch[aria-checked='true'] .thumb {
-		transform: translateX(16px);
+	.plan-tabs[data-active='1']::before {
+		transform: translateX(100%);
+	}
+
+	.plan-tabs button {
+		all: unset;
+		box-sizing: border-box;
+		position: relative;
+		z-index: 1;
+		display: grid;
+		place-items: center;
+		min-height: 48px;
+		padding: 0 12px;
+		border-radius: 999px;
+		font-size: 0.9375rem;
+		font-weight: 600;
+		text-align: center;
+		color: var(--ink-soft);
+		cursor: pointer;
+		transition: color 320ms var(--ease);
+	}
+
+	.plan-tabs button[aria-selected='true'] {
+		color: var(--cream);
+	}
+
+	.plan-tabs button:focus-visible {
+		outline: 2px solid var(--wine);
+		outline-offset: 3px;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.track,
-		.thumb {
+		.plan-tabs::before,
+		.plan-tabs button {
 			transition: none;
 		}
 	}

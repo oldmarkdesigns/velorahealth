@@ -418,3 +418,23 @@ Build direction B, the bento, for “Så går det till”.
 ```
 Commit the bento and the team heading change.
 ```
+
+## 63 – "Så skyddar vi dem." on its own row (Claude Code, 2026-11-02)
+
+```
+Let "Så skyddar vi dem." be on it's own row
+```
+
+## 64 – Two-option plan switch (Claude Code, 2026-11-02)
+
+```
+Replace the small “Underhåll” toggle in the pricing card with a large two-option switch labeled “Velorametoden” and “Underhåll”. Selecting either option should show that plan’s pricing and details in the card. Keep the rest of the pricing section unchanged.
+```
+
+(Attached: a screenshot of the current small "Underhåll" toggle.)
+
+## 65 – Commit and push (Claude Code, 2026-11-02)
+
+```
+commit and push to this repository: https://github.com/oldmarkdesigns/velorahealth.git
+```

@@ -406,3 +406,11 @@ All three keep the step text, heading and lede unchanged, and use Phosphor icons
 - **Accessibility:** body text on the rose tile uses ink (12.3:1), because the soft grey measured ~4.4:1, under AA for small text.
 - **Removed:** the sticky-image layout.
 - **Verified:** no overflow at 375, 768 and 1440 px.
+
+**Privacy heading on two rows (prompt log entry 63):** "*Så skyddar vi dem.*" is now its own row (`display: block; white-space: nowrap`), under "Dina uppgifter är dina.". The heading's 13 ch max-width was removed so the first sentence fits one row. Verified at 320, 375 and 1440 px: two rows, no overflow, rose colour unchanged.
+
+**Two-option plan switch (prompt log entry 64, replacing the small toggle from entry 57):** the pricing card now opens with a large segmented switch, "Velorametoden | Underhåll". It is a full-width pill with a deep wine indicator that slides behind the selected plan, which gets a cream label. Selecting an option shows that plan's price, list and fine print; the booking button stays.
+- **Accessibility:** it uses the tabs pattern (`tablist`, `tab`, `tabpanel`), with `aria-selected` and a roving tabindex. ←/→, Home and End switch plans. Each tab is 48 px tall. Reduced motion turns off the slide.
+- **Plan name:** the small name label above the price was removed because the switch names the plan. It remains only in the no-JS fallback, where both plans are listed.
+- **Unchanged:** the rest of the pricing section.
+- **Verified:** at 375 px (two 143 px halves, labels on one line) and 1440 px (528 px switch). Click and keyboard both work.

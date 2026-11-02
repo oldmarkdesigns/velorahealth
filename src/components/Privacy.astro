@@ -36,10 +36,13 @@ const points = [
 
 <style>
 	h2 {
-		max-width: 13ch;
+		max-width: none;
 	}
 
+	/* "Så skyddar vi dem." always gets its own row (entry 63). */
 	h2 em {
+		display: block;
+		white-space: nowrap;
 		color: var(--rose);
 	}
 
