@@ -212,7 +212,7 @@ The first build felt too close to today's velora.se. The brand is allowed to cha
 - It uses the native `<dialog>`, which gives focus trapping, Escape to close and focus back to the button. Clicking the backdrop or "Stäng" also closes it.
 - **Trade-off:** the premises are one click away instead of always visible. The cautious stance (§3) asked for premises "next to the number". The button sits directly under the numbers, so the premise is still signposted at the point of the claim, but it is no longer read by default.
 
-**"Så går det till", revised (prompt log entry 20):** the one-at-a-time module is replaced. All four steps are always open, with unchanged text. The section uses the same scroll pattern as "Vem det passar": on desktop the steps scroll on the left while the image sticks 48 px from the top on the right. On mobile and tablet the image sits above the steps in normal flow.
+~~Superseded by entry 61, see the bento below.~~ **"Så går det till", revised (prompt log entry 20):** the one-at-a-time module is replaced. All four steps are always open, with unchanged text. The section uses the same scroll pattern as "Vem det passar": on desktop the steps scroll on the left while the image sticks 48 px from the top on the right. On mobile and tablet the image sits above the steps in normal flow.
 - For the image to actually stick, it has to be shorter than the steps column. So on desktop the image is 64% of the screen height and the steps get more vertical spacing, which gives roughly 270 px of sticky travel at 1440 × 900.
 - The pinned track, its script and the step buttons are gone.
 
@@ -385,3 +385,24 @@ The first build felt too close to today's velora.se. The brand is allowed to cha
 - **Accessibility:** it is a `role="switch"` button with `aria-checked`, a 44 px tap target and a 22 px visual track. Reduced motion turns off the knob's slide.
 - **Without JS:** both plans are listed and the switch is hidden.
 - **Unchanged:** the rest of the pricing section, including the "När du nått din målvikt: Velora Underhåll, 495 kr/mån" line in the extras card.
+
+**"Samma team följer dig" on one row (prompt log entry 60):** in the care-team heading the phrase is kept on one line (`white-space: nowrap`), and "*hela vägen.*" follows on the next. The heading's 12 ch max-width, which forced it onto three lines, was removed.
+- **Measured fit:** 266 px in a 288 px column at 320 px wide. At 1440 px the phrase ends at x = 598, clear of the quote at x = 761.
+
+**"Så går det till": three directions mocked up (prompt log entry 59)** for review before any change to the implementation:
+- **A. Journey line:** the photo as a wide band, wine node badges on one line, and four columns.
+- **B. Bento:** step 1 as a tall photo tile, then cream, rose and deep wine icon tiles. Recommended.
+- **C. Zigzag timeline:** a centred line with alternating cards and rose badge icons.
+
+All three keep the step text, heading and lede unchanged, and use Phosphor icons. The mockups are not in the project.
+
+**"Så går det till" as a bento (prompt log entry 61, direction B):** the steps are now a bento grid (`Steps.astro`) with the heading, lede and step text unchanged.
+- **Step 1 (the free call, where the CTA leads):** a tall tile with the video-meeting photo.
+- **Steps 2–4:** tiles on cream, rose and deep wine, each with a Phosphor icon (drop, clipboard-text, chats-circle) in a thin outlined circle. Step 4 is wide.
+- **Layout by width:**
+  - Desktop: `1.25fr 1fr 1fr`, with the photo tile spanning both rows (480 × 532 px at 1440).
+  - Tablet (≥ 640 px): two columns, with the photo tile across the top as image and copy side by side, and step 4 full-width.
+  - Phones: one column, photo tile first.
+- **Accessibility:** body text on the rose tile uses ink (12.3:1), because the soft grey measured ~4.4:1, under AA for small text.
+- **Removed:** the sticky-image layout.
+- **Verified:** no overflow at 375, 768 and 1440 px.

@@ -13,7 +13,7 @@ const team = [
 		<div class="head" data-reveal>
 			<div>
 				<p class="label">Ditt vårdteam</p>
-				<h2 id="team-title">Samma team följer dig <em>hela vägen.</em></h2>
+				<h2 id="team-title"><span class="line">Samma team följer dig</span> <em>hela vägen.</em></h2>
 			</div>
 			<blockquote>
 				<p>Medicinska beslut fattas av svensklegitimerade läkare, aldrig av en algoritm.</p>
@@ -45,8 +45,14 @@ const team = [
 		gap: 40px;
 	}
 
+	/* "Samma team följer dig" stays on one row (entry 60); "hela vägen." follows below. */
+	.head h2 .line {
+		display: block;
+		white-space: nowrap;
+	}
+
 	.head h2 {
-		max-width: 12ch;
+		max-width: none;
 	}
 
 	blockquote {
