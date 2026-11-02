@@ -364,3 +364,21 @@ Let's put the arrow and the chexckark in circles, and incresase the sizing a lit
 ```
 Commit the pill icon and avatar change.
 ```
+
+## 54 – Avatars match icon circles (mid-turn message, 2026-11-02)
+
+```
+Make the avatars the same size as the arrow and checkmark circles in the hero pill. Keep the rest unchanged.
+```
+
+## 55 – Badge treatment for pill icons (Claude Code, 2026-11-02)
+
+```
+Give the graph arrow and checkmark in the hero pill a badge treatment, similar to the outlined circles around them now. Keep the avatars and the rest of the pill unchanged.
+```
+
+## 56 – Commit avatar size and badges (button reply, 2026-11-02)
+
+```
+Commit the avatar size and badge changes.
+```

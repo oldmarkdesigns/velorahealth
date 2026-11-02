@@ -370,3 +370,12 @@ The first build felt too close to today's velora.se. The brand is allowed to cha
 **Circled pill icons, larger avatars (prompt log entry 52):** the arrow and checkmark in the hero pill now sit in 32 px outlined circles (1 px wine hairline, no fill), echoing the round avatars. The glyphs are 18 px. The avatars grew from 24 to 28 px.
 - **Size:** the pill grew from 638 to 674 px wide and 54 px tall.
 - **Tablets (768–1023 px):** the dividers tighten from 16 to 12 px, so the pill stays one row in the 673 px text column (658 px at 768).
+
+**Avatars match the icon circles (prompt log entry 54):** the hero pill's avatars are now 32 px, the same as the arrow and checkmark circles. The overlap went from −9 to −10 px to keep the stack in proportion.
+- **Size:** the pill is 684 px wide on desktop and 668 px at 768 px, inside the 673 px column.
+- **Fit:** still one row, with no overflow.
+
+**Badge treatment for the pill icons (prompt log entry 55):** the arrow and checkmark circles are now filled badges.
+- **Look:** a soft rose `#E8C9D3` fill, a 2 px cream ring (matching the avatars' ring) and the thin wine outline kept just outside it.
+- **Contrast:** the wine glyph on rose is 12.3:1.
+- **Unchanged:** same 32 px size, so the pill is still 684 px and one row. The avatars and the rest of the pill are unchanged.

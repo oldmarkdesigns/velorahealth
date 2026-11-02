@@ -23,7 +23,7 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 					{item.avatars && (
 						<span class="avatars" aria-hidden="true">
 							{team.map((src) => (
-								<img src={src} alt="" width="28" height="28" loading="lazy" />
+								<img src={src} alt="" width="32" height="32" loading="lazy" />
 							))}
 						</span>
 					)}
@@ -98,15 +98,20 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 	}
 
 	/* Bare icon, no circle: wine, sized to the 17 px serif. */
-	/* Icons sit in thin outlined circles (entry 52), echoing the round avatars. */
+	/*
+	 * Badge treatment (entry 55): a soft rose fill with a cream ring like the avatars, and the thin
+	 * outline from entry 52 kept just outside it. Same 32 px, so the pill's width is unchanged.
+	 */
 	.icon {
 		display: inline-grid;
 		place-items: center;
 		width: 32px;
 		height: 32px;
 		margin-right: 8px;
-		border: 1px solid var(--line);
+		border: 2px solid var(--cream);
 		border-radius: 50%;
+		background: var(--rose);
+		box-shadow: 0 0 0 1px var(--line);
 		color: var(--wine);
 	}
 
@@ -115,13 +120,14 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 		height: 18px;
 	}
 
+	/* Same 32 px as the icon circles (entry 54). */
 	.avatars img {
-		width: 28px;
-		height: 28px;
+		width: 32px;
+		height: 32px;
 		border-radius: 50%;
 		object-fit: cover;
 		border: 2px solid var(--cream);
-		margin-left: -9px;
+		margin-left: -10px;
 		background: var(--stone);
 	}
 
