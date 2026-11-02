@@ -382,3 +382,15 @@ Give the graph arrow and checkmark in the hero pill a badge treatment, similar t
 ```
 Commit the avatar size and badge changes.
 ```
+
+## 57 – Underhåll toggle in the pricing card (Claude Code, 2026-11-02)
+
+```
+Add the Velora Underhåll pricing details to the Velorametoden card, hidden by default behind a toggle labeled “Underhåll”. Keep the rest of the pricing section unchanged.
+```
+
+## 58 – Commit Underhåll toggle (button reply, 2026-11-02)
+
+```
+Commit the Underhåll toggle.
+```

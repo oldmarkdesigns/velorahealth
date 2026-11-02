@@ -379,3 +379,9 @@ The first build felt too close to today's velora.se. The brand is allowed to cha
 - **Look:** a soft rose `#E8C9D3` fill, a 2 px cream ring (matching the avatars' ring) and the thin wine outline kept just outside it.
 - **Contrast:** the wine glyph on rose is 12.3:1.
 - **Unchanged:** same 32 px size, so the pill is still 684 px and one row. The avatars and the rest of the pill are unchanged.
+
+**Underhåll toggle in the pricing card (prompt log entry 57):** the Velorametoden card has an "Underhåll" switch in its header, off by default.
+- **Switched on:** the card's name, price, list and fine print swap to Velora Underhåll, using velora.se's wording: "När du uppnått din målvikt…", 495 kr/mån, four included points, and medicine not included. The booking button stays.
+- **Accessibility:** it is a `role="switch"` button with `aria-checked`, a 44 px tap target and a 22 px visual track. Reduced motion turns off the knob's slide.
+- **Without JS:** both plans are listed and the switch is hidden.
+- **Unchanged:** the rest of the pricing section, including the "När du nått din målvikt: Velora Underhåll, 495 kr/mån" line in the extras card.

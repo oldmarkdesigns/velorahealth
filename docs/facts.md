@@ -81,6 +81,7 @@ One of the following must apply [H, B, O], status **OK**:
 | Includes: own doctor, personal coach and dietitian, 24/7 access to the web app | H | OK |
 | Student price 695 kr/month (full-time students) | H | OK |
 | Velora Underhåll 495 kr/month | H | OK |
+| Underhåll: "När du uppnått din målvikt och vill bygga vidare på dina framgångar"; includes help keeping your target weight, optimised medicine dosing for lower cost, continued support from the whole expert team, flexible with no binding period; medicine not included | H (pricing) | OK; used in the pricing card's Underhåll toggle |
 | Health check 995 kr; 495 kr if you send in recent blood tests (doctor's review only) | H, B | OK |
 | Medicine is not included; it's bought at a pharmacy, the price varies by medicine and dose | H, B | OK, but don't name drugs |
 | Medicine cost about 1 050–4 800 kr/month (October 2026) | B | Premise: only as a general range, no drug names |

@@ -11,15 +11,48 @@ import CtaButton from './CtaButton.astro';
 		</div>
 
 		<div class="grid">
-			<div class="plan" data-reveal>
-				<p class="plan-name">Velorametoden</p>
-				<p class="price"><span class="from">från</span> 795<span class="unit"> kr/mån</span></p>
-				<ul role="list">
-					<li>Din egen läkare, expert på medicinsk viktnedgång</li>
-					<li>Personlig coach och dietist</li>
-					<li>Tillgång dygnet runt till vår webbapp för stöd och rådgivning</li>
-				</ul>
-				<p class="small">Du kan välja upplägg utan bindningstid. Studerar du på heltid: 695 kr/mån.</p>
+			<div class="plan" data-reveal data-plan-card>
+				<div class="plan-head">
+					<p class="plan-name" data-plan-name>Velorametoden</p>
+					<!-- Shown by JS; without it both plans are simply listed. -->
+					<button
+						type="button"
+						class="switch"
+						role="switch"
+						aria-checked="false"
+						aria-controls="plan-standard plan-underhall"
+						data-plan-switch
+						hidden
+					>
+						<span class="track" aria-hidden="true"><span class="thumb"></span></span>
+						<span>Underhåll</span>
+					</button>
+				</div>
+
+				<div class="plan-body" id="plan-standard" data-plan="standard">
+					<p class="price"><span class="from">från</span> 795<span class="unit"> kr/mån</span></p>
+					<ul role="list">
+						<li>Din egen läkare, expert på medicinsk viktnedgång</li>
+						<li>Personlig coach och dietist</li>
+						<li>Tillgång dygnet runt till vår webbapp för stöd och rådgivning</li>
+					</ul>
+					<p class="small">Du kan välja upplägg utan bindningstid. Studerar du på heltid: 695 kr/mån.</p>
+				</div>
+
+				<!-- Velora Underhåll, as described on velora.se (docs/facts.md). Hidden until the switch is on. -->
+				<div class="plan-body" id="plan-underhall" data-plan="underhall">
+					<p class="plan-name no-js-only">Velora Underhåll</p>
+					<p class="intro">När du uppnått din målvikt och vill bygga vidare på dina framgångar.</p>
+					<p class="price">495<span class="unit"> kr/mån</span></p>
+					<ul role="list">
+						<li>Hjälp med att behålla din målvikt</li>
+						<li>Optimerad läkemedelsdosering för lägre kostnad</li>
+						<li>Fortsatt support från hela Veloras expertteam</li>
+						<li>Flexibelt upplägg utan bindningstid</li>
+					</ul>
+					<p class="small">Kostnaden för läkemedel ingår inte i priset.</p>
+				</div>
+
 				<CtaButton />
 			</div>
 
@@ -53,6 +86,27 @@ import CtaButton from './CtaButton.astro';
 	</div>
 </section>
 
+<script>
+	document.querySelectorAll<HTMLElement>('[data-plan-card]').forEach((card) => {
+		const toggle = card.querySelector<HTMLButtonElement>('[data-plan-switch]')!;
+		const name = card.querySelector<HTMLElement>('[data-plan-name]')!;
+		const standard = card.querySelector<HTMLElement>('[data-plan="standard"]')!;
+		const underhall = card.querySelector<HTMLElement>('[data-plan="underhall"]')!;
+
+		const set = (on: boolean) => {
+			toggle.setAttribute('aria-checked', String(on));
+			name.textContent = on ? 'Velora Underhåll' : 'Velorametoden';
+			standard.hidden = on;
+			underhall.hidden = !on;
+		};
+
+		card.classList.add('has-switch');
+		toggle.hidden = false;
+		toggle.addEventListener('click', () => set(toggle.getAttribute('aria-checked') !== 'true'));
+		set(false);
+	});
+</script>
+
 <style>
 	.grid {
 		display: grid;
@@ -75,6 +129,92 @@ import CtaButton from './CtaButton.astro';
 
 	.extra {
 		border: 1px solid var(--line);
+	}
+
+	.plan-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	.plan-body {
+		display: grid;
+		gap: 24px;
+	}
+
+	/* The display values below would otherwise override the hidden attribute. */
+	.plan-body[hidden],
+	.switch[hidden] {
+		display: none;
+	}
+
+	.intro {
+		font-size: 0.9375rem;
+		color: var(--ink-soft);
+	}
+
+	/* With JS the header already names the plan; the extra label is only for the no-JS listing. */
+	.has-switch .no-js-only {
+		display: none;
+	}
+
+	.switch {
+		all: unset;
+		box-sizing: border-box;
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		/* 44 px tap target; the visible track stays 22 px. */
+		min-height: 44px;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--ink);
+		cursor: pointer;
+	}
+
+	.switch:focus-visible {
+		outline: 2px solid var(--wine);
+		outline-offset: 4px;
+		border-radius: 999px;
+	}
+
+	.track {
+		position: relative;
+		width: 38px;
+		height: 22px;
+		border-radius: 999px;
+		background: var(--stone);
+		border: 1px solid var(--line);
+		transition: background-color 240ms var(--ease);
+	}
+
+	.thumb {
+		position: absolute;
+		top: 2px;
+		left: 2px;
+		width: 16px;
+		height: 16px;
+		border-radius: 50%;
+		background: var(--card);
+		box-shadow: 0 1px 3px rgba(44, 0, 21, 0.25);
+		transition: transform 240ms var(--ease);
+	}
+
+	.switch[aria-checked='true'] .track {
+		background: var(--wine);
+		border-color: var(--wine);
+	}
+
+	.switch[aria-checked='true'] .thumb {
+		transform: translateX(16px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.track,
+		.thumb {
+			transition: none;
+		}
 	}
 
 	.plan-name {
