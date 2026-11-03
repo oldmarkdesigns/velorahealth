@@ -29,7 +29,7 @@ const cards = [
 <!-- 1px marker at the top of the page: once it scrolls out of view, the navbar turns into a floating bar. -->
 <!-- Also the logo's jump target: the very top of the page. -->
 <div class="scroll-sentinel" id="top" data-scroll-sentinel aria-hidden="true"></div>
-<header class="header" data-header>
+<header class="header" data-header data-load="down" style="--load-delay: 150ms">
 	<div class="container inner">
 		<a href="#top" class="logo" aria-label="Velora, till toppen av sidan">
 			<span class="mark" style={`--logo: url(${IMG.logoPlum})`}></span>

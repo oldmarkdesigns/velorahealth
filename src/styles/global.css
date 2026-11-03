@@ -195,13 +195,61 @@ a {
 	top: 16px;
 }
 
-/* Scroll reveal. Only hides content once JS has confirmed it can reveal it again. */
+/*
+ * Load sequence (entry 141): the first screen settles in one coordinated pass. The photo eases in
+ * first, then the navbar, then the hero text top to bottom, then the bar beneath. Each element sets
+ * its place in the queue with --load-delay. The keyframes use the individual translate/scale
+ * properties, so they never fight an element's own transform (the navbar's slide-away, for
+ * example), and fill only backwards, so nothing lingers once the animation has played.
+ */
+@media (prefers-reduced-motion: no-preference) {
+	.js [data-load] {
+		animation: load-rise 1000ms var(--ease) backwards;
+		animation-delay: var(--load-delay, 0ms);
+	}
+
+	.js [data-load='down'] {
+		animation-name: load-down;
+		animation-duration: 800ms;
+	}
+
+	.js [data-load='photo'] {
+		animation-name: load-photo;
+		animation-duration: 1600ms;
+	}
+}
+
+@keyframes load-rise {
+	from {
+		opacity: 0;
+		translate: 0 18px;
+	}
+}
+
+@keyframes load-down {
+	from {
+		opacity: 0;
+		translate: 0 -12px;
+	}
+}
+
+@keyframes load-photo {
+	from {
+		opacity: 0;
+		scale: 1.04;
+	}
+}
+
+/*
+ * Scroll reveal. Only hides content once JS has confirmed it can reveal it again. Entry 141: a
+ * shorter, softer rise (20 px, 1 s) so sections arrive in the same voice as the load sequence.
+ */
 .js [data-reveal] {
 	opacity: 0;
-	transform: translateY(24px);
+	transform: translateY(20px);
 	transition:
-		opacity 900ms var(--ease),
-		transform 900ms var(--ease);
+		opacity 1000ms var(--ease),
+		transform 1000ms var(--ease);
 }
 
 .js [data-reveal].is-in {

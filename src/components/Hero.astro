@@ -18,6 +18,7 @@ import HeroTrustPill from './HeroTrustPill.astro';
 	-->
 	<img
 		class="photo"
+		data-load="photo"
 		src="/images/hero-lake.webp"
 		srcset="/images/hero-lake.webp 1679w, /images/hero-lake-2x.webp 3358w"
 		sizes="100vw"
@@ -32,16 +33,17 @@ import HeroTrustPill from './HeroTrustPill.astro';
 	<div class="container content">
 		<!-- Desktop: the content sits on a frosted, see-through card (entry 107); a plain wrapper below. -->
 		<div class="hero-card">
-		<HeroTrustPill />
+		<!-- Entry 141: the hero text arrives top to bottom after the photo (load sequence in global.css). -->
+		<div data-load style="--load-delay: 250ms"><HeroTrustPill /></div>
 		<h1 id="hero-title">
-			<span class="line-1">Medicinsk viktnedgång</span>
-			<span class="line-2">när dieter inte räcker</span>
+			<span class="line-1" data-load style="--load-delay: 380ms">Medicinsk viktnedgång</span>
+			<span class="line-2" data-load style="--load-delay: 480ms">när dieter inte räcker</span>
 		</h1>
-		<p class="lede">
+		<p class="lede" data-load style="--load-delay: 600ms">
 			Velora är en svensk digital vårdgivare. Ett legitimerat vårdteam bedömer om medicinsk behandling passar dig,
 			och följer dig hela vägen.
 		</p>
-		<div class="cta-wrap" data-hero-cta><CtaButton label="Se om behandlingen passar dig" /></div>
+		<div class="cta-wrap" data-hero-cta data-load style="--load-delay: 720ms"><CtaButton label="Se om behandlingen passar dig" /></div>
 		</div>
 	</div>
 </section>
