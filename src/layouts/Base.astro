@@ -7,6 +7,10 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+// Entry 172: link previews (chat apps, social) show the hero photo. Without these tags they picked
+// the first large image on the page, the pen photo in the Viktmediciner menu.
+const ogImage = new URL('/images/og-hero.jpg', Astro.site);
+const pageUrl = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -19,6 +23,17 @@ const { title, description } = Astro.props;
 		<meta name="theme-color" content="#f7f2ec" />
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="sv_SE" />
+		<meta property="og:url" content={pageUrl} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Kvinna i en fåtölj vid ett stort fönster mot en skogssjö, i ett videosamtal på mobilen" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:image" content={ogImage} />
 		<script is:inline>
 			document.documentElement.classList.add('js');
 		</script>

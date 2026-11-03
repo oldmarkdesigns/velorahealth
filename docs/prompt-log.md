@@ -1129,3 +1129,35 @@ Let's switch positions of 5000+ patienter and trustpilot
 ```
 Commit and push all pending changes.
 ```
+
+## 171 – Explore alternative hero headlines (Claude Code, 2026-11-03)
+
+```
+Before changing the hero, let’s explore a few original Swedish headline options as alternatives to the current “Medicinsk viktnedgång när dieter inte räcker”. The original site uses “Din väg till en hållbar viktnedgång”, but I want a distinct direction I can explain in the presentation. For each option, give me a short rationale and how it works with the existing supporting copy. Don’t implement anything yet.
+```
+
+## 172 – Summary for friends & family (Claude Code, 2026-11-03)
+
+```
+Jag ska skicka en sammanfattning av mitt case till vännner & familj för att få feedback. Skriv kort vad jag gjort.
+```
+
+## 173 – Shorter summary, website only (Claude Code, 2026-11-03)
+
+```
+Nämn bara hemsidan, och kortare om vad jag gjort, skippa om nbeslutsunderlag och annons och processlogg, samt att de ska kolla i mobil/mobil först
+```
+
+## 172 – Link thumbnail should use the hero image (Claude Code, 2026-11-03)
+
+[Image attached: a chat link preview for velorahealth-ten.vercel.app showing velora.se's GLP-1 pen photo.]
+
+```
+The thumbnail for my build is using the wrong image. Please update it to use the current hero image instead. Leave the hero section itself unchanged.
+```
+
+## 173 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```
