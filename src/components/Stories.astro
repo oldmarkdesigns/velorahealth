@@ -95,27 +95,17 @@ const stories = [
 		font-size: 0.9375rem;
 	}
 
+	/* Entry 161: no swipe row any more. Below 1024 px the stories stack, one full-width card each. */
 	.rail {
 		list-style: none;
 		margin: 56px auto 40px;
 		display: grid;
-		grid-auto-flow: column;
-		grid-auto-columns: 78%;
 		gap: 20px;
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		scroll-padding-inline: var(--gutter);
-		scrollbar-width: none;
-	}
-
-	.rail::-webkit-scrollbar {
-		display: none;
 	}
 
 	/* Entry 133: one photo card, the text laid over its foot; the whole card is the link. */
 	.story {
 		position: relative;
-		scroll-snap-align: start;
 		overflow: hidden;
 		border-radius: var(--radius);
 		color: var(--cream);
@@ -337,19 +327,25 @@ const stories = [
 			display: inline;
 		}
 
-		/* Tablets: still the swipeable row, with wider cards; three across are too narrow for the text on the photo. */
+		/* Tablets: stacked like phones (entry 161); three across are too narrow for the text on the photo. */
 		.rail {
-			grid-auto-columns: 46%;
 			gap: 24px;
+		}
+
+		/* Tablets: a full-width card at 3:4 would be ~940 px tall, so a wider 4:3 frame. */
+		.photo img {
+			aspect-ratio: 4 / 3;
 		}
 	}
 
 	@media (min-width: 1024px) {
 		.rail {
-			grid-auto-flow: row;
 			grid-template-columns: repeat(3, 1fr);
 			gap: 32px;
-			overflow: visible;
+		}
+
+		.photo img {
+			aspect-ratio: 3 / 4;
 		}
 	}
 </style>

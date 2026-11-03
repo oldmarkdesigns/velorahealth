@@ -1065,3 +1065,23 @@ Let's make the navbar in mobile always be the sticky version with a background
 ```
 Commit and push all pending changes.
 ```
+
+## 161 – Patient stories stacked vertically, no swipe (Claude Code, 2026-11-03)
+
+```
+Let's skip the swipe for the patientberättelser - and just stack them vertically
+```
+
+## 162 – Guarantee and switching block side by side on desktop (Claude Code, 2026-11-03)
+
+[Image attached: the 30-day guarantee row with "Redan i behandling någon annanstans?" beneath it.]
+
+```
+Place these side by side on desktop, with a combined width no greater than the “Det här tillkommer” table. Keep the mobile layout unchanged.
+```
+
+## 163 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```

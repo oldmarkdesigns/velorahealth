@@ -85,15 +85,18 @@ const maintenance = [
 					<dd class="amount"><span class="unit">ca</span> 1 050–4 800 <span class="unit">kr/mån</span></dd>
 				</div>
 			</dl>
-			<div class="guarantee">
-				<span class="stamp" aria-hidden="true"><b>30</b>dagars<br />garanti</span>
-				<p class="desc">
-					<strong>Nöjdhetsgaranti i 30 dagar.</strong> Avslutar du inom 30 dagar får du tillbaka din första
-					månadsavgift. Gäller inte läkemedel eller prover. <a href={`${VELORA}/anvandarvillkor`}>Villkor</a>
-				</p>
+			<!-- Entry 162: stacked on phones; side by side from 1024 px, within the table's width. -->
+			<div class="foot-pair">
+				<div class="guarantee">
+					<span class="stamp" aria-hidden="true"><b>30</b>dagars<br />garanti</span>
+					<p class="desc">
+						<strong>Nöjdhetsgaranti i 30 dagar.</strong> Avslutar du inom 30 dagar får du tillbaka din första
+						månadsavgift. Gäller inte läkemedel eller prover. <a href={`${VELORA}/anvandarvillkor`}>Villkor</a>
+					</p>
+				</div>
+				<!-- Entry 158: the switching block from "Passar Velora dig?", repeated under the guarantee. -->
+				<div class="switch-row"><SwitchBlock /></div>
 			</div>
-			<!-- Entry 158: the switching block from "Passar Velora dig?", repeated under the guarantee. -->
-			<div class="switch-row"><SwitchBlock /></div>
 		</div>
 	</div>
 </section>
@@ -333,6 +336,32 @@ const maintenance = [
 
 	.switch-row :global(.switch) {
 		max-width: 46ch;
+	}
+
+	/*
+	 * Entry 162, desktop: the guarantee and the switching block side by side, inside the cost table's
+	 * 880 px. The rule above the guarantee moves to the pair, so it spans both.
+	 */
+	@media (min-width: 1024px) {
+		.foot-pair {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			align-items: center;
+			gap: 48px;
+			padding-top: 32px;
+			border-top: 1px solid var(--line);
+		}
+
+		.foot-pair .guarantee {
+			justify-content: flex-start;
+			padding-top: 0;
+			border-top: 0;
+		}
+
+		.foot-pair .switch-row {
+			justify-content: flex-start;
+			margin-top: 0;
+		}
 	}
 
 	/* A rubber stamp for the guarantee: double ring, slight tilt. */
