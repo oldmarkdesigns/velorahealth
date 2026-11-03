@@ -1161,3 +1161,15 @@ The thumbnail for my build is using the wrong image. Please update it to use the
 ```
 Commit and push all pending changes.
 ```
+
+## 174 – LegitScript badge right after Trustpilot on desktop (Claude Code, 2026-11-03)
+
+```
+On desktop, place the LegitScript badge immediately to the right of Trustpilot, with a divider between them, and center it vertically. Leave the mobile layout unchanged.
+```
+
+## 175 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```
