@@ -1173,3 +1173,15 @@ On desktop, place the LegitScript badge immediately to the right of Trustpilot, 
 ```
 Commit and push all pending changes.
 ```
+
+## 176 – "5 000+ patienter" back to the left of Trustpilot (Claude Code, 2026-11-03)
+
+```
+Okey let's have 5000+ patients on the left of trustpilot
+```
+
+## 177 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```
