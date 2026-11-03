@@ -110,7 +110,7 @@ One of the following must apply [H, B, O], status **OK**:
 | Drug names: Ozempic, Wegovy, Rybelsus, Mounjaro, semaglutid, tirzepatid | H, B | **Avoid** on the start page and in the ad |
 | "GLP-1" as a drug class | H, B | Premise: use sparingly, explained, inside the care story |
 | Side effects are usually mild and passing, mostly from the stomach and gut at the start | H, B | OK, in the FAQ |
-| "13 olika cancerformer", "5,3 miljoner i riskzonen" | H, B | **Avoid** on the start page: these use fear |
+| "13 olika cancerformer", "5,3 miljoner i riskzonen" | H, B | **Avoid** on the start page: these use fear. Entry 136: "5,3 miljoner" brought back at Samuel's request in "Visste du att?", framed as "you're not alone"; the cancer list stays out |
 | "Högst patientnöjdhet på marknaden" | H | **Avoid**: a superlative we can't verify |
 
 ## Medicines as listed on velora.se/viktmediciner (navbar menu only)

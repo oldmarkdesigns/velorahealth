@@ -54,18 +54,24 @@ const stories = [
 				<li class="story" data-reveal style={`transition-delay: ${i * 120}ms`}>
 					<div class="photo">
 						<img src={s.img} alt={`${s.name}, ${s.age} år`} width="600" height="800" loading="lazy" />
+						<div class="shade" aria-hidden="true" />
 					</div>
-					<p class="result">
-						<span class="kg">{s.kg}</span>
-						<span class="time">{s.time}</span>
-					</p>
-					<p class="who">
-						{s.name}, {s.age} år, {s.city}
-					</p>
-					<p class="text">{s.text}</p>
-					<a class="read" href={s.href} style={`--arrow: ${arrowMask}`}>
-						Läs {s.name}s berättelse<span class="arrow" aria-hidden="true">&nbsp;&emsp;</span><span class="visually-hidden"> på velora.se</span>
-					</a>
+					<!-- Entry 133: the text sits inside the photo, at the bottom; the link covers the whole card. -->
+					<div class="body">
+						<div class="copy">
+							<p class="result">
+								<span class="kg">{s.kg}</span>
+								<span class="time">{s.time}</span>
+							</p>
+							<p class="who">
+								{s.name}, {s.age} år, {s.city}
+							</p>
+							<p class="text">{s.text}</p>
+							<a class="read" href={s.href} style={`--arrow: ${arrowMask}`}>
+								Läs {s.name}s berättelse<span class="arrow" aria-hidden="true">&nbsp;&emsp;</span><span class="visually-hidden"> på velora.se</span>
+							</a>
+						</div>
+					</div>
 				</li>
 			))
 		}
@@ -106,38 +112,83 @@ const stories = [
 		display: none;
 	}
 
+	/* Entry 133: one photo card, the text laid over its foot; the whole card is the link. */
 	.story {
-		/* Contains the absolutely positioned visually-hidden text inside the scroller. */
 		position: relative;
 		scroll-snap-align: start;
-		display: flex;
-		flex-direction: column;
+		overflow: hidden;
+		border-radius: var(--radius);
+		color: var(--cream);
 	}
 
 	.photo {
-		overflow: hidden;
-		border-radius: var(--radius);
+		position: relative;
+		height: 100%;
 	}
 
 	.photo img {
 		width: 100%;
+		height: 100%;
+		min-height: 100%;
 		aspect-ratio: 3 / 4;
 		object-fit: cover;
 		object-position: center 20%;
 		transition: transform 1200ms var(--ease);
 	}
 
+	/* Holds the hover wash; the reading gradient sits behind the text itself (.copy). */
+	.shade {
+		position: absolute;
+		inset: 0;
+	}
+
+	/* Hover: the photo darkens a little more (an extra even wash over the gradient). */
+	.shade::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.18);
+		opacity: 0;
+		transition: opacity 400ms var(--ease);
+	}
+
 	.story:hover .photo img {
 		transform: scale(1.03);
+	}
+
+	.story:hover .shade::after,
+	.story:focus-within .shade::after {
+		opacity: 1;
+	}
+
+	/* Fills the card (so the stretched link below covers all of it); the text sits at the foot. */
+	.body {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+	}
+
+	/*
+	 * The dark gradient belongs to the text block: clear 96 px above it, deepening to the bottom edge,
+	 * so the text is always on the dark part whatever the card's size.
+	 */
+	.copy {
+		padding: 96px 24px 24px;
+		background: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0) 0,
+			rgba(0, 0, 0, 0.45) 72px,
+			rgba(0, 0, 0, 0.66) 50%,
+			rgba(0, 0, 0, 0.8) 100%
+		);
 	}
 
 	.result {
 		display: flex;
 		align-items: baseline;
 		gap: 10px;
-		margin-top: 24px;
-		padding-top: 20px;
-		border-top: 1px solid var(--line);
 	}
 
 	.kg {
@@ -150,11 +201,13 @@ const stories = [
 
 	.time {
 		font-size: 0.875rem;
-		color: var(--ink-soft);
+		color: var(--on-dark-soft);
 	}
 
 	.who {
 		margin-top: 14px;
+		padding-top: 14px;
+		border-top: 1px solid var(--line-dark);
 		font-size: 0.8125rem;
 		font-weight: 600;
 		letter-spacing: 0.04em;
@@ -162,15 +215,37 @@ const stories = [
 	}
 
 	.text {
-		margin-top: 10px;
-		color: var(--ink-soft);
+		margin-top: 8px;
+		color: rgba(247, 242, 236, 0.82);
+		font-size: 0.9375rem;
+		line-height: 1.5;
+	}
+
+	.read {
+		display: inline-block;
+		margin-top: 14px;
+		color: var(--cream);
+		font-weight: 600;
 		font-size: 0.9375rem;
 	}
 
-	.story a {
-		margin-top: 16px;
-		font-weight: 600;
-		font-size: 0.9375rem;
+	/* The link stretches over the whole card, so a click anywhere opens the story. */
+	.read::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		border-radius: var(--radius);
+	}
+
+	.read:focus-visible {
+		outline: none;
+	}
+
+	.read:focus-visible::before {
+		outline: 2px solid var(--wine);
+		outline-offset: -2px;
+		box-shadow: inset 0 0 0 4px var(--cream);
 	}
 
 	/*
@@ -204,11 +279,11 @@ const stories = [
 	}
 
 	@media (hover: hover) {
-		.read:hover .arrow {
+		.story:hover .read .arrow {
 			font-size: 1em;
 		}
 
-		.read:hover .arrow::after {
+		.story:hover .read .arrow::after {
 			opacity: 1;
 			translate: 0 0;
 			transition-delay: 60ms;
@@ -231,11 +306,45 @@ const stories = [
 		}
 	}
 
+	/*
+	 * Phones (entry 133): the card is narrow, so it is taller (2:3) and the type a step smaller, so the
+	 * text leaves the faces clear.
+	 */
+	@media (max-width: 767px) {
+		.photo img {
+			aspect-ratio: 2 / 3;
+		}
+
+		.copy {
+			padding: 88px 20px 20px;
+		}
+
+		.result {
+			white-space: nowrap;
+		}
+
+		.kg {
+			font-size: 2.5rem;
+		}
+
+		.text {
+			font-size: 0.875rem;
+		}
+	}
+
 	@media (min-width: 768px) {
 		.all {
 			display: inline;
 		}
 
+		/* Tablets: still the swipeable row, with wider cards; three across are too narrow for the text on the photo. */
+		.rail {
+			grid-auto-columns: 46%;
+			gap: 24px;
+		}
+	}
+
+	@media (min-width: 1024px) {
 		.rail {
 			grid-auto-flow: row;
 			grid-template-columns: repeat(3, 1fr);

@@ -882,3 +882,39 @@ Nah okey let's just put the CTA below the three doctor cards, center aligned. An
 ```
 Commit and push all pending changes.
 ```
+
+## 133 – Story text inside the images, whole card clickable (Claude Code, 2026-11-03)
+
+```
+For the patientberättelser cards, let’s move the text, descriptions and “Läs mer” CTA inside each image, anchored at the bottom. Add a dark gradient that gets stronger toward the bottom so the cream-white text stays readable. Darken the image a little more on hover, and make the whole card clickable rather than just the CTA. Keep the rest of the section unchanged.
+```
+
+## 134 – Keep the swipe row on tablets (Claude Code, 2026-11-03, button answer)
+
+```
+Keep swipe row
+```
+
+## 135 – What happened to "Visste du att"? (Claude Code, 2026-11-03)
+
+```
+what happened to visste du att section?
+```
+
+## 136 – Build "Visste du att" below "Ditt vårdteam" (Claude Code, 2026-11-03)
+
+```
+build it - and place it below ditt vårdteam
+```
+
+## 137 – Rephrase "Det handlar inte om viljestyrka." (Claude Code, 2026-11-03)
+
+```
+I'm not really sure if the title Det handlar inte om viljestyrka. is the best. Cause surely part of it is the will and the commitment. Can we rephrase it?
+```
+
+## 138 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```

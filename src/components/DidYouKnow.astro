@@ -1,0 +1,121 @@
+---
+import CtaButton from './CtaButton.astro';
+
+// velora.se's "Visste du att?" (entries 128–136), kept with most of its content. Figures as on
+// velora.se (docs/facts.md), each with its premise. The third card keeps the 5,3 miljoner figure but
+// drops the cancer list and reads as "you're not alone" rather than as a warning.
+const facts = [
+	{
+		figure: '8 av 10',
+		text: 'som enbart går på diet går tillbaka till samma vikt, enligt studier. Kroppen är programmerad att försvara sin högsta vikt, så det är inget misslyckande.',
+	},
+	{
+		figure: '16–25 %',
+		text: 'genomsnittlig viktnedgång under första året i stora studier, beroende på läkemedel och i kombination med kost och träning. Resultat varierar.',
+	},
+	{
+		figure: '5,3 miljoner',
+		text: 'människor i Sverige är i riskzonen för viktrelaterade sjukdomar. Du är långt ifrån ensam, och det finns hjälp som fungerar.',
+	},
+];
+---
+
+<section class="section stone" aria-labelledby="dyk-title">
+	<div class="container">
+		<div class="head" data-reveal>
+			<p class="label">Visste du att?</p>
+			<h2 id="dyk-title">Det handlar om mer än <em>viljestyrka.</em></h2>
+		</div>
+		<ul class="facts" role="list">
+			{
+				facts.map((f, i) => (
+					<li data-reveal style={`transition-delay: ${i * 120}ms`}>
+						<p class="figure">{f.figure}</p>
+						<p class="text">{f.text}</p>
+					</li>
+				))
+			}
+		</ul>
+		<div class="foot" data-reveal>
+			<p class="glp">
+				Läkemedelsgruppen GLP-1-analoger är den första behandlingen mot övervikt som fungerar utan kirurgi.{' '}
+				<a href="#faq-varfor-lakemedel">Varför läkemedel?</a>
+			</p>
+			<CtaButton label="Se om behandlingen passar dig" />
+		</div>
+	</div>
+</section>
+
+<style>
+	.facts {
+		list-style: none;
+		padding: 0;
+		margin: 56px 0 0;
+		display: grid;
+	}
+
+	/* Mobile: ruled rows, figure above its sentence. */
+	.facts li {
+		padding: 28px 0;
+		border-top: 1px solid var(--line);
+	}
+
+	.facts li:last-child {
+		border-bottom: 1px solid var(--line);
+	}
+
+	.figure {
+		font-family: var(--serif);
+		font-weight: 300;
+		font-size: clamp(3rem, 7vw, 4.5rem);
+		line-height: 1;
+		letter-spacing: -0.03em;
+		white-space: nowrap;
+	}
+
+	.text {
+		margin-top: 14px;
+		color: var(--ink-soft);
+		font-size: 0.9375rem;
+		max-width: 36ch;
+	}
+
+	.foot {
+		display: grid;
+		gap: 24px;
+		margin-top: 40px;
+	}
+
+	.glp {
+		color: var(--ink-soft);
+		font-size: 0.9375rem;
+		max-width: 52ch;
+	}
+
+	.glp a {
+		color: var(--ink);
+		font-weight: 600;
+	}
+
+	/* Desktop: three columns between two rules, the note and button on one row beneath. */
+	@media (min-width: 1024px) {
+		.facts {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 48px;
+			border-top: 1px solid var(--line);
+			border-bottom: 1px solid var(--line);
+		}
+
+		.facts li,
+		.facts li:last-child {
+			padding: 40px 0 44px;
+			border: 0;
+		}
+
+		.foot {
+			grid-template-columns: 1fr auto;
+			align-items: center;
+			gap: 48px;
+		}
+	}
+</style>
