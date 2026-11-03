@@ -376,6 +376,11 @@ const cards = [
 			box-shadow: none;
 			background: rgba(247, 242, 236, 0.78);
 		}
+
+		/* Entry 159: the band shows from the start, at the top of the page too (not only once scrolled). */
+		.header:not(.is-open)::before {
+			opacity: 1;
+		}
 	}
 
 	/* Desktop: the floating bar hugs the content (20 px around logo and CTA) instead of spanning the page. */

@@ -1,5 +1,6 @@
 ---
 import CtaButton from './CtaButton.astro';
+import SwitchBlock from './SwitchBlock.astro';
 
 const criteria = [
 	'Du har ett BMI på 30 eller högre.',
@@ -36,15 +37,7 @@ const criteria = [
 					>Läs om behandling vid obesitas på 1177</a
 				>
 			</p>
-			<aside class="switch">
-				<p class="switch-title">Redan i behandling någon annanstans?</p>
-				<p>
-					Vi hjälper dig att byta, smidigt. Hälsokontrollen behövs bara om din tidigare vårdgivare inte redan har gjort
-					den.
-				</p>
-				<!-- Same flow as velora.se's own "Byt idag" (/kom-igang). -->
-				<div class="switch-cta"><CtaButton size="sm" label="Byt vårdgivare idag" /></div>
-			</aside>
+			<SwitchBlock class="forwho-switch" />
 		</div>
 	</div>
 </section>
@@ -100,24 +93,8 @@ const criteria = [
 		margin-top: 32px;
 	}
 
-	.switch {
+	:global(.forwho-switch) {
 		margin-top: 40px;
-		padding-left: 20px;
-		border-left: 2px solid var(--wine);
-	}
-
-	.switch-title {
-		font-weight: 600;
-		margin-bottom: 4px;
-	}
-
-	.switch-title + p {
-		color: var(--ink-soft);
-		font-size: 0.9375rem;
-	}
-
-	.switch-cta {
-		margin-top: 20px;
 	}
 
 	@media (min-width: 1024px) {

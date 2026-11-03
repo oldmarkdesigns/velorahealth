@@ -1,0 +1,42 @@
+---
+import CtaButton from './CtaButton.astro';
+
+// "Redan i behandling någon annanstans?" (switching provider). Shared by "Passar Velora dig?" and,
+// since entry 158, the pricing section, so both copies stay identical.
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<aside class:list={['switch', className]}>
+	<p class="switch-title">Redan i behandling någon annanstans?</p>
+	<p>
+		Vi hjälper dig att byta, smidigt. Hälsokontrollen behövs bara om din tidigare vårdgivare inte redan har gjort
+		den.
+	</p>
+	<!-- Same flow as velora.se's own "Byt idag" (/kom-igang). -->
+	<div class="switch-cta"><CtaButton size="sm" label="Byt vårdgivare idag" /></div>
+</aside>
+
+<style>
+	.switch {
+		padding-left: 20px;
+		border-left: 2px solid var(--wine);
+	}
+
+	.switch-title {
+		font-weight: 600;
+		margin-bottom: 4px;
+	}
+
+	.switch-title + p {
+		color: var(--ink-soft);
+		font-size: 0.9375rem;
+	}
+
+	.switch-cta {
+		margin-top: 20px;
+	}
+</style>

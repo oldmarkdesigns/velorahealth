@@ -2,6 +2,7 @@
 import checkIcon from '@phosphor-icons/core/assets/light/check-light.svg?raw';
 import { VELORA } from '../data/site';
 import CtaButton from './CtaButton.astro';
+import SwitchBlock from './SwitchBlock.astro';
 
 // Layout from entry 88: Velorametoden and Underhåll side by side, then the extra costs as a ruled
 // table beneath them (after the "Våra planer i detalj" reference). Same content as layout F.
@@ -91,6 +92,8 @@ const maintenance = [
 					månadsavgift. Gäller inte läkemedel eller prover. <a href={`${VELORA}/anvandarvillkor`}>Villkor</a>
 				</p>
 			</div>
+			<!-- Entry 158: the switching block from "Passar Velora dig?", repeated under the guarantee. -->
+			<div class="switch-row"><SwitchBlock /></div>
 		</div>
 	</div>
 </section>
@@ -318,6 +321,17 @@ const maintenance = [
 	}
 
 	.guarantee .desc {
+		max-width: 46ch;
+	}
+
+	/* Entry 158: centred under the guarantee, like it, as one left-ruled block. */
+	.switch-row {
+		display: flex;
+		justify-content: center;
+		margin-top: 40px;
+	}
+
+	.switch-row :global(.switch) {
 		max-width: 46ch;
 	}
 

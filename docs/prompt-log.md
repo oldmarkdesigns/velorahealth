@@ -1047,3 +1047,21 @@ aldrig av en algoritm.
 ```
 Commit and push all pending changes.
 ```
+
+## 158 – Repeat "Redan i behandling någon annanstans?" under the guarantee (Claude Code, 2026-11-03)
+
+```
+Repeat the “Redan i behandling någon annanstans?” block in the pricing section, directly below the 30-day guarantee. Keep the original block where it is and leave the rest of the pricing section unchanged.
+```
+
+## 159 – Mobile navbar always in its sticky, backed state (Claude Code, 2026-11-03)
+
+```
+Let's make the navbar in mobile always be the sticky version with a background
+```
+
+## 160 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```
