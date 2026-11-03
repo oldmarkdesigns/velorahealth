@@ -37,16 +37,13 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 
 <style>
 	/*
-	 * Phones (entry 145, option A): the three statements don't fit one row at 375 px, so the pill
-	 * becomes a small frosted card with one statement per line. It is the first thing in the hero's
-	 * text stack, and that stack is anchored to the bottom, so the card lands on the foot of the
-	 * photo where it fades into cream.
+	 * One frosted pill holding all three statements (from 768 px). Phones (entries 145, 147): the
+	 * three don't fit one row at 375 px, so each statement is its own pill, stacked and as wide as its
+	 * content, with the same padding. They lead the hero's bottom-anchored text stack, so they land on
+	 * the foot of the photo where it fades into cream.
 	 */
-	.pill {
-		display: inline-block;
-		margin-bottom: 24px;
-		padding: 12px 18px 12px 12px;
-		border-radius: 20px;
+	.pill,
+	li {
 		background: rgba(255, 253, 250, 0.6);
 		backdrop-filter: blur(16px) saturate(140%);
 		-webkit-backdrop-filter: blur(16px) saturate(140%);
@@ -54,11 +51,28 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 		box-shadow: 0 16px 32px -24px rgba(74, 20, 48, 0.35);
 	}
 
+	.pill {
+		display: block;
+		margin-bottom: 24px;
+		background: none;
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		border: 0;
+		box-shadow: none;
+	}
+
 	@media (max-width: 767px) {
-		ul {
+		/* .pill ul, so it outranks the base `ul` rule further down. */
+		.pill ul {
 			flex-direction: column;
 			align-items: flex-start;
 			gap: 8px;
+		}
+
+		/* Same padding in every pill: 6 px around the 28 px badge, 16 px after the text. */
+		li {
+			padding: 6px 16px 6px 6px;
+			border-radius: 999px;
 		}
 
 		li + li::before {
@@ -80,13 +94,36 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 	/* From 768 px: one row, a full pill. Sits on cream there, so a fine wine outline gives it its edge. */
 	@media (min-width: 768px) {
 		.pill {
+			display: inline-block;
 			margin-bottom: 28px;
 			padding: 10px 24px 10px 10px;
 			border-radius: 999px;
+			background: rgba(255, 253, 250, 0.6);
+			backdrop-filter: blur(16px) saturate(140%);
+			-webkit-backdrop-filter: blur(16px) saturate(140%);
+			border: 1px solid var(--line);
+			box-shadow: 0 16px 32px -24px rgba(74, 20, 48, 0.35);
+		}
+
+		li {
+			background: none;
+			backdrop-filter: none;
+			-webkit-backdrop-filter: none;
+			border: 0;
+			box-shadow: none;
 		}
 	}
 
-	@media (prefers-reduced-transparency: reduce) {
+	/* Solid card colour instead of frost: on the separate pills (phones) or the one pill (768 px up). */
+	@media (prefers-reduced-transparency: reduce) and (max-width: 767px) {
+		li {
+			background: var(--card);
+			backdrop-filter: none;
+			-webkit-backdrop-filter: none;
+		}
+	}
+
+	@media (prefers-reduced-transparency: reduce) and (min-width: 768px) {
 		.pill {
 			background: var(--card);
 			backdrop-filter: none;

@@ -970,3 +970,33 @@ Build option A: the trust pill on the photo and the services as an icon grid und
 ```
 Commit and push all pending changes.
 ```
+
+## 147 – Separate mobile pills, Viktmediciner dropdown on mobile, desktop service icons (Claude Code, 2026-11-03)
+
+```
+Place each statement in mobile card in hero section as seperate pills. Make sure the padding is the same in each pill - and hug the content on width. 
+
+In the mobile nav menu, make sure viktmediciner has the dropdown, just like in desktop.
+
+For desktop - add the icons for the statements läkarmöten etc
+```
+
+## 148 – Sticky full-width mobile navbar (Claude Code, 2026-11-03)
+
+[Image attached: velora.se on an iPhone, with the navbar (logo, "Kom igång", burger) pinned full width at the top over the content.]
+
+```
+Make the mobile navbar sticky on scroll. It should span the full width and sit flush with the top of the screen, keeping its transparent background like the original mobile site. Leave the desktop navbar unchanged.
+```
+
+## 149 – "You did not add the icons in desktop" (Claude Code, 2026-11-03)
+
+```
+You did not add the icons in desktop for läkarmöten via video and so on
+```
+
+## 150 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```

@@ -8,7 +8,7 @@ import videoIcon from '@phosphor-icons/core/assets/light/video-camera-light.svg?
 import testTubeIcon from '@phosphor-icons/core/assets/light/test-tube-light.svg?raw';
 import foodIcon from '@phosphor-icons/core/assets/light/bowl-food-light.svg?raw';
 
-// Icons show on phones only (entry 145), where the services become a three-column grid.
+// Icons: a three-column grid on phones (entry 145), inline before each label on desktop (entry 147).
 const services = [
 	{ label: 'Läkarmöten via video', icon: videoIcon },
 	{ label: 'Hälsokontroll', icon: testTubeIcon },
@@ -60,6 +60,7 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		display: flex;
 		align-items: center;
 		gap: 12px;
+		white-space: nowrap;
 	}
 
 	.figure {
@@ -196,6 +197,22 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		}
 	}
 
+	/*
+	 * Entries 147, 149: from 768 px (tablets and desktop) the icons sit inline before each label.
+	 * Below that the row is too narrow for them; phones have their own icon grid.
+	 */
+	@media (min-width: 768px) {
+		.service-icon {
+			display: flex;
+			margin-right: 8px;
+		}
+
+		.service-icon :global(svg) {
+			width: 18px;
+			height: 18px;
+		}
+	}
+
 	/* Desktop: one row, stat | services | certification, like Hemmapartner's bar. */
 	@media (min-width: 1024px) {
 		.bar {
@@ -212,6 +229,7 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 			padding-right: 32px;
 			border-right: 1px solid var(--line);
 		}
+
 	}
 
 	/* Narrow desktops: tighter pills and a one-line badge so the bar stays a single row. */
@@ -228,8 +246,13 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 			font-size: 0.6875rem;
 		}
 
+		/* Entry 147: room for the inline icons without squeezing "5 000+ patienter" onto two lines. */
 		.services li + li::before {
-			margin-inline: 14px;
+			margin-inline: 10px;
+		}
+
+		.service-icon {
+			margin-right: 6px;
 		}
 
 		.cert span:last-child {

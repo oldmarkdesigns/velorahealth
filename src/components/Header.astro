@@ -112,10 +112,50 @@ const cards = [
 			</button>
 		</div>
 	</div>
-	<div class="mobile-menu" id="mobile-menu" data-mobile-menu>
+	<div class="mobile-menu" id="mobile-menu" data-mobile-menu data-lenis-prevent>
 		<nav aria-label="Huvudmeny" class="container mobile-nav">
 			<a href="#sa-fungerar-det">Behandlingen</a>
-			<a href="#faq-varfor-lakemedel">Viktmediciner</a>
+			<!-- Entry 147: Viktmediciner opens the same content as the desktop menu, as an accordion. -->
+			<details class="mobile-group">
+				<summary>
+					Viktmediciner
+					<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
+				</summary>
+				<div class="mobile-sub">
+					<ul class="mobile-cards" role="list">
+						{
+							cards.map((c) => (
+								<li>
+									<a class="card" href={c.href}>
+										<img src={c.img} alt={c.alt} width="600" height="400" loading="lazy" />
+										<span class="card-label">{c.label}</span>
+									</a>
+								</li>
+							))
+						}
+					</ul>
+					<ul class="list" role="list">
+						{
+							medicines.map((m) => (
+								<li>
+									<a class="row" href={m.href}>
+										<span class="row-name">{m.name}</span>
+										<span class="row-meta">{m.meta}</span>
+									</a>
+								</li>
+							))
+						}
+						<li>
+							<a class="row all" href={MEDICINES_FAQ}>
+								<span class="all-dot" aria-hidden="true">
+									<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+								</span>
+								<span class="row-name">Allt om viktmediciner</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</details>
 			<a href="#patientberattelser">Patientberättelser</a>
 			<a href="#vardteam">Om Velora</a>
 			<a href="#pris">Pris</a>
@@ -291,6 +331,26 @@ const cards = [
 
 	.header.is-scrolled::before {
 		opacity: 1;
+	}
+
+	/*
+	 * Phones and tablets (entry 148): like velora.se's mobile bar, it stays put while scrolling (no
+	 * slide-away) and, once scrolled, spans the full width flush with the top edge: a see-through,
+	 * frosted cream band with a hairline beneath, instead of the floating rounded bar.
+	 */
+	@media (max-width: 1023px) {
+		.header.is-hidden {
+			transform: none;
+		}
+
+		.header::before {
+			inset: 0;
+			border: 0;
+			border-bottom: 1px solid var(--line);
+			border-radius: 0;
+			box-shadow: none;
+			background: rgba(247, 242, 236, 0.78);
+		}
 	}
 
 	/* Desktop: the floating bar hugs the content (20 px around logo and CTA) instead of spanning the page. */
@@ -684,7 +744,15 @@ const cards = [
 		padding-block: 8px 28px;
 	}
 
-	.mobile-nav a {
+	/* Tall enough to hold the open Viktmediciner group; scrolls inside on short phones. */
+	.mobile-menu {
+		max-height: calc(100svh - 80px);
+		overflow-y: auto;
+		overscroll-behavior: contain;
+	}
+
+	.mobile-nav > a,
+	.mobile-group summary {
 		padding: 14px 0;
 		border-bottom: 1px solid var(--line);
 		color: var(--ink);
@@ -693,6 +761,76 @@ const cards = [
 		font-weight: 340;
 		line-height: 1.2;
 		text-decoration: none;
+	}
+
+	/* Viktmediciner: a summary styled like the links, with the desktop menu's chevron. */
+	.mobile-group {
+		border-bottom: 1px solid var(--line);
+		interpolate-size: allow-keywords;
+	}
+
+	.mobile-group summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: 0;
+		list-style: none;
+		cursor: pointer;
+	}
+
+	.mobile-group summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.mobile-group summary svg {
+		transition: rotate 300ms var(--ease);
+	}
+
+	.mobile-group[open] summary svg {
+		rotate: 180deg;
+	}
+
+	.mobile-group::details-content {
+		block-size: 0;
+		overflow: clip;
+		transition:
+			block-size 360ms var(--ease),
+			content-visibility 360ms allow-discrete;
+	}
+
+	.mobile-group[open]::details-content {
+		block-size: auto;
+	}
+
+	.mobile-sub {
+		display: grid;
+		gap: 16px;
+		padding-bottom: 20px;
+	}
+
+	/* The two image cards side by side, labels a step smaller than on desktop. */
+	.mobile-cards {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 10px;
+	}
+
+	.mobile-cards .card-label {
+		left: 12px;
+		bottom: 10px;
+		max-width: 85%;
+		font-size: 1rem;
+	}
+
+	.mobile-sub .row {
+		padding: 8px 0;
+	}
+
+	.mobile-sub .row-name {
+		font-size: 1.25rem;
 	}
 
 	/* "Logga in" closes the list as an outline pill, apart from the section links. */
@@ -789,7 +927,9 @@ const cards = [
 		.card-arrow,
 		.row-name,
 		.burger span,
-		.mobile-menu {
+		.mobile-menu,
+		.mobile-group summary svg,
+		.mobile-group::details-content {
 			transition: none;
 		}
 	}
