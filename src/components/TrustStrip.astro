@@ -1,39 +1,39 @@
 ---
 // Static key-information bar directly under the hero (prompt log entry 37), inspired by
 // Hemmapartner's achievements bar. Replaces the earlier drifting trust carousel.
-// - "5 000+ patienter": from a Trustpilot snippet supplied by Samuel; not found on velora.se, so
-//   flagged in docs/facts.md for confirmation with Velora.
-// - Services and certifications: velora.se (docs/facts.md).
-import videoIcon from '@phosphor-icons/core/assets/light/video-camera-light.svg?raw';
-import testTubeIcon from '@phosphor-icons/core/assets/light/test-tube-light.svg?raw';
-import broccoliIcon from '../icons/broccoli.svg?raw';
+// - "5 000+ patienter": from a Trustpilot snippet supplied by Samuel; not on velora.se, so flagged in
+//   docs/facts.md for confirmation with Velora.
+// - Trustpilot 4,7: Velora's Trustpilot page, 316 reviews on 2026-11-03 (docs/facts.md).
+// - Certifications: velora.se (docs/facts.md).
+// Entry 164: the service statements (video, health check, dietitian and coach) are replaced by the
+// Trustpilot rating, on the same row as "5 000+ patienter".
+import starIcon from '@phosphor-icons/core/assets/fill/star-fill.svg?raw';
 
-// Icons: a three-column grid on phones (entry 145), inline before each label on desktop (entry 147).
-const services = [
-	{ label: 'Läkarmöten via video', icon: videoIcon },
-	{ label: 'Hälsokontroll', icon: testTubeIcon },
-	{ label: 'Dietist och coach', icon: broccoliIcon },
-];
+const TRUSTPILOT_SCORE = '4,7';
+// Trustpilot draws its stars to the nearest half: 4,7 shows as four and a half.
+const stars = [1, 1, 1, 1, 0.5];
 const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 ---
 
 <div class="bar" data-load style="--load-delay: 860ms">
 	<div class="container inner">
-		<p class="stat">
-			<span class="figure">5 000<span class="plus">+</span></span>
-			<span class="unit">patienter</span>
-		</p>
+		<div class="rating-row">
+			<p class="stat">
+				<span class="figure">5 000<span class="plus">+</span></span>
+				<span class="unit">patienter</span>
+			</p>
 
-		<ul class="services" role="list" aria-label="Det här ingår">
-			{
-				services.map((s) => (
-					<li>
-						<span class="service-icon" aria-hidden="true" set:html={s.icon} />
-						{s.label}
-					</li>
-				))
-			}
-		</ul>
+			<!-- Styled after Trustpilot's own snippet: the logo above the stars and score. -->
+			<a class="tp" href="https://se.trustpilot.com/review/velora.se" aria-label={`Betyg ${TRUSTPILOT_SCORE} av 5 på Trustpilot`}>
+				<span class="tp-logo" aria-hidden="true"><span class="tp-mark" set:html={starIcon} />Trustpilot</span>
+				<span class="tp-score" aria-hidden="true">
+					<span class="tp-stars">
+						{stars.map((fill) => <span class="tp-star" style={`--fill: ${fill * 100}%`} set:html={starIcon} />)}
+					</span>
+					<span class="tp-num">{TRUSTPILOT_SCORE}</span>
+				</span>
+			</a>
+		</div>
 
 		<div class="cert">
 			<img src={LEGITSCRIPT_SEAL} alt="LegitScript-sigill" width="34" height="37" loading="lazy" />
@@ -55,18 +55,28 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		gap: 20px;
 	}
 
+	/* "5 000+ patienter" and the Trustpilot rating share one row, split by a thin rule. */
+	.rating-row {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+	}
+
 	/* "patienter" sits on the vertical centre of the figure, not its baseline (entry 48). */
 	.stat {
 		display: flex;
 		align-items: center;
-		gap: 12px;
+		gap: 10px;
+		padding-right: 20px;
+		border-right: 1px solid var(--line);
 		white-space: nowrap;
 	}
 
+	/* Entry 164: a step smaller on phones so the rating fits beside it at 375 px. */
 	.figure {
 		font-family: var(--serif);
 		font-weight: 300;
-		font-size: 2.25rem;
+		font-size: 1.75rem;
 		line-height: 1;
 		letter-spacing: -0.02em;
 	}
@@ -78,72 +88,74 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 	}
 
 	.unit {
-		font-size: 0.9375rem;
+		font-size: 0.875rem;
 		color: var(--ink-soft);
 		/* Optical correction: the serif digits' box reserves descender space, so their visible middle sits higher. */
 		transform: translateY(-0.3em);
 	}
 
+	/* ---- Trustpilot: green star mark and wordmark, then the boxed stars and the score ---- */
 	/*
-	 * Phones (entry 145, option A): the services come first, as a three-column grid of icons with
-	 * short labels between two rules; the figure and the certification follow, as before.
+	 * Entry 166: lifted to the digits' visual middle. The serif figure's box reserves descender space,
+	 * so centring boxes puts the rating ~0.11 × the figure size low (measured: 4 px at 36 px).
 	 */
-	.services {
-		list-style: none;
-		margin: 0;
-		padding: 16px 0;
+	.tp {
 		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 12px;
-		border-block: 1px solid var(--line);
-		order: -1;
-	}
-
-	.services li {
-		display: grid;
-		justify-items: center;
-		gap: 8px;
-		text-align: center;
-		font-size: 0.8125rem;
-		font-weight: 500;
-		line-height: 1.3;
+		gap: 6px;
 		color: var(--ink);
+		text-decoration: none;
+		translate: 0 -3px;
 	}
 
-	.service-icon {
+	.tp-logo {
 		display: flex;
-		color: var(--wine);
+		align-items: center;
+		gap: 4px;
+		font-size: 0.875rem;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		color: #191919;
 	}
 
-	.service-icon :global(svg) {
-		width: 26px;
-		height: 26px;
+	.tp-mark {
+		display: flex;
+		color: #00b67a;
 	}
 
+	.tp-mark :global(svg) {
+		width: 18px;
+		height: 18px;
+	}
 
-	/* Plain labels, no pills (entry 46), from 560 px: no icons, small capitals. */
-	@media (min-width: 560px) {
-		.services {
-			order: 0;
-			padding: 0;
-			border: 0;
-		}
+	.tp-score {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
 
-		.services li {
-			display: flex;
-			align-items: center;
-			font-size: 0.75rem;
-			font-weight: 600;
-			letter-spacing: 0.08em;
-			line-height: 1.6;
-			text-transform: uppercase;
-			color: var(--ink-soft);
-			white-space: nowrap;
-		}
+	.tp-stars {
+		display: flex;
+		gap: 2px;
+	}
 
-		.service-icon {
-			display: none;
-		}
+	/* Each star on its own square; the last is filled in part, left to right, as Trustpilot does. */
+	.tp-star {
+		display: grid;
+		place-items: center;
+		width: 18px;
+		height: 18px;
+		background: linear-gradient(to right, #00b67a var(--fill), #dcdce6 var(--fill));
+		color: #fff;
+	}
+
+	.tp-star :global(svg) {
+		width: 13px;
+		height: 13px;
+	}
+
+	.tp-num {
+		font-size: 1rem;
+		color: var(--ink-soft);
 	}
 
 	/* Just the seal and the text, no card around them. */
@@ -166,12 +178,6 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		line-height: 1.35;
 	}
 
-	@media (min-width: 560px) {
-		.cert p {
-			font-size: 0.8125rem;
-		}
-	}
-
 	.cert span:first-child {
 		font-weight: 600;
 	}
@@ -180,83 +186,112 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		color: var(--ink-soft);
 	}
 
-	/* From 560 px: one row of labels with thin vertical dividers between them. */
+	/* The narrowest phones (320 px): one more step down so the row still fits. */
+	@media (max-width: 359px) {
+		.rating-row {
+			gap: 12px;
+		}
+
+		.stat {
+			gap: 6px;
+			padding-right: 12px;
+		}
+
+		.figure {
+			font-size: 1.5rem;
+		}
+
+		.unit {
+			font-size: 0.8125rem;
+		}
+
+		.tp-score {
+			gap: 6px;
+		}
+
+		.tp-star {
+			width: 15px;
+			height: 15px;
+		}
+
+		.tp-star :global(svg) {
+			width: 11px;
+			height: 11px;
+		}
+
+		.tp-num {
+			font-size: 0.875rem;
+		}
+	}
+
 	@media (min-width: 560px) {
-		.services {
-			display: flex;
-			flex-wrap: nowrap;
-			gap: 0;
+		.figure {
+			font-size: 2.25rem;
 		}
 
-		.services li + li::before {
-			content: '';
-			width: 1px;
-			height: 14px;
-			margin-inline: 18px;
-			background: var(--line);
+		.unit {
+			font-size: 0.9375rem;
+		}
+
+		.rating-row,
+		.stat {
+			gap: 12px;
+		}
+
+		.rating-row {
+			gap: 32px;
+		}
+
+		.stat {
+			padding-right: 32px;
+		}
+
+		.tp-star {
+			width: 22px;
+			height: 22px;
+		}
+
+		.tp-star :global(svg) {
+			width: 15px;
+			height: 15px;
+		}
+
+		.tp-num {
+			font-size: 1.125rem;
+		}
+
+		.cert p {
+			font-size: 0.8125rem;
 		}
 	}
 
-	/*
-	 * Entries 147, 149: from 768 px (tablets and desktop) the icons sit inline before each label.
-	 * Below that the row is too narrow for them; phones have their own icon grid.
-	 */
-	@media (min-width: 768px) {
-		.service-icon {
-			display: flex;
-			margin-right: 8px;
-		}
-
-		.service-icon :global(svg) {
-			width: 18px;
-			height: 18px;
-		}
-	}
-
-	/* Desktop: one row, stat | services | certification, like Hemmapartner's bar. */
+	/* Desktop: one row, figure | Trustpilot on the left, certification on the right. */
 	@media (min-width: 1024px) {
 		.bar {
 			padding-block: 18px 22px;
 		}
 
 		.inner {
-			grid-template-columns: auto 1fr auto;
+			grid-template-columns: 1fr auto;
 			align-items: center;
 			gap: 32px;
 		}
 
-		.stat {
-			padding-right: 32px;
-			border-right: 1px solid var(--line);
+		/* Entry 165: the Trustpilot logo and the stars with the score on one line. */
+		.tp {
+			display: flex;
+			align-items: center;
+			gap: 14px;
+			translate: 0 -4px;
 		}
 
-	}
-
-	/* Narrow desktops: tighter pills and a one-line badge so the bar stays a single row. */
-	@media (min-width: 1024px) and (max-width: 1279px) {
-		.inner {
-			gap: 24px;
+		.tp-logo {
+			font-size: 1rem;
 		}
 
-		.stat {
-			padding-right: 24px;
-		}
-
-		.services li {
-			font-size: 0.6875rem;
-		}
-
-		/* Entry 147: room for the inline icons without squeezing "5 000+ patienter" onto two lines. */
-		.services li + li::before {
-			margin-inline: 10px;
-		}
-
-		.service-icon {
-			margin-right: 6px;
-		}
-
-		.cert span:last-child {
-			display: none;
+		.tp-mark :global(svg) {
+			width: 22px;
+			height: 22px;
 		}
 	}
 </style>

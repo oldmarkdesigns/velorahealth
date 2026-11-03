@@ -61,6 +61,7 @@ Sources:
 | Fact | Source | Status |
 |------|--------|--------|
 | "5 000+ patienter" | Trustpilot snippet in a screenshot supplied by Samuel (prompt log entry 37). **Not found** on velora.se (start page, /om-oss, /patientberattelser, /behandling, /kom-igang, static and rendered, checked 2026-11-02) | ⚠ **Confirm with Velora.** Kept in the hero bar by Samuel's decision (entry 39); Samuel will confirm the figure with Velora |
+| Trustpilot score "4,7" (316 omdömen) | https://se.trustpilot.com/review/velora.se, read in the browser 2026-11-03 (prompt log entry 164; a plain request got a bot check, the browser page loaded) | OK. Used in the hero bar; stars drawn to the nearest half (4½), as Trustpilot does. The live score can change |
 | "Gå ner 20 % i vikt i snitt" (was "20 % viktnedgång i snitt") | Samuel's wording (prompt log entries 47, 124). **Not stated as an average** on velora.se: the site gives 16–25 % (FAQ). The only "20 %" is one study, in which "nästan en tredjedel hade gått ner 20 %" (/behandling) | ⚠ **Confirm with Velora.** Used in the hero pill at Samuel's request; outside the cautious stance (§3), as it is a single figure without its premise |
 | "4,7 på Trustpilot" | /om-oss; also in the same screenshot | OK (not used yet) |
 | LegitScript seal image | static.legitscript.com/seals/9675475.png, linked from velora.se's footer | OK, shown in the hero bar |

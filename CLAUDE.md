@@ -154,7 +154,7 @@ Things the brief leaves open or that are missing from the PDF. Resolve by asking
 - Fonts are self-hosted via `@fontsource-variable/newsreader` (section headings), `@fontsource-variable/cormorant-garamond` (hero title only) and `@fontsource-variable/manrope` (body) –
   no Google Fonts calls, consistent with the privacy story.
 - Smooth wheel scrolling via `lenis` (set up in `src/layouts/Base.astro`; skipped for reduced motion, paused while a `<dialog>` is open).
-- Icons: `@phosphor-icons/core` (light weight, imported as raw SVG); no hand-drawn icons. One exception: `src/icons/broccoli.svg`, vendored from Lucide (ISC) because Phosphor has no broccoli.
+- Icons: `@phosphor-icons/core` (light weight, imported as raw SVG); no hand-drawn icons.
 - Images are hotlinked from velora.se's CDN (see `docs/facts.md`, Images).
 - The page sets `noindex` and carries a work-sample disclaimer in the footer.
 - Preview in the app: `.claude/launch.json` → `astro-dev` (port 4321).

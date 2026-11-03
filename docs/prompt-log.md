@@ -1085,3 +1085,35 @@ Place these side by side on desktop, with a combined width no greater than the �
 ```
 Commit and push all pending changes.
 ```
+
+## 164 – Trustpilot rating instead of the service statements (Claude Code, 2026-11-03)
+
+[Image attached: a Trustpilot snippet: logo, 4.5 green star boxes, "4,7 | 5 000+ patienter".]
+
+```
+Remove the “LÄKARMÖTEN VIA VIDEO,” “HÄLSOKONTROLL,” and “DIETIST OCH COACH” statements below the hero. Replace them with a Trustpilot section styled like the reference image, positioned to the right of “5 000+ patienter” on the same row on both desktop and mobile. Reduce the “5 000+” font size on mobile if needed to make both fit. Leave the rest of the hero unchanged.
+```
+
+## 165 – Trustpilot logo and rating on one line on desktop (Claude Code, 2026-11-03)
+
+```
+In desktop - let's not rowbreak the trustpilot element - lets have the title and the rating on the same row
+```
+
+## 166 – Align the Trustpilot line vertically with "5 000+ patienter" (Claude Code, 2026-11-03)
+
+```
+and make sure it's vertically aligned with 5000+ patienter
+```
+
+## 167 – "vertically center aligned" (Claude Code, 2026-11-03, mid-turn)
+
+```
+vertically center aligned
+```
+
+## 168 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```
