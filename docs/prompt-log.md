@@ -1415,3 +1415,138 @@ Keep the full-bleed hero on phones only.
 ```
 Commit and push all pending changes.
 ```
+
+## 213 – Feedback round: "Så går det till" layout, medical section title, bigger avatars; are the "Trygg vård" statements real? (Claude Code, 2026-11-03)
+
+```
+Some edits from feedback sessions:
+
+* We need to change the lsyout for Så går det till - it was perceived as a bit confusing in terms of how the cards were arranged - and which order to read it
+* "Medicinska grunden" is not really an accurate title for that section - since it's more of a build on top of Så går det till - to show how the different paarts of eh treatment takes the customer to results
+* Enlarge the avatars in Så stöttar vårdteamet card
+
+
+And a question - in Trygg vård - are those statements displayed acutal statement from the companys policys? Just want to make sure that we're not coming up with stuff.
+```
+
+## 214 – Numbers back inside the step cards, card colours back (Claude Code, 2026-11-03)
+
+```
+Put the numbers back inside the “Så går det till” cards, like before, and bring back the different card colors. Keep the steps in a clear reading order.
+```
+
+## 215 – "Läs mer" links under "Det här tillkommer" (Claude Code, 2026-11-03)
+
+[Image attached: velora.se's price accordion "Läs mer", with "Kostnad för läkemedel" open: "Kostnaden för läkemedel ingår inte i priset. Läs mer om pris för läkemedel." and "Kostnad för hälsokontroll" below.]
+
+```
+Great. In the Pris section, make a small addition under “Det här tillkommer”:
+
+Add “Läs mer om vilka prover vi behöver” under Hälsokontroll. It should look like a link but not navigate anywhere yet, since the original site doesn’t have that information.
+
+Add “Läs mer om pris för läkemedel” under Läkemedel and link it to the existing medication pricing page on the original site. Keep the rest of the section unchanged.
+```
+
+## 216 – Secondary "Läs mer om vårt team" button in the care team section (Claude Code, 2026-11-03)
+
+```
+In the “Ditt vårdteam” section, add a secondary button to the left of “Boka gratis bedömningssamtal” labelled “Läs mer om vårt team”. It should not navigate anywhere yet. Keep the rest of the section unchanged.
+```
+
+## 217 – Bring the missing velora.se footer content into our footer (Claude Code, 2026-11-03)
+
+[Image attached: velora.se's footer: the logo, a white "Kom igång idag" button, "Velora drivs och ägs av Velora Health AB, org.nr 559455-0724, och är en IVO-registrerad vårdgivare.", a GDPR Compliant badge, payment logos (Visa, Mastercard, Amex, Google Pay, Apple Pay); a "Velora" column (Om Velora, Så fungerar det, Behandlingen, Viktmediciner, Pris, Patientberättelser, Information & inspiration, Vanliga frågor, Jobba hos Velora); a "Kontakt" column (08-525 132 73, hej@velora.se); "© 2026 Velora Health AB" and Användarvillkor, Integritetspolicy, Cookies.]
+
+```
+Add the information from the original velora.se footer to our footer. Keep everything already in our footer and add only what’s missing.
+```
+
+## 218 – Faster pill carousel in the phone hero (Claude Code, 2026-11-03)
+
+```
+have the statement pills in mobile carousel in hero section move a little faster
+```
+
+## 219 – No image zoom on scroll on phones (Claude Code, 2026-11-03)
+
+```
+remove the image zoom effect on scroll in mobile, in all places where it's implemented.
+```
+
+## 220 – Patient stories between "Vad du kan förvänta dig" and "Ditt vårdteam" (Claude Code, 2026-11-03)
+
+```
+Move patientberättelser to be between vad du kan förv'nta dig and ditt vårdteam sections
+```
+
+## 221 – Lighter primary buttons on desktop (Claude Code, 2026-11-03)
+
+```
+I think the primary large buttons in desktop are a bit too bulky
+```
+
+## 222 – Icon circles in the hero pill in the primary burgundy (Claude Code, 2026-11-03)
+
+[Image attached: two statements from the hero pill, "Gå ner 20 % i vikt i snitt" and "30 dagars nöjdhetsgaranti", each with a light pink circle holding a burgundy arrow or tick icon.]
+
+```
+try making these circles the primary dark red
+```
+
+## 223 – Revert the burgundy icon circles (Claude Code, 2026-11-03)
+
+```
+revert that
+```
+
+## 224 – A slightly darker hero overlay on desktop (Claude Code, 2026-11-03)
+
+```
+Make the hero overlay a little darker in desktop
+```
+
+## 225 – Statement pills in the button font (Claude Code, 2026-11-03)
+
+```
+Use the same button font style for the statement pills in carousel and on desktop pill
+```
+
+## 226 – Desktop pill must hug its content (Claude Code, 2026-11-03)
+
+[Image attached: the desktop hero pill, with "Eget vårdteam" cut off into "Eget vårdtea" and overlapped by the divider and the next item's icon.]
+
+```
+make sure pills hugs content on width
+```
+
+## 227 – A trend-down arrow for "Gå ner 20 % i vikt i snitt" (Claude Code, 2026-11-03)
+
+[Image attached: a zigzag arrow trending down to the right, in burgundy on a pale pink square.]
+
+```
+use a similar arrow for Gå ner 20 % i vikt i snitt
+```
+
+## 228 – No cream ring inside the icon circles (Claude Code, 2026-11-03)
+
+```
+remove the white in the circles, between the stroke and the background color
+```
+
+## 229 – Cream ring back, outline removed (Claude Code, 2026-11-03)
+
+```
+add back the white and remove the stroke
+```
+
+## 230 – A badge icon for the guarantee, in its own colours (Claude Code, 2026-11-03)
+
+```
+Do a badge icon for garanti, in different background color and icon color
+```
+
+## 231 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```

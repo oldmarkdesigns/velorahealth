@@ -282,7 +282,8 @@ import RatingRow from './RatingRow.astro';
 	@media (min-width: 1024px) {
 		.hero-card {
 			width: fit-content;
-			max-width: 760px;
+			/* Entry 226: room for the full-size pill, which now hugs its sans labels (~727 px) (was 760). */
+			max-width: 810px;
 			padding: 36px 40px 40px;
 			border-radius: 20px;
 			/* Entry 112: no fill of its own; the page-wide overlay gives the text its contrast. */
@@ -322,19 +323,27 @@ import RatingRow from './RatingRow.astro';
 		}
 
 		/* Entry 107: a narrower card here, so it doesn't cover her; the pill scales to fit inside it. */
-		/* The compact pill needs ~583 px; 660 − 2 × 32 leaves 596. */
+		/*
+		 * Entry 226: the pill's sans labels (entry 225) are wider than the serif ones, and the pill now
+		 * hugs them, so the compact pill needs ~642 px; 710 − 2 × 32 leaves 646 (was 660).
+		 */
 		.hero-card {
-			max-width: 660px;
+			max-width: 710px;
 			padding-inline: 32px;
 		}
+	}
 
-		/* A compact pill (smaller type, avatars, icons and dividers) so it fits the narrower card. */
+	/*
+	 * A compact pill (smaller type, avatars, icons and dividers) on tablets and small laptops, so it
+	 * fits the narrower card. Entry 226: from 768 px too, now that the pill hugs its labels.
+	 */
+	@media (min-width: 768px) and (max-width: 1279px) {
 		.hero-card :global(.pill) {
 			padding: 8px 18px 8px 8px;
 		}
 
 		.hero-card :global(.pill li) {
-			font-size: 0.9375rem;
+			font-size: 0.875rem;
 		}
 
 		.hero-card :global(.pill li + li::before) {
@@ -396,13 +405,14 @@ import RatingRow from './RatingRow.astro';
 					rgba(0, 0, 0, 0.06) 220px,
 					rgba(0, 0, 0, 0) 280px
 				),
+				/* Entry 224: a step darker throughout (was 0 / .1 / .28 / .45 / .58). */
 				linear-gradient(
 					to bottom,
-					rgba(0, 0, 0, 0) 0%,
-					rgba(0, 0, 0, 0.1) 25%,
-					rgba(0, 0, 0, 0.28) 50%,
-					rgba(0, 0, 0, 0.45) 75%,
-					rgba(0, 0, 0, 0.58) 100%
+					rgba(0, 0, 0, 0.08) 0%,
+					rgba(0, 0, 0, 0.18) 25%,
+					rgba(0, 0, 0, 0.36) 50%,
+					rgba(0, 0, 0, 0.53) 75%,
+					rgba(0, 0, 0, 0.66) 100%
 				);
 		}
 
@@ -549,7 +559,7 @@ import RatingRow from './RatingRow.astro';
 		.marquee-track {
 			display: flex;
 			width: max-content;
-			animation: hero-marquee 32s linear infinite;
+			animation: hero-marquee 22s linear infinite;
 		}
 
 		.marquee-track :global(.pill) {

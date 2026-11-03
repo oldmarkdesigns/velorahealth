@@ -142,8 +142,11 @@ const stories = [
 		transition: opacity 400ms var(--ease);
 	}
 
-	.story:hover .photo img {
-		transform: scale(1.03);
+	/* Entry 219: the zoom only where there is a real pointer; on touch it fired while scrolling. */
+	@media (hover: hover) and (min-width: 1024px) {
+		.story:hover .photo img {
+			transform: scale(1.03);
+		}
 	}
 
 	.story:hover .shade::after,

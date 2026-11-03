@@ -1,7 +1,8 @@
 ---
 import { IMG } from '../data/site';
 
-// The medical basis of the service (entry 151): how the medicine works and what the care team adds.
+// Built on "Så går det till" (entry 151; retitled in entry 213): how the two parts of the treatment,
+// the medicine and the care team, take the patient towards results.
 // Every sentence restates velora.se's own FAQ and treatment steps (docs/facts.md), no stronger:
 // "minskar hungern och suget" (not "ingen hunger"), no "kliniskt bevisat" or "säkert", no drug names.
 const medicine = [
@@ -54,12 +55,12 @@ const results = [
 	<div class="container">
 		<div class="head" data-reveal>
 			<div>
-				<p class="label">Den medicinska grunden</p>
+				<p class="label">Från behandling till resultat</p>
 				<h2 id="basis-title">Läkemedlet hjälper kroppen. <em>Teamet hjälper dig.</em></h2>
 			</div>
 			<p class="lede">
-				Behandlingen vilar på två delar som hänger ihop: ett läkemedel som gör det lättare att äta mindre, och ett
-				vårdteam som ser till att det blir rätt för just dig.
+				Bakom stegen finns två delar som hänger ihop: ett läkemedel som gör det lättare att äta mindre, och ett
+				vårdteam som ser till att det blir rätt för just dig. Tillsammans är de vägen mot resultatet.
 			</p>
 		</div>
 
@@ -205,13 +206,14 @@ const results = [
 		display: flex;
 	}
 
+	/* Entry 213: larger, so the three faces read as people rather than icons. */
 	.avatars img {
-		width: 88px;
-		height: 88px;
+		width: 120px;
+		height: 120px;
 		border-radius: 50%;
 		object-fit: cover;
-		border: 3px solid var(--stone);
-		margin-left: -18px;
+		border: 4px solid var(--stone);
+		margin-left: -24px;
 		background: var(--card);
 	}
 
@@ -312,6 +314,16 @@ const results = [
 
 	/* Three columns are narrow on small laptops: tighter card padding. */
 	@media (min-width: 1024px) and (max-width: 1279px) {
+		.avatars img {
+			width: 96px;
+			height: 96px;
+			margin-left: -20px;
+		}
+
+		.avatars img:first-child {
+			margin-left: 0;
+		}
+
 		.card {
 			--pad-y: 32px;
 			--pad-x: 28px;

@@ -240,6 +240,19 @@ a {
 	}
 }
 
+/* Entry 219: phones and tablets get a plain fade on the hero photo, without the zoom. */
+@keyframes load-photo-fade {
+	from {
+		opacity: 0;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) and (max-width: 1023px) {
+	.js [data-load='photo'] {
+		animation-name: load-photo-fade;
+	}
+}
+
 /*
  * Scroll reveal. Only hides content once JS has confirmed it can reveal it again. Entry 141: a
  * shorter, softer rise (20 px, 1 s) so sections arrive in the same voice as the load sequence.

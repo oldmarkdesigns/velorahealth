@@ -1,30 +1,76 @@
 ---
 import { IMG, VELORA } from '../data/site';
+import CtaButton from './CtaButton.astro';
 
 // Entry 198: the LegitScript certification lives here on every device (it was in the bar under the hero).
 const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
+
+// Entry 217: what was missing from velora.se's own footer (as on /om-oss): the "Kom igång idag" button,
+// the "Velora" link column, the GDPR badge, the payment logos and the copyright line. Links to sections
+// that exist on this page stay on it; the rest go to the same velora.se pages as the original.
+const CDN = 'https://cdn.prod.website-files.com/66e29f6849a1468a576a6554';
+const nav = [
+	{ label: 'Om Velora', href: `${VELORA}/om-oss` },
+	{ label: 'Så fungerar det', href: '#sa-fungerar-det' },
+	{ label: 'Behandlingen', href: `${VELORA}/behandling` },
+	{ label: 'Viktmediciner', href: `${VELORA}/viktmediciner` },
+	{ label: 'Pris', href: '#pris' },
+	{ label: 'Patientberättelser', href: '#patientberattelser' },
+	{ label: 'Information & inspiration', href: `${VELORA}/information-och-inspiration` },
+	{ label: 'Vanliga frågor', href: '#vanliga-fragor' },
+	{ label: 'Jobba hos Velora', href: 'https://karriar.velora.se/' },
+];
+const payments = [
+	{ alt: 'Visa', src: `${CDN}/66e29f6849a1468a576a66e9_visa-card.svg.svg` },
+	{ alt: 'Mastercard', src: `${CDN}/66e29f6849a1468a576a66ea_mastercard.svg.svg` },
+	{ alt: 'American Express', src: `${CDN}/66e29f6849a1468a576a66ec_amex-card.svg.svg` },
+	{ alt: 'Google Pay', src: `${CDN}/66e29f6849a1468a576a66e8_google-pay.svg.svg` },
+	{ alt: 'Apple Pay', src: `${CDN}/66e29f6849a1468a576a66eb_apple-pay.svg.svg` },
+];
 ---
 
 <footer class="footer dark">
 	<div class="container">
-		<span class="mark" style={`--logo: url(${IMG.logoWhite})`} role="img" aria-label="Velora"></span>
-		<div class="cols">
-			<p>Velora drivs och ägs av Velora Health AB, org.nr 559455-0724, och är en IVO-registrerad vårdgivare.</p>
-			<p>
-				<a href="tel:+46852513273">08-525 132 73</a> (vardagar 08–17)<br />
-				<a href="mailto:hej@velora.se">hej@velora.se</a>
-			</p>
+		<div class="top">
+			<div class="brand">
+				<span class="mark" style={`--logo: url(${IMG.logoWhite})`} role="img" aria-label="Velora"></span>
+				<div class="footer-cta"><CtaButton tone="cream" label="Kom igång idag" /></div>
+				<p class="company">Velora drivs och ägs av Velora Health AB, org.nr 559455-0724, och är en IVO-registrerad vårdgivare.</p>
+				<div class="cert">
+					<img src={LEGITSCRIPT_SEAL} alt="LegitScript-sigill" width="34" height="37" loading="lazy" />
+					<p>
+						<span>LegitScript-certifierad</span>
+						<span>IVO-registrerad vårdgivare med legitimerad personal</span>
+					</p>
+				</div>
+				<img class="gdpr" src={`${CDN}/66e29f6849a1468a576a66e7_image%2010.svg`} alt="GDPR Compliant" width="116" height="44" loading="lazy" />
+				<ul class="payments" role="list" aria-label="Betalsätt">
+					{payments.map((p) => <li><img src={p.src} alt={p.alt} height="28" loading="lazy" /></li>)}
+				</ul>
+			</div>
+
+			<nav class="col" aria-labelledby="footer-velora">
+				<p class="col-title" id="footer-velora">Velora</p>
+				<ul role="list">
+					{nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+				</ul>
+			</nav>
+
+			<div class="col">
+				<p class="col-title">Kontakt</p>
+				<ul role="list">
+					<li><a href="tel:+46852513273">08-525 132 73</a> <span class="hours">(vardagar 08–17)</span></li>
+					<li><a href="mailto:hej@velora.se">hej@velora.se</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="bottom">
+			<p>© 2026 Velora Health AB</p>
 			<p class="links">
 				<a href={`${VELORA}/integritetspolicy`}>Integritetspolicy</a>
 				<a href={`${VELORA}/anvandarvillkor`}>Användarvillkor</a>
 				<a href={`${VELORA}/cookies`}>Cookies</a>
-			</p>
-		</div>
-		<div class="cert">
-			<img src={LEGITSCRIPT_SEAL} alt="LegitScript-sigill" width="34" height="37" loading="lazy" />
-			<p>
-				<span>LegitScript-certifierad</span>
-				<span>IVO-registrerad vårdgivare med legitimerad personal</span>
 			</p>
 		</div>
 		<p class="disclaimer">Arbetsprov för rollen Design Engineer, Brand &amp; Growth. Inte en officiell Velora-sida.</p>
@@ -38,6 +84,11 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		color: var(--on-dark-soft);
 	}
 
+	.top {
+		display: grid;
+		gap: 48px;
+	}
+
 	.mark {
 		display: block;
 		height: 56px;
@@ -47,22 +98,17 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		-webkit-mask: var(--logo) left center / contain no-repeat;
 	}
 
-	.cols {
-		display: grid;
-		gap: 24px;
-		margin-top: 56px;
-		padding-top: 28px;
-		border-top: 1px solid var(--line);
+	.footer-cta {
+		margin-top: 32px;
+	}
+
+	.company {
+		margin-top: 28px;
+		max-width: 44ch;
 	}
 
 	a {
 		color: var(--on-dark);
-	}
-
-	.links {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 8px 24px;
 	}
 
 	/* The seal and its two lines, as in the old hero bar, in the footer's light-on-dark colours. */
@@ -70,7 +116,7 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		display: flex;
 		align-items: center;
 		gap: 12px;
-		margin-top: 40px;
+		margin-top: 32px;
 	}
 
 	.cert img {
@@ -90,8 +136,74 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		color: var(--on-dark);
 	}
 
+	.gdpr {
+		display: block;
+		width: auto;
+		height: 32px;
+		margin-top: 28px;
+	}
+
+	.payments {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 12px 20px;
+		margin: 20px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.payments img {
+		display: block;
+		width: auto;
+		height: 24px;
+	}
+
+	.col-title {
+		margin-bottom: 16px;
+		font-size: 0.8125rem;
+	}
+
+	.col ul {
+		display: grid;
+		gap: 10px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: 1rem;
+	}
+
+	.col a {
+		text-decoration: none;
+	}
+
+	.col a:hover {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.hours {
+		font-size: 0.875rem;
+	}
+
+	.bottom {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 16px 24px;
+		margin-top: 56px;
+		padding-top: 28px;
+		border-top: 1px solid var(--line);
+	}
+
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 24px;
+	}
+
 	.disclaimer {
-		margin-top: 40px;
+		margin-top: 32px;
 		font-size: 0.8125rem;
 	}
 
@@ -100,8 +212,9 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 			height: 88px;
 		}
 
-		.cols {
-			grid-template-columns: 2fr 1fr 1fr;
+		/* Brand block on the left, then the two link columns, as on velora.se. */
+		.top {
+			grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
 			gap: 48px;
 		}
 	}

@@ -35,7 +35,11 @@ const team = [
 			}
 		</ul>
 		<!-- Entry 131: one centred booking button under the portraits (replaces entry 129's card and the footnote). -->
-		<div class="team-cta" data-reveal><CtaButton /></div>
+		<!-- Entry 216: a secondary "Läs mer om vårt team" to its left. A placeholder: no team page to link to yet. -->
+		<div class="team-cta" data-reveal>
+			<a class="secondary" role="link" aria-disabled="true">Läs mer om vårt team</a>
+			<CtaButton />
+		</div>
 	</div>
 </section>
 
@@ -120,8 +124,47 @@ const team = [
 		background: var(--stone);
 	}
 
+	/*
+	 * Entry 216: the two buttons side by side and centred. wrap-reverse means that when they don't fit
+	 * on one line (phones), the booking button goes on top and the secondary one under it.
+	 */
 	.team-cta {
+		display: flex;
+		flex-wrap: wrap-reverse;
+		justify-content: center;
+		align-items: center;
+		gap: 12px;
 		margin-top: 16px;
+	}
+
+	/* Outline version of CtaButton, same height and type, no arrow. */
+	.secondary {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 52px;
+		padding: 0 26px;
+		border: 1px solid var(--wine);
+		border-radius: 999px;
+		color: var(--wine);
+		font-weight: 600;
+		font-size: 0.9375rem;
+		letter-spacing: 0.005em;
+		white-space: nowrap;
+		cursor: pointer;
+		transition: background-color 240ms var(--ease);
+	}
+
+	.secondary:hover {
+		background: rgba(82, 19, 36, 0.06);
+	}
+
+	@media (max-width: 479px) {
+		.secondary {
+			min-height: 52px;
+			padding: 0 24px;
+			font-size: 0.9375rem;
+		}
 	}
 
 	.team-cta :global(.cta) {

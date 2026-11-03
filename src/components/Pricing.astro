@@ -76,12 +76,19 @@ const maintenance = [
 			<dl>
 				<div class="row">
 					<dt>Hälsokontroll <span class="when">en gång</span></dt>
-					<dd class="desc">Blodprover och läkargenomgång. Har du nyligen tagit proverna betalar du bara för genomgången, 495 kr.</dd>
+					<dd class="desc">Blodprover och läkargenomgång. Har du nyligen tagit proverna betalar du bara för genomgången, 495 kr.
+						<!-- Entry 215: a placeholder link. velora.se has no page listing the tests yet, so it goes nowhere. -->
+						<a class="more" role="link" aria-disabled="true">Läs mer om vilka prover vi behöver</a>
+					</dd>
 					<dd class="amount">995 <span class="unit">kr</span></dd>
 				</div>
 				<div class="row">
 					<dt>Läkemedel <span class="when">apotek</span></dt>
-					<dd class="desc">Beror på läkemedel och dos (oktober 2026).</dd>
+					<dd class="desc">
+						Beror på läkemedel och dos (oktober 2026).
+						<!-- Entry 215: the same link and target as velora.se's price accordion. -->
+						<a class="more" href={`${VELORA}/behandling#item-kostnad-medicin`}>Läs mer om pris för läkemedel</a>
+					</dd>
 					<dd class="amount"><span class="unit">ca</span> 1 050–4 800 <span class="unit">kr/mån</span></dd>
 				</div>
 			</dl>
@@ -311,6 +318,16 @@ const maintenance = [
 	.desc strong {
 		color: var(--ink);
 		font-weight: 600;
+	}
+
+	/* Entry 215: "Läs mer" links on their own line under each cost, underlined like velora.se's. */
+	.desc .more {
+		display: block;
+		width: fit-content;
+		margin-top: 4px;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		cursor: pointer;
 	}
 
 	/* Entry 90: the stamp and its text centered as one group under the table. */

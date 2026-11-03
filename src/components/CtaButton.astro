@@ -32,14 +32,15 @@ const { size = 'md', tone = 'wine', inline = true, label = CTA.label } = Astro.p
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: 14px;
-		min-height: 58px;
-		padding: 0 30px;
+		/* Entry 221: lighter on desktop too (was 58 px tall, 30 px padding, 16 px text). */
+		gap: 12px;
+		min-height: 52px;
+		padding: 0 26px;
 		border-radius: 999px;
 		background: var(--wine);
 		color: var(--cream);
 		font-weight: 600;
-		font-size: 1rem;
+		font-size: 0.9375rem;
 		letter-spacing: 0.005em;
 		text-decoration: none;
 		white-space: nowrap;

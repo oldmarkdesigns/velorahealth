@@ -596,9 +596,12 @@ const cards = [
 		background: linear-gradient(to top, rgba(82, 19, 36, 0.72) 0%, rgba(82, 19, 36, 0) 55%);
 	}
 
-	.card:hover img,
-	.card:focus-visible img {
-		transform: scale(1.04);
+	/* Entry 219: no image zoom on touch screens or below desktop width. */
+	@media (hover: hover) and (min-width: 1024px) {
+		.card:hover img,
+		.card:focus-visible img {
+			transform: scale(1.04);
+		}
 	}
 
 	.card-label {
