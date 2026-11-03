@@ -4,7 +4,16 @@
 // - "5 000+ patienter": from a Trustpilot snippet supplied by Samuel; not found on velora.se, so
 //   flagged in docs/facts.md for confirmation with Velora.
 // - Services and certifications: velora.se (docs/facts.md).
-const services = ['Läkarmöten via video', 'Hälsokontroll', 'Dietist och coach'];
+import videoIcon from '@phosphor-icons/core/assets/light/video-camera-light.svg?raw';
+import testTubeIcon from '@phosphor-icons/core/assets/light/test-tube-light.svg?raw';
+import foodIcon from '@phosphor-icons/core/assets/light/bowl-food-light.svg?raw';
+
+// Icons show on phones only (entry 145), where the services become a three-column grid.
+const services = [
+	{ label: 'Läkarmöten via video', icon: videoIcon },
+	{ label: 'Hälsokontroll', icon: testTubeIcon },
+	{ label: 'Dietist och coach', icon: foodIcon },
+];
 const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 ---
 
@@ -16,7 +25,14 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		</p>
 
 		<ul class="services" role="list" aria-label="Det här ingår">
-			{services.map((s) => <li>{s}</li>)}
+			{
+				services.map((s) => (
+					<li>
+						<span class="service-icon" aria-hidden="true" set:html={s.icon} />
+						{s.label}
+					</li>
+				))
+			}
 		</ul>
 
 		<div class="cert">
@@ -67,24 +83,66 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		transform: translateY(-0.3em);
 	}
 
-	/* Plain labels, no pills (entry 46). Narrow phones: a short stacked list. */
+	/*
+	 * Phones (entry 145, option A): the services come first, as a three-column grid of icons with
+	 * short labels between two rules; the figure and the certification follow, as before.
+	 */
 	.services {
 		list-style: none;
 		margin: 0;
-		padding: 0;
+		padding: 16px 0;
 		display: grid;
-		gap: 6px;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 12px;
+		border-block: 1px solid var(--line);
+		order: -1;
 	}
 
 	.services li {
+		display: grid;
+		justify-items: center;
+		gap: 8px;
+		text-align: center;
+		font-size: 0.8125rem;
+		font-weight: 500;
+		line-height: 1.3;
+		color: var(--ink);
+	}
+
+	.service-icon {
 		display: flex;
-		align-items: center;
-		font-size: 0.75rem;
-		font-weight: 600;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--ink-soft);
-		white-space: nowrap;
+		color: var(--wine);
+	}
+
+	.service-icon :global(svg) {
+		width: 26px;
+		height: 26px;
+	}
+
+
+	/* Plain labels, no pills (entry 46), from 560 px: no icons, small capitals. */
+	@media (min-width: 560px) {
+		.services {
+			order: 0;
+			padding: 0;
+			border: 0;
+		}
+
+		.services li {
+			display: flex;
+			align-items: center;
+			font-size: 0.75rem;
+			font-weight: 600;
+			letter-spacing: 0.08em;
+			line-height: 1.6;
+			text-transform: uppercase;
+			color: var(--ink-soft);
+			white-space: nowrap;
+		}
+
+		.service-icon {
+			display: none;
+		}
 	}
 
 	/* Just the seal and the text, no card around them. */
@@ -96,14 +154,21 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 	}
 
 	.cert img {
+		flex: none;
 		width: 34px;
 		height: auto;
 	}
 
 	.cert p {
 		display: grid;
-		font-size: 0.8125rem;
+		font-size: 0.75rem;
 		line-height: 1.35;
+	}
+
+	@media (min-width: 560px) {
+		.cert p {
+			font-size: 0.8125rem;
+		}
 	}
 
 	.cert span:first-child {

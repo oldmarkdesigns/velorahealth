@@ -98,7 +98,30 @@ const cards = [
 		<div class="actions">
 			<a class="login" href="https://velora.kaddio.com/login">Logga in</a>
 			<div class="header-cta"><CtaButton size="sm" inline={false} label="Kom igång" /></div>
+			<!-- Entry 144: below 1024 px the links and "Logga in" live behind a two-stroke burger. -->
+			<button
+				type="button"
+				class="burger"
+				aria-expanded="false"
+				aria-controls="mobile-menu"
+				aria-label="Meny"
+				data-burger
+			>
+				<span aria-hidden="true"></span>
+				<span aria-hidden="true"></span>
+			</button>
 		</div>
+	</div>
+	<div class="mobile-menu" id="mobile-menu" data-mobile-menu>
+		<nav aria-label="Huvudmeny" class="container mobile-nav">
+			<a href="#sa-fungerar-det">Behandlingen</a>
+			<a href="#faq-varfor-lakemedel">Viktmediciner</a>
+			<a href="#patientberattelser">Patientberättelser</a>
+			<a href="#vardteam">Om Velora</a>
+			<a href="#pris">Pris</a>
+			<a href="#vanliga-fragor">Vanliga frågor</a>
+			<a class="mobile-login" href="https://velora.kaddio.com/login">Logga in</a>
+		</nav>
 	</div>
 </header>
 <div class="menu-scrim" data-menu-scrim aria-hidden="true"></div>
@@ -143,6 +166,39 @@ const cards = [
 		window.addEventListener('scroll', () => {
 			if (!frame) frame = requestAnimationFrame(check);
 		}, { passive: true });
+	}
+
+	// Entry 144: the mobile burger menu. Opening it turns the bar into one cream surface with the
+	// panel (the same is-open state as the desktop menu) and dims the page behind it.
+	const burger = header?.querySelector<HTMLButtonElement>('[data-burger]');
+	const mobileMenu = header?.querySelector<HTMLElement>('[data-mobile-menu]');
+	if (header && burger && mobileMenu && scrim) {
+		const setMobileOpen = (open: boolean) => {
+			burger.setAttribute('aria-expanded', String(open));
+			burger.setAttribute('aria-label', open ? 'Stäng meny' : 'Meny');
+			header.classList.toggle('is-open', open);
+			header.classList.toggle('is-mobile-open', open);
+			scrim.classList.toggle('is-open', open);
+			if (open) header.classList.remove('is-hidden');
+		};
+		const mobileOpen = () => burger.getAttribute('aria-expanded') === 'true';
+
+		burger.addEventListener('click', () => setMobileOpen(!mobileOpen()));
+		// Every link jumps within the page (or leaves for the login), so close the menu behind it.
+		mobileMenu.addEventListener('click', (e) => {
+			if ((e.target as Element).closest('a')) setMobileOpen(false);
+		});
+		scrim.addEventListener('click', () => setMobileOpen(false));
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && mobileOpen()) {
+				setMobileOpen(false);
+				burger.focus();
+			}
+		});
+		// Rotating to a desktop width closes it, since the burger disappears there.
+		window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+			if (e.matches && mobileOpen()) setMobileOpen(false);
+		});
 	}
 
 	if (header && menu && button && scrim) {
@@ -540,14 +596,145 @@ const cards = [
 		gap: 8px;
 	}
 
-	.header-cta {
+	/*
+	 * Entry 144, below 1024 px: logo, "Kom igång" and a two-stroke burger. The nav links and
+	 * "Logga in" move into the burger's panel.
+	 */
+	.actions .login {
 		display: none;
 	}
 
+	.burger {
+		all: unset;
+		box-sizing: border-box;
+		position: relative;
+		display: grid;
+		width: 44px;
+		height: 44px;
+		margin-right: -10px;
+		cursor: pointer;
+		color: var(--ink);
+	}
+
+	.burger span {
+		position: absolute;
+		left: 11px;
+		right: 11px;
+		height: 1.5px;
+		border-radius: 1px;
+		background: currentColor;
+		transition:
+			translate 300ms var(--ease),
+			rotate 300ms var(--ease);
+	}
+
+	.burger span:first-child {
+		top: 18px;
+	}
+
+	.burger span:last-child {
+		top: 25px;
+	}
+
+	/* Open: the two strokes meet in the middle and cross. */
+	.burger[aria-expanded='true'] span:first-child {
+		translate: 0 3.5px;
+		rotate: 45deg;
+	}
+
+	.burger[aria-expanded='true'] span:last-child {
+		translate: 0 -3.5px;
+		rotate: -45deg;
+	}
+
+	.burger:focus-visible {
+		outline: 2px solid var(--wine);
+		outline-offset: -4px;
+		border-radius: 8px;
+	}
+
+	/* The panel drops from the bar as one cream surface, like the desktop Viktmediciner menu. */
+	.mobile-menu {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		background: var(--cream);
+		border-bottom-left-radius: var(--radius);
+		border-bottom-right-radius: var(--radius);
+		box-shadow: 0 24px 48px -24px rgba(74, 20, 48, 0.28);
+		visibility: hidden;
+		opacity: 0;
+		transform: translateY(-8px);
+		transition:
+			opacity 300ms var(--ease),
+			transform 300ms var(--ease),
+			visibility 0s linear 300ms;
+	}
+
+	.is-mobile-open .mobile-menu {
+		visibility: visible;
+		opacity: 1;
+		transform: none;
+		transition-delay: 0s;
+	}
+
+	.mobile-nav {
+		display: grid;
+		padding-block: 8px 28px;
+	}
+
+	.mobile-nav a {
+		padding: 14px 0;
+		border-bottom: 1px solid var(--line);
+		color: var(--ink);
+		font-family: var(--serif);
+		font-size: 1.5rem;
+		font-weight: 340;
+		line-height: 1.2;
+		text-decoration: none;
+	}
+
+	/* "Logga in" closes the list as an outline pill, apart from the section links. */
+	.mobile-nav .mobile-login {
+		justify-self: start;
+		margin-top: 24px;
+		padding: 12px 24px;
+		border: 1px solid rgba(74, 20, 48, 0.35);
+		border-radius: 999px;
+		font-family: var(--sans);
+		font-size: 0.9375rem;
+		font-weight: 600;
+	}
+
+	/* The narrowest phones (320 px): a smaller logo and tighter button so the burger stays on screen. */
+	@media (max-width: 359px) {
+		.inner {
+			gap: 12px;
+		}
+
+		.mark {
+			height: 22px;
+		}
+
+		.header-cta :global(.btn) {
+			padding: 0 14px;
+			gap: 8px;
+		}
+	}
+
 	@media (min-width: 1024px) {
-		.nav,
-		.header-cta {
+		.nav {
 			display: flex;
+		}
+
+		.actions .login {
+			display: inline-flex;
+		}
+
+		.burger,
+		.mobile-menu {
+			display: none;
 		}
 	}
 
@@ -600,7 +787,9 @@ const cards = [
 		.trigger svg,
 		.card img,
 		.card-arrow,
-		.row-name {
+		.row-name,
+		.burger span,
+		.mobile-menu {
 			transition: none;
 		}
 	}

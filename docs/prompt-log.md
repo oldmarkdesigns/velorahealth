@@ -942,3 +942,31 @@ Make the page feel smooth on load with subtle, coordinated entrance animations a
 ```
 Commit and push all pending changes.
 ```
+
+## 143 – Not yet (deploy) (Claude Code, 2026-11-03, button answer)
+
+```
+Not yet
+```
+
+## 144 – Mobile: burger menu, hero options, no sticky CTA (Claude Code, 2026-11-03)
+
+```
+We need to fix a few things on mobile. Add a two-stroke burger menu to the navbar and put the navigation links and “Logga in” inside it. Keep “Kom igång” visible as the navbar button.
+
+The hero also needs a better mobile layout. The pill is missing, and the “Läkarmöten via video” statements aren’t displayed well. Show me a couple of layout options before changing the hero.
+
+Remove the sticky “Boka gratis bedömningssamtal” button at the bottom on mobile. The rest of the sections look good, so leave them unchanged.
+```
+
+## 145 – Build mobile hero option A (Claude Code, 2026-11-03, button answer)
+
+```
+Build option A: the trust pill on the photo and the services as an icon grid under the button.
+```
+
+## 146 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```
