@@ -151,6 +151,13 @@ const stories = [
 		opacity: 1;
 	}
 
+	/* Entry 178: phones and tablets have no hover, so the extra dark wash is always on there. */
+	@media (max-width: 1023px) {
+		.shade::after {
+			opacity: 1;
+		}
+	}
+
 	/* Fills the card (so the stretched link below covers all of it); the text sits at the foot. */
 	.body {
 		position: absolute;

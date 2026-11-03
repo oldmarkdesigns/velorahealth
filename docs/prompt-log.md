@@ -1185,3 +1185,21 @@ Okey let's have 5000+ patients on the left of trustpilot
 ```
 Commit and push all pending changes.
 ```
+
+## 178 – Story cards' hover darkening always on, on mobile (Claude Code, 2026-11-03)
+
+```
+For mobile - let the dark overlay hover effect be permanent and always on
+```
+
+## 179 – Original hero photo in "Första steget är ett samtal" (Claude Code, 2026-11-03)
+
+```
+Use the previous hero image that was in the original build to replace the image that now is in the last section "Första steget är ett samtal"
+```
+
+## 180 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```

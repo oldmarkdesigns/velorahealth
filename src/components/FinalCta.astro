@@ -5,7 +5,16 @@ import CtaButton from './CtaButton.astro';
 
 <!-- Bookends the page: a second full-bleed photo with the same cream veil as the hero. -->
 <section class="final" aria-labelledby="final-title">
-	<img src={IMG.sofa} alt="Ung kvinna som sitter i soffan och ler" width="1024" height="1024" loading="lazy" />
+	<!-- Entry 179: velora.se's own hero photo (the page's original hero), a video meeting at home. -->
+	<img
+		src={IMG.heroMedium}
+		srcset={`${IMG.heroSmall} 800w, ${IMG.heroMedium} 1080w, ${IMG.hero} 1500w`}
+		sizes="(min-width: 1024px) 60vw, 100vw"
+		alt="Kvinna i en soffa som har ett videomöte på mobilen"
+		width="1500"
+		height="1355"
+		loading="lazy"
+	/>
 	<div class="veil" aria-hidden="true"></div>
 	<div class="container content" data-reveal>
 		<h2 id="final-title">Första steget är <em>ett samtal.</em></h2>
@@ -57,20 +66,11 @@ import CtaButton from './CtaButton.astro';
 		margin-top: 32px;
 	}
 
+	/*
+	 * Entry 179: tablets keep the phone layout (photo on top, text below). The photo is nearly square,
+	 * so full-bleed behind the text it can't move far enough right and the text crosses her face.
+	 */
 	@media (min-width: 768px) {
-		.final {
-			align-items: center;
-		}
-
-		img {
-			height: 100%;
-			object-position: 70% 35%;
-		}
-
-		.veil {
-			background: linear-gradient(to right, var(--cream) 0%, rgba(247, 242, 236, 0.9) 32%, rgba(247, 242, 236, 0) 60%);
-		}
-
 		.content {
 			padding-block: 120px;
 		}
@@ -78,7 +78,12 @@ import CtaButton from './CtaButton.astro';
 
 	/* Same split-bleed as the hero on wide screens. */
 	@media (min-width: 1024px) {
+		.final {
+			align-items: center;
+		}
+
 		img {
+			height: 100%;
 			inset: 0 0 0 auto;
 			width: 60%;
 			object-position: 50% 30%;
