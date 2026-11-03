@@ -79,7 +79,11 @@ const maintenance = [
 			<h3 class="costs-heading">
 				<button class="costs-toggle" type="button" id="costs-title" aria-expanded="false" aria-controls="costs-panel" data-costs-toggle>
 					<span class="costs-title">Kostnader som tillkommer</span>
-					<span class="plus" aria-hidden="true" set:html={plusIcon} />
+					<!-- Entry 239: "Läs mer" / "Läs mindre" back beside the plus. -->
+					<span class="more-label">
+						<span data-costs-label>Läs mer</span>
+						<span class="plus" aria-hidden="true" set:html={plusIcon} />
+					</span>
 				</button>
 			</h3>
 			<div class="costs-panel" id="costs-panel" role="region" aria-labelledby="costs-title" data-costs-panel>
@@ -250,9 +254,10 @@ const maintenance = [
 	}
 
 	/* Entry 233: the extra costs as one card; the heading is a full-width button. */
+	/* Entry 237: an outline only, no fill. */
 	.costs-card {
+		border: 1px solid var(--line);
 		border-radius: var(--radius);
-		background: var(--card);
 	}
 
 	.costs-heading {
@@ -266,7 +271,8 @@ const maintenance = [
 		align-items: center;
 		justify-content: space-between;
 		gap: 16px;
-		padding: 24px;
+		/* Entry 240: a shorter card (was 24 px all round). */
+		padding: 16px 20px;
 		border: 0;
 		border-radius: var(--radius);
 		background: none;
@@ -279,7 +285,8 @@ const maintenance = [
 	.costs-title {
 		font-family: var(--serif);
 		font-weight: 340;
-		font-size: 1.5rem;
+		/* Entry 240: smaller (was 24 px). */
+		font-size: 1.25rem;
 		line-height: 1.15;
 	}
 
@@ -290,9 +297,19 @@ const maintenance = [
 		transition: rotate 380ms var(--ease);
 	}
 
+	.more-label {
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		gap: 8px;
+		font-weight: 600;
+		font-size: 0.9375rem;
+	}
+
+	/* Entry 239: a little smaller (was 36 px). */
 	.costs-toggle .plus :global(svg) {
-		width: 36px;
-		height: 36px;
+		width: 26px;
+		height: 26px;
 	}
 
 	.costs-toggle[aria-expanded='true'] .plus {
@@ -338,7 +355,7 @@ const maintenance = [
 	.costs-inner {
 		min-height: 0;
 		overflow: hidden;
-		padding-inline: 24px;
+		padding-inline: 20px;
 	}
 
 	.costs-inner dl {
@@ -427,8 +444,8 @@ const maintenance = [
 		justify-content: center;
 		align-items: center;
 		gap: 20px;
+		/* Entry 238: no rule above; the outlined costs card already closes off the section above it. */
 		padding-top: 24px;
-		border-top: 1px solid var(--line);
 	}
 
 	.guarantee .desc {
@@ -457,7 +474,6 @@ const maintenance = [
 			align-items: center;
 			gap: 48px;
 			padding-top: 32px;
-			border-top: 1px solid var(--line);
 		}
 
 		.foot-pair .guarantee {
@@ -512,7 +528,7 @@ const maintenance = [
 		}
 
 		.costs-toggle {
-			padding: 28px 32px;
+			padding: 20px 32px;
 		}
 
 		.costs-inner {
@@ -576,11 +592,13 @@ const maintenance = [
 	// Entries 232–233: the card's heading opens and closes the extra costs.
 	const toggle = document.querySelector<HTMLButtonElement>('[data-costs-toggle]');
 	const panel = document.querySelector<HTMLElement>('[data-costs-panel]');
+	const label = toggle?.querySelector<HTMLElement>('[data-costs-label]');
 	if (toggle && panel) {
 		toggle.addEventListener('click', () => {
 			const open = toggle.getAttribute('aria-expanded') !== 'true';
 			toggle.setAttribute('aria-expanded', String(open));
 			panel.classList.toggle('is-open', open);
+			if (label) label.textContent = open ? 'Läs mindre' : 'Läs mer';
 		});
 	}
 </script>

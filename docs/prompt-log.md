@@ -1580,3 +1580,33 @@ Make the mobile nav dropdown fill the full viewport height. When Viktmediciner i
 ```
 Commit and push all pending changes.
 ```
+
+## 237 – Outline-only card for "Kostnader som tillkommer" (Claude Code, 2026-11-03)
+
+```
+Let's make the card have stroke only for kostnader som tillkommer
+```
+
+## 238 – Remove the line under the costs card (Claude Code, 2026-11-03)
+
+```
+remove the underline under the card
+```
+
+## 239 – "Läs mer" text back in the costs card, smaller plus (Claude Code, 2026-11-03)
+
+```
+add back läs mer text - and make the + a little smaller
+```
+
+## 240 – Smaller title and a shorter costs card (Claude Code, 2026-11-03)
+
+```
+make kostnader som tillkommer title smaller too and the cards height less tall too
+```
+
+## 241 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```
