@@ -1,5 +1,6 @@
 ---
 import { IMG } from '../data/site';
+import CtaButton from './CtaButton.astro';
 
 const team = [
 	{ name: 'Mina Munktell', title: 'Specialistsjuksköterska inom viktnedgång och hälsa', img: IMG.mina },
@@ -33,10 +34,8 @@ const team = [
 				))
 			}
 		</ul>
-		<p class="footnote">
-			Läkare, sjuksköterska, dietist och coach. Ett urval av våra legitimerade kliniker. Alla legitimationer är registrerade
-			hos Socialstyrelsen.
-		</p>
+		<!-- Entry 131: one centred booking button under the portraits (replaces entry 129's card and the footnote). -->
+		<div class="team-cta" data-reveal><CtaButton /></div>
 	</div>
 </section>
 
@@ -119,6 +118,14 @@ const team = [
 		object-fit: cover;
 		border-radius: 50%;
 		background: var(--stone);
+	}
+
+	.team-cta {
+		margin-top: 16px;
+	}
+
+	.team-cta :global(.cta) {
+		justify-items: center;
 	}
 
 	h3 {

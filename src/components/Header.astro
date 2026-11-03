@@ -225,7 +225,7 @@ const cards = [
 		backdrop-filter: blur(20px) saturate(140%);
 		-webkit-backdrop-filter: blur(20px) saturate(140%);
 		border: 1px solid rgba(255, 255, 255, 0.55);
-		box-shadow: 0 12px 32px -20px rgba(44, 0, 21, 0.35);
+		box-shadow: 0 12px 32px -20px rgba(74, 20, 48, 0.35);
 		opacity: 0;
 		transition: opacity 300ms var(--ease);
 		pointer-events: none;
@@ -297,9 +297,40 @@ const cards = [
 		font-weight: 500;
 	}
 
-	.nav-link:hover,
-	.login:hover {
+	.nav-link:hover {
 		text-decoration: underline;
+	}
+
+	/*
+	 * Entries 108–109: "Logga in" is a pill beside the wine CTA, same height as the small button.
+	 * Entry 123: solid white with wine text (it was a white outline). On the floating cream bar or an
+	 * open menu it stays white, with a faint wine edge so it doesn't melt into the cream.
+	 */
+	.login {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 0 20px;
+		border-radius: 999px;
+		border: 1px solid #fff;
+		background: #fff;
+		color: var(--wine);
+		font-size: 0.875rem;
+		font-weight: 600;
+		transition:
+			background-color 240ms var(--ease),
+			color 240ms var(--ease),
+			border-color 240ms var(--ease);
+	}
+
+	.login:hover {
+		background: var(--cream);
+		border-color: var(--cream);
+	}
+
+	.header.is-scrolled .login,
+	.header.is-open .login {
+		border-color: rgba(74, 20, 48, 0.14);
 	}
 
 	.trigger {
@@ -343,7 +374,7 @@ const cards = [
 		background: var(--cream);
 		border-bottom-left-radius: var(--radius);
 		border-bottom-right-radius: var(--radius);
-		box-shadow: 0 24px 48px -24px rgba(44, 0, 21, 0.28);
+		box-shadow: 0 24px 48px -24px rgba(74, 20, 48, 0.28);
 		visibility: hidden;
 		opacity: 0;
 		transform: translateY(-8px);
@@ -393,7 +424,7 @@ const cards = [
 		content: '';
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(to top, rgba(44, 0, 21, 0.72) 0%, rgba(44, 0, 21, 0) 55%);
+		background: linear-gradient(to top, rgba(74, 20, 48, 0.72) 0%, rgba(74, 20, 48, 0) 55%);
 	}
 
 	.card:hover img,
@@ -491,7 +522,7 @@ const cards = [
 		position: fixed;
 		inset: 0;
 		z-index: 9;
-		background: rgba(44, 0, 21, 0.18);
+		background: rgba(74, 20, 48, 0.18);
 		opacity: 0;
 		pointer-events: none;
 		transition: opacity 300ms var(--ease);
@@ -502,10 +533,11 @@ const cards = [
 		pointer-events: auto;
 	}
 
+	/* Entry 109: the two buttons sit close together. */
 	.actions {
 		display: flex;
 		align-items: center;
-		gap: 24px;
+		gap: 8px;
 	}
 
 	.header-cta {
@@ -537,8 +569,18 @@ const cards = [
 			font-size: 0.875rem;
 		}
 
-		.actions {
-			gap: 16px;
+
+		/* Entry 108: room for the white "Logga in" pill on small laptops. */
+		.inner {
+			gap: 20px;
+		}
+
+		.nav {
+			gap: 13px;
+		}
+
+		.login {
+			padding: 0 14px;
 		}
 	}
 

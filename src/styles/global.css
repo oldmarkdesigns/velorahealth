@@ -4,16 +4,16 @@
 @import 'lenis/dist/lenis.css';
 
 :root {
-	/* Deep wine is the one primary colour: every CTA, accent and emphasis. */
-	--wine: #2c0015;
-	--wine-hover: #4a0a2a;
-	--ink: #2c0015;
+	/* Deep wine is the one primary colour: every CTA, accent and emphasis. Entry 115: lifted from #2c0015. */
+	--wine: #4a1430;
+	--wine-hover: #64203f;
+	--ink: #4a1430;
 	--ink-soft: #6b5560;
 	--cream: #f7f2ec;
 	--stone: #ede4da;
 	--card: #fffdfa;
 	--rose: #e8c9d3;
-	--line: rgba(44, 0, 21, 0.14);
+	--line: rgba(74, 20, 48, 0.14);
 	--on-dark: #f7f2ec;
 	--on-dark-soft: rgba(247, 242, 236, 0.7);
 	--line-dark: rgba(247, 242, 236, 0.18);

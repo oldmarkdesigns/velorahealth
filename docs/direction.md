@@ -531,3 +531,61 @@ All three keep the step text, heading and lede unchanged, and use Phosphor icons
 - The cost table is capped at 880px and centered under the plan cards (which span 1280px). Rows are tighter: 16px padding (was 22px). Type is smaller: names 17px (was 20), amounts 20px (was 22), explanations 13px (was 14). Desktop columns are 3:5:3 with 28px gaps; tablets keep 3:4:4.
 - The 30-day guarantee row is one centered group (stamp plus text, text capped at 46ch) instead of being aligned to the table columns. It's within 3px of center at 1440, 768 and 375px.
 - At 1440px the table is 302px tall. No overflow at 1440, 768 or 375px. On phones the medicine row now fits name and amount on one line. Wording and plan cards are unchanged.
+
+### Velorametoden button label (entry 92)
+- The booking button on the Velorametoden card now reads "Kom igång", like the navbar and the steps booking tile. The link is unchanged (velora.se/kom-igang). The hero, sticky bar and final CTA keep "Boka gratis bedömningssamtal", so the page now uses two labels for the same action. That departs from the one-label principle in §8 at Samuel's request.
+
+### Smaller Underhåll price (entries 93–94)
+- The Underhåll price is now `clamp(3rem, 8vw, 4.25rem)`: 68px at 1440px, against 112px for Velorametoden. The main plan clearly leads. A first step to 88px was still too large, per Samuel.
+- Prices never wrap (`white-space: nowrap`). The cards stay equal height (517px at 1440).
+
+### Underhåll price sized to align the dividers (entry 95)
+- Side by side (≥1024px), the Underhåll price is `calc((7rem * 0.9 - 4rem) / 0.9)`, about 41px. That's exactly what aligns both checklist dividers: Underhåll's price line plus its intro block (16px of gap and two 24px lines) equals Velorametoden's 112px price line. Measured 0px apart at 1024, 1440 and 1920px. "kr/mån" stays on the line, and the cards stay equal height.
+- Below 1024px the cards stack, so nothing needs to align. The entry 94 size (`clamp(3rem, 8vw, 4.25rem)`) still applies there.
+- The formula assumes the intro wraps to exactly two lines. It does at every desktop width (its column is at least 367px, and the intro is capped at 40ch).
+
+### Story link hover animation (entry 96)
+- Entry 84's arrow appeared instantly: its slot switched from `display: none` to inline, so the underline jumped. Now the slot's `font-size` animates from 0 to 1em (380ms ease-out), so the link's own underline glides out to the right. The arrow (a fixed 15px masked Phosphor icon) fades in 60ms later and slides 10px into place. Moving off reverses both.
+- Measured in the browser: the slot grows 0 → 18px over about 320ms with an ease-out curve, and the arrow's opacity reaches 1 at about 370ms. At rest the slot is 0px wide, so the resting look is unchanged. Only mouse hover triggers it (keyboard focus shows the end state); touch screens are untouched, and reduced motion turns the animation off.
+
+### Lakeside hero image (entries 97–100)
+- Samuel generated the new hero from my image-to-image prompt (entry 99), using a reference cabin photo: a woman in a woven oak chair under a wine-red blanket, on a phone video call by a large window onto a forest lake, with the left half open. It's saved as `public/images/hero-lake.webp` (1376×768). It replaces the sunset trial; `hero-sunset.webp` is still in `public/` but unused.
+- Desktop (≥1024px): the photo fills the panel unfaded, at object-position 70% 50%. The photo is light, so the hero text is wine again rather than cream (entry 83's cream suited the darker sunset). A soft three-layer cream glow lifts it off the dark treeline, and the italic line is a deeper #4a2a38. Readable at 1024 and 1440px, with the woman clear of the text.
+- Tablets (768–1023px) now use the phone layout: photo on top, text below on cream. On a tall tablet screen the landscape photo put her behind the headline and the intro text over the dark floor. Phones are unchanged in structure, cropped at 82% 50%.
+- Still open: this is an AI-generated person, which the brief rules out "if they look like patients". She is shown as someone using the service (a video call from home), not as a before/after or outcome. This choice must be motivated in the decision document. The image is also only 1376px wide, so a larger render would be sharper on big screens.
+
+### Sharper hero image and progressive blur (entry 101)
+- Sharpness: the generated image is only 1376px wide. I made `hero-lake-2x.webp` (2752×1536) with a Lanczos 2× upscale and a gentle unsharp mask (radius 2, 70 %), and lightly sharpened the 1x file too (Pillow). `srcset` serves the 2x file to high-density and wide screens. This restores edge contrast but can't add real detail; a native high-resolution render is still the better fix. The untouched original is the attachment from entry 100.
+- Blur (desktop, ≥1024px): two backdrop-blur layers over the photo, 4px and then 14px, each masked with a right-to-left gradient (soft from 40 to 62 %, strong from 58 to 92 % of the width, measured from the right). The image stays clear on the right, around the woman, and the blur builds gradually to its strongest at the left edge behind the text. Phones and tablets don't need it (text sits below the photo), so the layers are hidden there. The rest of the hero is unchanged.
+
+### Dark wash instead of blur (entry 102)
+- On desktop the entry 101 blur is replaced by a wine-black gradient, transparent on the right (to 34 % from the right edge) and deepening in eased steps to 60 % opacity at the left edge. The woman on the right is untouched.
+- On the darker left side the hero text is light cream again (like entry 83), with a soft wine-black shadow; the italic line is at 88 % cream. Readable at 1024 and 1440px. Phones and tablets are unchanged (text below the photo, no wash). The sharpened 2× image from entry 101 stays.
+
+### New hero photo, crop, top fade and black overlay (entries 103–105)
+- New hero photo from Samuel (1679×937, a closer and larger render of the lakeside scene). As in entry 101, there's a lightly sharpened 1x file and a Lanczos 2× (3358px) with an unsharp mask, served via `srcset`.
+- Desktop crop is 100% 50% (as far right as it goes). At 1024–1279px the image is cropped tighter, so the headline steps down to 60px (from 72) to stay clear of her. A first attempt narrowed the text column instead, which squeezed and clipped the trust pill, so it was reverted.
+- Entry 104: the light wash at the top of the hero is gone at every width; the photo now runs right up to the navbar. Phones keep the bottom dissolve into cream.
+- Entry 105: the left-side overlay is now pure black (rgba 0,0,0; up to 60 %) instead of a wine-black.
+- Open: without the top wash, the wine logo, the nav links and "Logga in" sit straight on the photo. They read poorly over the darker left and the window frame (most visible at 1024px).
+
+### No dark overlay (entry 106, trial)
+- The desktop black overlay is switched off (`.shade` set to `display: none`, CSS kept for a quick restore).
+- On the bare, light photo the cream text from entry 102 disappeared into the sky and water, so the hero text is wine again with a three-layer cream glow, and the italic line is #4a2a38 (as in entry 100). Readable at 1440px, though the headline's first line crosses the dark treeline.
+- Without the overlay the navbar's wine text reads better on the lighter photo. "Logga in" over the wooden window frame is still faint.
+
+### Hero card, Logga in button, top-to-bottom overlay (entries 107–112)
+- Entries 107, 110–112: the pill, headline, intro and CTA sit in a `.hero-card` wrapper on desktop. It went from frosted light glass to dark glass to plain dark grey, and now has no fill (entry 112), so it only groups and pads the content. At 1024–1279px it's capped at 660px with a compact trust pill (28px avatars and icons, 15px text); avatars and icons no longer shrink. A first try used CSS `zoom` on the pill, which misdrew the avatars over the text, so it was replaced.
+- Entry 112: the desktop overlay now runs top to bottom (clear at the top, black up to 58 % at the bottom), and the text is cream. Readable at 1440px.
+- Entries 108–109: "Logga in" is an outline pill with white stroke and text, 8px from "Kom igång". It turns wine on the floating cream bar and in the open menu.
+- Entry 113: the image Samuel sent is identical to the entry 103 photo already in use (same SHA-1), so nothing changed. Also checked the top-to-bottom overlay at 1024px: cream text readable, no navbar or card overflow. The end of "räcker" sits just beside her knee.
+- Entry 114: new hero photo (same scene, seen from further back: more floor and lake, she sits smaller on the right). Same 1679 × 937 size, so the markup is unchanged; `hero-lake.webp` and `hero-lake-2x.webp` were regenerated with the same sharpening as entry 101. Checked at 1440, 1024 and 375px: text stays clear of her and the chair.
+- Entry 115: the wine was too dark (it read as near-black on large areas). Lifted `--wine` and `--ink` from `#2c0015` to `#4a1430`, hover from `#4a0a2a` to `#64203f`, and moved the translucent wine shadows, borders and scrims to the same hue (rgb 74, 20, 48). Contrast stays high: 13.2:1 on cream, 11.7:1 on stone.
+- Entries 117–118: the hero button is cream with wine text from 1024px, where it sits on the darkened photo and a wine button blended into it. Below 1024px it stays wine, since it sits on cream there.
+- Entries 119–120: the hero button reads "Se om behandlingen passar dig" instead of the shared "Boka gratis bedömningssamtal". It replaces velora.se's "Se om du kvalificerar dig", which tests the visitor; this asks whether the treatment fits them, and echoes the lede. Link unchanged (/kom-igang); every other CTA keeps the shared label.
+- Entry 121: the hero button is back to solid wine with cream text on desktop too (entry 118's cream version reverted); the "Se om behandlingen passar dig" label stays.
+- Entries 122–123: "stop logging to prompt log" was misread as stopping the log; Samuel meant the buttons. "Logga in" is now solid white with wine text (cream on hover; a faint wine edge on the floating cream bar). The hero button is white with wine text on desktop again (cream on hover), wine below 1024px; label and link unchanged.
+- Entry 125: the "+" in "5 000+" is lifted 0.11em so its centre lines up with the middle of the digits (measured with canvas text metrics: digits centre 12.3px, "+" centre 8.3px above the baseline at 36px).
+- Entry 126: "Passar Velora dig?" gets a "Se om behandlingen passar dig" button under its intro (same label as the hero, link /kom-igang). On desktop it sits in the sticky left column, filling the empty space under the intro; on phones it comes right after the intro, before the criteria.
+- Entry 129: "Ditt vårdteam" gets a fourth, white booking card after Sandra Merei ("Börja med ett gratis samtal", video meeting with a doctor or nurse, the short note and a "Boka gratis bedömningssamtal" button). Desktop: a fourth column, so the three portraits are a little narrower; the button fills the card, without its arrow, and wraps to two lines at 1024px. Tablets: the card runs full width under the portraits. Phones: a card under the three rows.
+- Entry 131: entry 129's booking card is replaced by one centred "Boka gratis bedömningssamtal" button under the three portraits (back to three columns), and the footnote ("Läkare, sjuksköterska, dietist och coach … Socialstyrelsen.") is removed.

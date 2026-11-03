@@ -14,6 +14,8 @@ const criteria = [
 			<p class="label">Vem det passar</p>
 			<h2 id="forwho-title">Passar Velora <em>dig?</em></h2>
 			<p class="lede">Medicinsk behandling för viktminskning kan vara aktuell om något av det här stämmer in på dig.</p>
+			<!-- Entry 126: same label as the hero button; same link as every CTA (/kom-igang). -->
+			<div class="forwho-cta"><CtaButton label="Se om behandlingen passar dig" /></div>
 		</div>
 		<div data-reveal>
 			<ol class="criteria" role="list">
@@ -92,6 +94,10 @@ const criteria = [
 	.doctor a {
 		color: var(--ink);
 		font-weight: 600;
+	}
+
+	.forwho-cta {
+		margin-top: 32px;
 	}
 
 	.switch {

@@ -11,7 +11,7 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 <div class="bar">
 	<div class="container inner">
 		<p class="stat">
-			<span class="figure">5 000+</span>
+			<span class="figure">5 000<span class="plus">+</span></span>
 			<span class="unit">patienter</span>
 		</p>
 
@@ -52,6 +52,12 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		font-size: 2.25rem;
 		line-height: 1;
 		letter-spacing: -0.02em;
+	}
+
+	/* Entry 125: the "+" sits on the maths axis, below the digits' middle; lifted to centre on them (measured: 4 px at 36 px). */
+	.plus {
+		display: inline-block;
+		transform: translateY(-0.11em);
 	}
 
 	.unit {

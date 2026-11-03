@@ -174,54 +174,58 @@ const stories = [
 	}
 
 	/*
-	 * Hover (entry 84): an arrow appears after the label and the underline runs on beneath it. The
-	 * arrow's slot is a no-break space plus an em space, so the link's own underline covers it; the
-	 * icon itself is drawn on top as a masked pseudo-element. Hidden by default, so the resting
-	 * state is unchanged.
+	 * Hover (entries 84, 96): the underline glides out to the right while an arrow slides in after
+	 * the label; both retract on leave. The arrow's slot is a no-break space plus an em space in an
+	 * inline span, so the link's own underline (drawn with the link's metrics) runs beneath it. The
+	 * slot's font-size animates from 0, which widens it smoothly. The icon is a masked pseudo-element
+	 * in fixed px, so it doesn't scale with the slot. At rest the slot is 0 wide: unchanged look.
 	 */
 	.arrow {
-		display: none;
 		position: relative;
+		font-size: 0;
+		transition: font-size 380ms var(--ease);
 	}
 
 	.arrow::after {
 		content: '';
 		position: absolute;
 		right: 0;
-		top: 50%;
-		width: 1em;
-		height: 1em;
-		translate: -4px -50%;
+		bottom: 0.18rem;
+		width: 15px;
+		height: 15px;
 		background: currentColor;
 		mask: var(--arrow) center / contain no-repeat;
 		-webkit-mask: var(--arrow) center / contain no-repeat;
 		opacity: 0;
+		translate: -10px 0;
 		transition:
-			translate 240ms var(--ease),
-			opacity 240ms var(--ease);
+			translate 380ms var(--ease),
+			opacity 200ms var(--ease);
 	}
 
 	@media (hover: hover) {
-		.read:hover .arrow,
-		.read:focus-visible .arrow {
-			display: inline;
+		.read:hover .arrow {
+			font-size: 1em;
+		}
+
+		.read:hover .arrow::after {
+			opacity: 1;
+			translate: 0 0;
+			transition-delay: 60ms;
 		}
 	}
 
-	@starting-style {
-		.arrow::after {
-			opacity: 0;
-			translate: -4px -50%;
-		}
+	.read:focus-visible .arrow {
+		font-size: 1em;
 	}
 
-	.read:hover .arrow::after,
 	.read:focus-visible .arrow::after {
 		opacity: 1;
-		translate: 0 -50%;
+		translate: 0 0;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
+		.arrow,
 		.arrow::after {
 			transition: none;
 		}

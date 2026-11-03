@@ -43,7 +43,7 @@ const maintenance = [
 				</ul>
 				<div class="featured-foot">
 					<p class="small">Du kan välja upplägg utan bindningstid. Studerar du på heltid: 695 kr/mån.</p>
-					<CtaButton tone="cream" />
+					<CtaButton tone="cream" label="Kom igång" />
 				</div>
 			</div>
 
@@ -159,6 +159,7 @@ const maintenance = [
 		font-size: clamp(4.5rem, 12vw, 7rem);
 		line-height: 0.9;
 		letter-spacing: -0.04em;
+		white-space: nowrap;
 	}
 
 	.price .unit {
@@ -188,6 +189,11 @@ const maintenance = [
 
 	.maintenance {
 		background: var(--card);
+	}
+
+	/* Entry 93: a step below Velorametoden's price, so the main plan stays the lead. */
+	.maintenance .price {
+		font-size: clamp(3rem, 8vw, 4.25rem);
 	}
 
 	.intro {
@@ -400,6 +406,16 @@ const maintenance = [
 		.featured,
 		.maintenance {
 			padding: 48px;
+		}
+
+		/*
+		 * Entry 95: side by side, the Underhåll price is exactly as small as it must be for both
+		 * checklist dividers to line up. Its line box (0.9 × size) plus the intro block (−12 px pull-up
+		 * + 28 px gap = 16 px, then two 24 px lines) must equal Velorametoden's price line (0.9 × 7rem):
+		 * 0.9 × size + 4rem = 0.9 × 7rem, so size = (6.3rem − 4rem) / 0.9 ≈ 41 px.
+		 */
+		.maintenance .price {
+			font-size: calc((7rem * 0.9 - 4rem) / 0.9);
 		}
 	}
 </style>
