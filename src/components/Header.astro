@@ -346,7 +346,7 @@ const cards = [
 		backdrop-filter: blur(20px) saturate(140%);
 		-webkit-backdrop-filter: blur(20px) saturate(140%);
 		border: 1px solid rgba(255, 255, 255, 0.55);
-		box-shadow: 0 12px 32px -20px rgba(74, 20, 48, 0.35);
+		box-shadow: 0 12px 32px -20px rgba(82, 19, 36, 0.35);
 		opacity: 0;
 		transition: opacity 300ms var(--ease);
 		pointer-events: none;
@@ -425,6 +425,7 @@ const cards = [
 		background: var(--wine);
 		mask: var(--logo) center / contain no-repeat;
 		-webkit-mask: var(--logo) center / contain no-repeat;
+		transition: background-color 300ms var(--ease);
 	}
 
 	.nav {
@@ -448,9 +449,24 @@ const cards = [
 	}
 
 	/*
+	 * Entry 186: over the hero photo (desktop, top of the page) the menu links are white. On the
+	 * floating cream bar, or with the Viktmediciner menu open, they go back to ink so they stay legible.
+	 */
+	@media (min-width: 1024px) {
+		.header:not(.is-scrolled):not(.is-open) .nav-link {
+			color: #fff;
+			text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+		}
+
+		/* Entry 187: the logo goes white with them, over the hero's dark top band. */
+		.header:not(.is-scrolled):not(.is-open) .mark {
+			background: #fff;
+		}
+	}
+
+	/*
 	 * Entries 108–109: "Logga in" is a pill beside the wine CTA, same height as the small button.
-	 * Entry 123: solid white with wine text (it was a white outline). On the floating cream bar or an
-	 * open menu it stays white, with a faint wine edge so it doesn't melt into the cream.
+	 * Entry 123: solid white with wine text; entry 188: back to a white outline with white text.
 	 */
 	.login {
 		display: inline-flex;
@@ -459,8 +475,8 @@ const cards = [
 		padding: 0 20px;
 		border-radius: 999px;
 		border: 1px solid #fff;
-		background: #fff;
-		color: var(--wine);
+		background: transparent;
+		color: #fff;
 		font-size: 0.875rem;
 		font-weight: 600;
 		transition:
@@ -469,14 +485,21 @@ const cards = [
 			border-color 240ms var(--ease);
 	}
 
+	/* Entry 188: an outline pill again, white stroke and text over the hero's dark top band. */
 	.login:hover {
-		background: var(--cream);
-		border-color: var(--cream);
+		background: rgba(255, 255, 255, 0.16);
 	}
 
+	/* On the floating cream bar (or with a menu open) white would vanish, so it turns burgundy. */
 	.header.is-scrolled .login,
 	.header.is-open .login {
-		border-color: rgba(74, 20, 48, 0.14);
+		color: var(--ink);
+		border-color: rgba(82, 19, 36, 0.35);
+	}
+
+	.header.is-scrolled .login:hover,
+	.header.is-open .login:hover {
+		background: rgba(82, 19, 36, 0.06);
 	}
 
 	.trigger {
@@ -520,7 +543,7 @@ const cards = [
 		background: var(--cream);
 		border-bottom-left-radius: var(--radius);
 		border-bottom-right-radius: var(--radius);
-		box-shadow: 0 24px 48px -24px rgba(74, 20, 48, 0.28);
+		box-shadow: 0 24px 48px -24px rgba(82, 19, 36, 0.28);
 		visibility: hidden;
 		opacity: 0;
 		transform: translateY(-8px);
@@ -570,7 +593,7 @@ const cards = [
 		content: '';
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(to top, rgba(74, 20, 48, 0.72) 0%, rgba(74, 20, 48, 0) 55%);
+		background: linear-gradient(to top, rgba(82, 19, 36, 0.72) 0%, rgba(82, 19, 36, 0) 55%);
 	}
 
 	.card:hover img,
@@ -668,7 +691,7 @@ const cards = [
 		position: fixed;
 		inset: 0;
 		z-index: 9;
-		background: rgba(74, 20, 48, 0.18);
+		background: rgba(82, 19, 36, 0.18);
 		opacity: 0;
 		pointer-events: none;
 		transition: opacity 300ms var(--ease);
@@ -752,7 +775,7 @@ const cards = [
 		background: var(--cream);
 		border-bottom-left-radius: var(--radius);
 		border-bottom-right-radius: var(--radius);
-		box-shadow: 0 24px 48px -24px rgba(74, 20, 48, 0.28);
+		box-shadow: 0 24px 48px -24px rgba(82, 19, 36, 0.28);
 		visibility: hidden;
 		opacity: 0;
 		transform: translateY(-8px);
@@ -860,7 +883,7 @@ const cards = [
 		justify-self: start;
 		margin-top: 24px;
 		padding: 12px 24px;
-		border: 1px solid rgba(74, 20, 48, 0.35);
+		border: 1px solid rgba(82, 19, 36, 0.35);
 		border-radius: 999px;
 		font-family: var(--sans);
 		font-size: 0.9375rem;

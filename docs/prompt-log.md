@@ -1203,3 +1203,77 @@ Use the previous hero image that was in the original build to replace the image 
 ```
 Commit and push all pending changes.
 ```
+
+## 181 – Try a new hero image (Claude Code, 2026-11-03)
+
+[Image attached: a closer view of the woman in the oak chair with the wine-red blanket, on her phone, in a wood-panelled cabin; a lake and pines through the window on the left.]
+
+```
+Try this image as hero image
+```
+
+## 182 – Try another hero image (Claude Code, 2026-11-03)
+
+[Image attached: the same cabin scene with darker wood, framed a little wider, the woman in the oak chair with the wine-red blanket on the right.]
+
+```
+try this one
+```
+
+## 183 – Try a third cabin hero image (Claude Code, 2026-11-03)
+
+[Image attached: the same cabin composition with whitewashed wood walls, a dark-haired woman in the oak chair with the wine-red blanket, smiling at her phone.]
+
+```
+try this
+```
+
+## 184 – Move the primary colour towards the blanket (Claude Code, 2026-11-03)
+
+[Image attached: a close crop of the hero photo: the woman's knees and the wine-red blanket over the oak chair.]
+
+```
+Let's move towards the color of the blanket for our primary color
+```
+
+## 185 – Burgundy a little darker (Claude Code, 2026-11-03)
+
+```
+I like that - make it a little darker though
+```
+
+## 186 – White menu links (Claude Code, 2026-11-03)
+
+```
+Have the menu links be white
+```
+
+## 187 – Dark gradient at the top of the hero, white logo (Claude Code, 2026-11-03, button answer)
+
+```
+Add a soft dark gradient at the top of the hero behind the navbar so the white links read, and make the logo white there too.
+```
+
+## 188 – "Logga in" as stroke only, white text (Claude Code, 2026-11-03, mid-turn)
+
+```
+Make the logga in now only be stroke and white text
+```
+
+## 189 – Top band a little less dark (Claude Code, 2026-11-03)
+
+```
+We can have it a little less dark in the top
+```
+
+## 190 – Keep the lighter top band (Claude Code, 2026-11-03, button answer)
+
+```
+Keep the lighter top band.
+```
+
+## 191 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```
