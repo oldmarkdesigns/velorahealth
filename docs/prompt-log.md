@@ -1349,3 +1349,29 @@ let's have the icons on the right to align the texts
 ```
 Commit and push all pending changes.
 ```
+
+## 203 – Mobile hero: darker photo, content higher, light text (Claude Code, 2026-11-03)
+
+```
+On mobile, darken the hero image and move the content higher within the hero. Adjust the text colors so everything remains readable. Leave the desktop hero unchanged.
+```
+
+## 204 – Mobile hero ordered like velora.se, statement card inside the hero (Claude Code, 2026-11-03)
+
+[Image attached: velora.se's mobile hero again: Trustpilot and "5 000+ patienter" at the top, the headline, the intro, the button, then the panel of three statements, all inside the hero.]
+
+```
+Look at this for reference of hero layout - I also want the statement card to be in the hero section.
+```
+
+## 205 – Keep the dark photo behind the mobile hero text (Claude Code, 2026-11-03, button answer)
+
+```
+Keep the dark photo behind the hero text on mobile.
+```
+
+## 206 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```

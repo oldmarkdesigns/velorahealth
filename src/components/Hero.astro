@@ -55,6 +55,8 @@ import RatingRow from './RatingRow.astro';
 			team följer dig hela vägen.
 		</p>
 		<div class="cta-wrap" data-hero-cta data-load style="--load-delay: 720ms"><CtaButton label="Se om behandlingen passar dig" /></div>
+		<!-- Entry 204: phones only. The three statements as a list in one card, inside the hero. -->
+		<div class="hero-statements" data-load style="--load-delay: 820ms"><HeroTrustPill detailed /></div>
 		</div>
 	</div>
 </section>
@@ -149,6 +151,65 @@ import RatingRow from './RatingRow.astro';
 
 	.cta-wrap {
 		margin-top: 24px;
+	}
+
+	/*
+	 * ---- Phones: the three statements as a plain list in one soft card (entries 200–201; inside the hero since entry 204) ----
+	 * Same icons and texts as the pills (entry 199), but no pill backgrounds, borders, shadows or
+	 * tilts: one row each, divided by hairlines.
+	 */
+	.hero-statements {
+		padding: 8px 20px;
+		border-radius: 20px;
+		background: var(--card);
+	}
+
+	.hero-statements :global(.pill) {
+		margin: 0;
+	}
+
+	.hero-statements :global(.pill ul) {
+		align-items: stretch;
+		gap: 0;
+	}
+
+	.hero-statements :global(.pill li) {
+		padding: 14px 0;
+		border: 0;
+		border-radius: 0;
+		background: none;
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		box-shadow: none;
+	}
+
+	.hero-statements :global(.pill li + li) {
+		border-top: 1px solid var(--line);
+	}
+
+	/*
+	 * Entry 201: the icons sit on the right, so every title and subtitle starts on the same left edge
+	 * (the three portraits are wider than a single badge, which pushed the first text in).
+	 */
+	.hero-statements :global(.pill li) {
+		flex-direction: row-reverse;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	.hero-statements :global(.pill .avatars),
+	.hero-statements :global(.pill .icon) {
+		margin-right: 0;
+	}
+
+	.hero-statements {
+		margin-top: 28px;
+	}
+
+	@media (min-width: 768px) {
+		.hero-statements {
+			display: none;
+		}
 	}
 
 	/* Entries 195, 197: on phones the pills move under the hero (TrustStrip.astro). */
@@ -438,5 +499,75 @@ import RatingRow from './RatingRow.astro';
 		}
 
 
+	}
+
+	/*
+	 * Entry 203, phones (below 768 px; tablets and desktop unchanged): the photo fills the whole hero
+	 * under a dark wash instead of fading into cream, and the text sits higher, over the photo, in
+	 * light colours. The wash is light at the top (her face) and deepest where the text is.
+	 */
+	@media (max-width: 767px) {
+		/* Entry 204: content flows from the top, like velora.se's mobile hero, the statement card last. */
+		.hero {
+			align-items: flex-start;
+			/* Ends with its content (the statement card) rather than filling the whole screen. */
+			min-height: 0;
+			background: #1c1416;
+		}
+
+		.photo {
+			inset: 0;
+			height: 100%;
+			object-position: 72% 30%;
+		}
+
+		.veil {
+			background: linear-gradient(
+				to bottom,
+				rgba(20, 10, 14, 0.62) 0%,
+				rgba(20, 10, 14, 0.7) 30%,
+				rgba(20, 10, 14, 0.76) 60%,
+				rgba(20, 10, 14, 0.82) 100%
+			);
+		}
+
+		.content {
+			padding-top: 112px;
+			padding-bottom: 20px;
+		}
+
+		.line-1,
+		.lede {
+			color: var(--cream);
+		}
+
+		.line-2 {
+			color: rgba(247, 242, 236, 0.86);
+		}
+
+		.lede {
+			opacity: 1;
+		}
+
+		/* The rating above the title, in light tones on the dark photo. */
+		.hero-rating :global(.tp-logo) {
+			color: #fff;
+		}
+
+		.hero-rating :global(.tp-num),
+		.hero-rating :global(.stat),
+		.hero-rating :global(.stat .unit) {
+			color: rgba(247, 242, 236, 0.82);
+		}
+
+		.hero-rating :global(.stat) {
+			border-left-color: rgba(247, 242, 236, 0.3);
+		}
+
+		/* The button inverts to cream on the dark photo, as it does on desktop. */
+		.cta-wrap :global(.btn) {
+			background: var(--cream);
+			color: var(--wine);
+		}
 	}
 </style>

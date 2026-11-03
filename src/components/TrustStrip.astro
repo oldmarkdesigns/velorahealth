@@ -3,9 +3,8 @@
 // Hemmapartner's achievements bar. Replaces the earlier drifting trust carousel.
 // - Rating ("5 000+ patienter" and Trustpilot): RatingRow.astro (sources noted there).
 // - The LegitScript/IVO certification moved to the footer (entry 198).
-// Entries 195, 197, phones only: the rating moves above the hero title, and this bar instead shows the
-// hero's three statements, as a plain list in one card (entry 200; pills and cards were tried first).
-import HeroTrustPill from './HeroTrustPill.astro';
+// Phones (entries 195–204): the rating and the statement list both live in the hero, so this bar is
+// hidden there; it shows on tablets and desktop only.
 import RatingRow from './RatingRow.astro';
 ---
 
@@ -13,8 +12,6 @@ import RatingRow from './RatingRow.astro';
 	<div class="container inner">
 		<RatingRow />
 
-		<!-- Entries 195–200: phones only. The three statements as a plain list in one card. -->
-		<div class="pill-panel"><HeroTrustPill detailed /></div>
 	</div>
 </div>
 
@@ -28,65 +25,9 @@ import RatingRow from './RatingRow.astro';
 		gap: 20px;
 	}
 
-	/*
-	 * ---- Phones: the three statements as a plain list in one soft card (entry 200) ----
-	 * Same icons and texts as the pills (entry 199), but no pill backgrounds, borders, shadows or
-	 * tilts: one row each, divided by hairlines.
-	 */
-	.pill-panel {
-		padding: 8px 20px;
-		border-radius: 20px;
-		background: var(--card);
-	}
-
-	.pill-panel :global(.pill) {
-		margin: 0;
-	}
-
-	.pill-panel :global(.pill ul) {
-		align-items: stretch;
-		gap: 0;
-	}
-
-	.pill-panel :global(.pill li) {
-		padding: 14px 0;
-		border: 0;
-		border-radius: 0;
-		background: none;
-		backdrop-filter: none;
-		-webkit-backdrop-filter: none;
-		box-shadow: none;
-	}
-
-	.pill-panel :global(.pill li + li) {
-		border-top: 1px solid var(--line);
-	}
-
-	/*
-	 * Entry 201: the icons sit on the right, so every title and subtitle starts on the same left edge
-	 * (the three portraits are wider than a single badge, which pushed the first text in).
-	 */
-	.pill-panel :global(.pill li) {
-		flex-direction: row-reverse;
-		justify-content: space-between;
-		gap: 16px;
-	}
-
-	.pill-panel :global(.pill .avatars),
-	.pill-panel :global(.pill .icon) {
-		margin-right: 0;
-	}
-
-	/* Phones: the rating lives above the hero title instead (Hero.astro). */
+	/* Phones: nothing left to show here (the rating and the statements are in the hero, entry 204). */
 	@media (max-width: 767px) {
-		.inner :global(.rating-row) {
-			display: none;
-		}
-	}
-
-	/* Tablets and desktop: no pill panel here (the hero carries the pill); the rating row as before. */
-	@media (min-width: 768px) {
-		.pill-panel {
+		.bar {
 			display: none;
 		}
 	}
