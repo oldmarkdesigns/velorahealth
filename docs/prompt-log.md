@@ -1117,3 +1117,15 @@ vertically center aligned
 ```
 Commit and push all pending changes.
 ```
+
+## 169 – Swap "5 000+ patienter" and Trustpilot (Claude Code, 2026-11-03)
+
+```
+Let's switch positions of 5000+ patienter and trustpilot
+```
+
+## 170 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```

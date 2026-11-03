@@ -18,12 +18,7 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 <div class="bar" data-load style="--load-delay: 860ms">
 	<div class="container inner">
 		<div class="rating-row">
-			<p class="stat">
-				<span class="figure">5 000<span class="plus">+</span></span>
-				<span class="unit">patienter</span>
-			</p>
-
-			<!-- Styled after Trustpilot's own snippet: the logo above the stars and score. -->
+			<!-- Styled after Trustpilot's own snippet: the logo above the stars and score. Entry 169: first, before "5 000+". -->
 			<a class="tp" href="https://se.trustpilot.com/review/velora.se" aria-label={`Betyg ${TRUSTPILOT_SCORE} av 5 på Trustpilot`}>
 				<span class="tp-logo" aria-hidden="true"><span class="tp-mark" set:html={starIcon} />Trustpilot</span>
 				<span class="tp-score" aria-hidden="true">
@@ -33,6 +28,11 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 					<span class="tp-num">{TRUSTPILOT_SCORE}</span>
 				</span>
 			</a>
+
+			<p class="stat">
+				<span class="figure">5 000<span class="plus">+</span></span>
+				<span class="unit">patienter</span>
+			</p>
 		</div>
 
 		<div class="cert">
@@ -55,7 +55,7 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		gap: 20px;
 	}
 
-	/* "5 000+ patienter" and the Trustpilot rating share one row, split by a thin rule. */
+	/* The Trustpilot rating and "5 000+ patienter" share one row, split by a thin rule (entry 169: rating first). */
 	.rating-row {
 		display: flex;
 		align-items: center;
@@ -67,8 +67,8 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		display: flex;
 		align-items: center;
 		gap: 10px;
-		padding-right: 20px;
-		border-right: 1px solid var(--line);
+		padding-left: 20px;
+		border-left: 1px solid var(--line);
 		white-space: nowrap;
 	}
 
@@ -194,7 +194,7 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 
 		.stat {
 			gap: 6px;
-			padding-right: 12px;
+			padding-left: 12px;
 		}
 
 		.figure {
@@ -243,7 +243,7 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		}
 
 		.stat {
-			padding-right: 32px;
+			padding-left: 32px;
 		}
 
 		.tp-star {
