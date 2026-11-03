@@ -1,5 +1,8 @@
 ---
 import { IMG, VELORA } from '../data/site';
+
+// Entry 198: the LegitScript certification lives here on every device (it was in the bar under the hero).
+const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 ---
 
 <footer class="footer dark">
@@ -15,6 +18,13 @@ import { IMG, VELORA } from '../data/site';
 				<a href={`${VELORA}/integritetspolicy`}>Integritetspolicy</a>
 				<a href={`${VELORA}/anvandarvillkor`}>Användarvillkor</a>
 				<a href={`${VELORA}/cookies`}>Cookies</a>
+			</p>
+		</div>
+		<div class="cert">
+			<img src={LEGITSCRIPT_SEAL} alt="LegitScript-sigill" width="34" height="37" loading="lazy" />
+			<p>
+				<span>LegitScript-certifierad</span>
+				<span>IVO-registrerad vårdgivare med legitimerad personal</span>
 			</p>
 		</div>
 		<p class="disclaimer">Arbetsprov för rollen Design Engineer, Brand &amp; Growth. Inte en officiell Velora-sida.</p>
@@ -55,8 +65,33 @@ import { IMG, VELORA } from '../data/site';
 		gap: 8px 24px;
 	}
 
+	/* The seal and its two lines, as in the old hero bar, in the footer's light-on-dark colours. */
+	.cert {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-top: 40px;
+	}
+
+	.cert img {
+		flex: none;
+		width: 34px;
+		height: auto;
+	}
+
+	.cert p {
+		display: grid;
+		font-size: 0.8125rem;
+		line-height: 1.35;
+	}
+
+	.cert span:first-child {
+		font-weight: 600;
+		color: var(--on-dark);
+	}
+
 	.disclaimer {
-		margin-top: 56px;
+		margin-top: 40px;
 		font-size: 0.8125rem;
 	}
 
@@ -71,10 +106,10 @@ import { IMG, VELORA } from '../data/site';
 		}
 	}
 
-	/* Leave room for the sticky bar on mobile. */
+	/* Clear the phone's home indicator (the sticky booking bar this once made room for is gone, entry 144). */
 	@media (max-width: 767px) {
 		.footer {
-			padding-bottom: calc(56px + 100px + env(safe-area-inset-bottom));
+			padding-bottom: calc(56px + env(safe-area-inset-bottom));
 		}
 	}
 </style>

@@ -1,0 +1,234 @@
+---
+// "5 000+ patienter" and the Trustpilot rating (entries 164–176), one source for both places they
+// appear: the bar under the hero (tablet and desktop) and, on phones, above the hero title (entry 195).
+// - "5 000+ patienter": from a Trustpilot snippet supplied by Samuel; not on velora.se, so flagged in
+//   docs/facts.md for confirmation with Velora.
+// - Trustpilot 4,7: Velora's Trustpilot page, 316 reviews on 2026-11-03 (docs/facts.md).
+import starIcon from '@phosphor-icons/core/assets/fill/star-fill.svg?raw';
+
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+const TRUSTPILOT_SCORE = '4,7';
+// Trustpilot draws its stars to the nearest half: 4,7 shows as four and a half.
+const stars = [1, 1, 1, 1, 0.5];
+---
+
+<div class:list={['rating-row', className]}>
+	<p class="stat">
+		<span class="figure">5 000<span class="plus">+</span></span>
+		<span class="unit">patienter</span>
+	</p>
+
+	<!-- Styled after Trustpilot's own snippet: the logo above the stars and score. -->
+	<a class="tp" href="https://se.trustpilot.com/review/velora.se" aria-label={`Betyg ${TRUSTPILOT_SCORE} av 5 på Trustpilot`}>
+		<span class="tp-logo" aria-hidden="true"><span class="tp-mark" set:html={starIcon} />Trustpilot</span>
+		<span class="tp-score" aria-hidden="true">
+			<span class="tp-stars">
+				{stars.map((fill) => <span class="tp-star" style={`--fill: ${fill * 100}%`} set:html={starIcon} />)}
+			</span>
+			<span class="tp-num">{TRUSTPILOT_SCORE}</span>
+		</span>
+	</a>
+</div>
+
+<style>
+	/* "5 000+ patienter" and the Trustpilot rating share one row, split by a thin rule (entry 176: figure first). */
+	.rating-row {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+	}
+
+	/* "patienter" sits on the vertical centre of the figure, not its baseline (entry 48). */
+	.stat {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding-right: 20px;
+		border-right: 1px solid var(--line);
+		white-space: nowrap;
+	}
+
+	/* Entry 164: a step smaller on phones so the rating fits beside it at 375 px. */
+	.figure {
+		font-family: var(--serif);
+		font-weight: 300;
+		font-size: 1.75rem;
+		line-height: 1;
+		letter-spacing: -0.02em;
+	}
+
+	/* Entry 125: the "+" sits on the maths axis, below the digits' middle; lifted to centre on them (measured: 4 px at 36 px). */
+	.plus {
+		display: inline-block;
+		transform: translateY(-0.11em);
+	}
+
+	.unit {
+		font-size: 0.875rem;
+		color: var(--ink-soft);
+		/* Optical correction: the serif digits' box reserves descender space, so their visible middle sits higher. */
+		transform: translateY(-0.3em);
+	}
+
+	/* ---- Trustpilot: green star mark and wordmark, then the boxed stars and the score ---- */
+	/*
+	 * Entry 166: lifted to the digits' visual middle. The serif figure's box reserves descender space,
+	 * so centring boxes puts the rating ~0.11 × the figure size low (measured: 4 px at 36 px).
+	 */
+	.tp {
+		display: grid;
+		gap: 6px;
+		color: var(--ink);
+		text-decoration: none;
+		translate: 0 -3px;
+	}
+
+	.tp-logo {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		font-size: 0.875rem;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		color: #191919;
+	}
+
+	.tp-mark {
+		display: flex;
+		color: #00b67a;
+	}
+
+	.tp-mark :global(svg) {
+		width: 18px;
+		height: 18px;
+	}
+
+	.tp-score {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.tp-stars {
+		display: flex;
+		gap: 2px;
+	}
+
+	/* Each star on its own square; the last is filled in part, left to right, as Trustpilot does. */
+	.tp-star {
+		display: grid;
+		place-items: center;
+		width: 18px;
+		height: 18px;
+		background: linear-gradient(to right, #00b67a var(--fill), #dcdce6 var(--fill));
+		color: #fff;
+	}
+
+	.tp-star :global(svg) {
+		width: 13px;
+		height: 13px;
+	}
+
+	.tp-num {
+		font-size: 1rem;
+		color: var(--ink-soft);
+	}
+
+	/* The narrowest phones (320 px): one more step down so the row still fits. */
+	@media (max-width: 359px) {
+		.rating-row {
+			gap: 12px;
+		}
+
+		.stat {
+			gap: 6px;
+			padding-right: 12px;
+		}
+
+		.figure {
+			font-size: 1.5rem;
+		}
+
+		.unit {
+			font-size: 0.8125rem;
+		}
+
+		.tp-score {
+			gap: 6px;
+		}
+
+		.tp-star {
+			width: 15px;
+			height: 15px;
+		}
+
+		.tp-star :global(svg) {
+			width: 11px;
+			height: 11px;
+		}
+
+		.tp-num {
+			font-size: 0.875rem;
+		}
+	}
+
+	@media (min-width: 560px) {
+		.figure {
+			font-size: 2.25rem;
+		}
+
+		.unit {
+			font-size: 0.9375rem;
+		}
+
+		.rating-row,
+		.stat {
+			gap: 12px;
+		}
+
+		.rating-row {
+			gap: 32px;
+		}
+
+		.stat {
+			padding-right: 32px;
+		}
+
+		.tp-star {
+			width: 22px;
+			height: 22px;
+		}
+
+		.tp-star :global(svg) {
+			width: 15px;
+			height: 15px;
+		}
+
+		.tp-num {
+			font-size: 1.125rem;
+		}
+	}
+
+	/* Entry 165: from 1024 px the Trustpilot logo and the stars with the score sit on one line. */
+	@media (min-width: 1024px) {
+		.tp {
+			display: flex;
+			align-items: center;
+			gap: 14px;
+			translate: 0 -4px;
+		}
+
+		.tp-logo {
+			font-size: 1rem;
+		}
+
+		.tp-mark :global(svg) {
+			width: 22px;
+			height: 22px;
+		}
+	}
+</style>

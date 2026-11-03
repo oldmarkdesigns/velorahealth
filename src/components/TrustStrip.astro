@@ -1,47 +1,20 @@
 ---
 // Static key-information bar directly under the hero (prompt log entry 37), inspired by
 // Hemmapartner's achievements bar. Replaces the earlier drifting trust carousel.
-// - "5 000+ patienter": from a Trustpilot snippet supplied by Samuel; not on velora.se, so flagged in
-//   docs/facts.md for confirmation with Velora.
-// - Trustpilot 4,7: Velora's Trustpilot page, 316 reviews on 2026-11-03 (docs/facts.md).
-// - Certifications: velora.se (docs/facts.md).
-// Entry 164: the service statements (video, health check, dietitian and coach) are replaced by the
-// Trustpilot rating, on the same row as "5 000+ patienter".
-import starIcon from '@phosphor-icons/core/assets/fill/star-fill.svg?raw';
-
-const TRUSTPILOT_SCORE = '4,7';
-// Trustpilot draws its stars to the nearest half: 4,7 shows as four and a half.
-const stars = [1, 1, 1, 1, 0.5];
-const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
+// - Rating ("5 000+ patienter" and Trustpilot): RatingRow.astro (sources noted there).
+// - The LegitScript/IVO certification moved to the footer (entry 198).
+// Entries 195, 197, phones only: the rating moves above the hero title, and this bar instead shows the
+// hero's three statements, as a plain list in one card (entry 200; pills and cards were tried first).
+import HeroTrustPill from './HeroTrustPill.astro';
+import RatingRow from './RatingRow.astro';
 ---
 
 <div class="bar" data-load style="--load-delay: 860ms">
 	<div class="container inner">
-		<div class="rating-row">
-			<p class="stat">
-				<span class="figure">5 000<span class="plus">+</span></span>
-				<span class="unit">patienter</span>
-			</p>
+		<RatingRow />
 
-			<!-- Styled after Trustpilot's own snippet: the logo above the stars and score. Entry 176: after "5 000+" again. -->
-			<a class="tp" href="https://se.trustpilot.com/review/velora.se" aria-label={`Betyg ${TRUSTPILOT_SCORE} av 5 på Trustpilot`}>
-				<span class="tp-logo" aria-hidden="true"><span class="tp-mark" set:html={starIcon} />Trustpilot</span>
-				<span class="tp-score" aria-hidden="true">
-					<span class="tp-stars">
-						{stars.map((fill) => <span class="tp-star" style={`--fill: ${fill * 100}%`} set:html={starIcon} />)}
-					</span>
-					<span class="tp-num">{TRUSTPILOT_SCORE}</span>
-				</span>
-			</a>
-		</div>
-
-		<div class="cert">
-			<img src={LEGITSCRIPT_SEAL} alt="LegitScript-sigill" width="34" height="37" loading="lazy" />
-			<p>
-				<span>LegitScript-certifierad</span>
-				<span>IVO-registrerad vårdgivare med legitimerad personal</span>
-			</p>
-		</div>
+		<!-- Entries 195–200: phones only. The three statements as a plain list in one card. -->
+		<div class="pill-panel"><HeroTrustPill detailed /></div>
 	</div>
 </div>
 
@@ -55,271 +28,73 @@ const LEGITSCRIPT_SEAL = 'https://static.legitscript.com/seals/9675475.png';
 		gap: 20px;
 	}
 
-	/* "5 000+ patienter" and the Trustpilot rating share one row, split by a thin rule (entry 176: figure first). */
-	.rating-row {
-		display: flex;
-		align-items: center;
-		gap: 20px;
-	}
-
-	/* "patienter" sits on the vertical centre of the figure, not its baseline (entry 48). */
-	.stat {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		padding-right: 20px;
-		border-right: 1px solid var(--line);
-		white-space: nowrap;
-	}
-
-	/* Entry 164: a step smaller on phones so the rating fits beside it at 375 px. */
-	.figure {
-		font-family: var(--serif);
-		font-weight: 300;
-		font-size: 1.75rem;
-		line-height: 1;
-		letter-spacing: -0.02em;
-	}
-
-	/* Entry 125: the "+" sits on the maths axis, below the digits' middle; lifted to centre on them (measured: 4 px at 36 px). */
-	.plus {
-		display: inline-block;
-		transform: translateY(-0.11em);
-	}
-
-	.unit {
-		font-size: 0.875rem;
-		color: var(--ink-soft);
-		/* Optical correction: the serif digits' box reserves descender space, so their visible middle sits higher. */
-		transform: translateY(-0.3em);
-	}
-
-	/* ---- Trustpilot: green star mark and wordmark, then the boxed stars and the score ---- */
 	/*
-	 * Entry 166: lifted to the digits' visual middle. The serif figure's box reserves descender space,
-	 * so centring boxes puts the rating ~0.11 × the figure size low (measured: 4 px at 36 px).
+	 * ---- Phones: the three statements as a plain list in one soft card (entry 200) ----
+	 * Same icons and texts as the pills (entry 199), but no pill backgrounds, borders, shadows or
+	 * tilts: one row each, divided by hairlines.
 	 */
-	.tp {
-		display: grid;
-		gap: 6px;
-		color: var(--ink);
-		text-decoration: none;
-		translate: 0 -3px;
+	.pill-panel {
+		padding: 8px 20px;
+		border-radius: 20px;
+		background: var(--card);
 	}
 
-	.tp-logo {
-		display: flex;
-		align-items: center;
-		gap: 4px;
-		font-size: 0.875rem;
-		font-weight: 600;
-		letter-spacing: -0.01em;
-		color: #191919;
+	.pill-panel :global(.pill) {
+		margin: 0;
 	}
 
-	.tp-mark {
-		display: flex;
-		color: #00b67a;
+	.pill-panel :global(.pill ul) {
+		align-items: stretch;
+		gap: 0;
 	}
 
-	.tp-mark :global(svg) {
-		width: 18px;
-		height: 18px;
+	.pill-panel :global(.pill li) {
+		padding: 14px 0;
+		border: 0;
+		border-radius: 0;
+		background: none;
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		box-shadow: none;
 	}
 
-	.tp-score {
-		display: flex;
-		align-items: center;
-		gap: 10px;
+	.pill-panel :global(.pill li + li) {
+		border-top: 1px solid var(--line);
 	}
 
-	.tp-stars {
-		display: flex;
-		gap: 2px;
+	/*
+	 * Entry 201: the icons sit on the right, so every title and subtitle starts on the same left edge
+	 * (the three portraits are wider than a single badge, which pushed the first text in).
+	 */
+	.pill-panel :global(.pill li) {
+		flex-direction: row-reverse;
+		justify-content: space-between;
+		gap: 16px;
 	}
 
-	/* Each star on its own square; the last is filled in part, left to right, as Trustpilot does. */
-	.tp-star {
-		display: grid;
-		place-items: center;
-		width: 18px;
-		height: 18px;
-		background: linear-gradient(to right, #00b67a var(--fill), #dcdce6 var(--fill));
-		color: #fff;
+	.pill-panel :global(.pill .avatars),
+	.pill-panel :global(.pill .icon) {
+		margin-right: 0;
 	}
 
-	.tp-star :global(svg) {
-		width: 13px;
-		height: 13px;
-	}
-
-	.tp-num {
-		font-size: 1rem;
-		color: var(--ink-soft);
-	}
-
-	/* Just the seal and the text, no card around them. */
-	.cert {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		justify-self: start;
-	}
-
-	.cert img {
-		flex: none;
-		width: 34px;
-		height: auto;
-	}
-
-	.cert p {
-		display: grid;
-		font-size: 0.75rem;
-		line-height: 1.35;
-	}
-
-	.cert span:first-child {
-		font-weight: 600;
-	}
-
-	.cert span:last-child {
-		color: var(--ink-soft);
-	}
-
-	/* The narrowest phones (320 px): one more step down so the row still fits. */
-	@media (max-width: 359px) {
-		.rating-row {
-			gap: 12px;
-		}
-
-		.stat {
-			gap: 6px;
-			padding-right: 12px;
-		}
-
-		.figure {
-			font-size: 1.5rem;
-		}
-
-		.unit {
-			font-size: 0.8125rem;
-		}
-
-		.tp-score {
-			gap: 6px;
-		}
-
-		.tp-star {
-			width: 15px;
-			height: 15px;
-		}
-
-		.tp-star :global(svg) {
-			width: 11px;
-			height: 11px;
-		}
-
-		.tp-num {
-			font-size: 0.875rem;
+	/* Phones: the rating lives above the hero title instead (Hero.astro). */
+	@media (max-width: 767px) {
+		.inner :global(.rating-row) {
+			display: none;
 		}
 	}
 
-	@media (min-width: 560px) {
-		.figure {
-			font-size: 2.25rem;
-		}
-
-		.unit {
-			font-size: 0.9375rem;
-		}
-
-		.rating-row,
-		.stat {
-			gap: 12px;
-		}
-
-		.rating-row {
-			gap: 32px;
-		}
-
-		.stat {
-			padding-right: 32px;
-		}
-
-		.tp-star {
-			width: 22px;
-			height: 22px;
-		}
-
-		.tp-star :global(svg) {
-			width: 15px;
-			height: 15px;
-		}
-
-		.tp-num {
-			font-size: 1.125rem;
-		}
-
-		.cert p {
-			font-size: 0.8125rem;
+	/* Tablets and desktop: no pill panel here (the hero carries the pill); the rating row as before. */
+	@media (min-width: 768px) {
+		.pill-panel {
+			display: none;
 		}
 	}
 
-	/* Desktop: one row, figure | Trustpilot | certification. */
+	/* Desktop: one row, "5 000+ patienter" | Trustpilot (the certification is in the footer since entry 198). */
 	@media (min-width: 1024px) {
 		.bar {
 			padding-block: 18px 22px;
-		}
-
-		/*
-		 * Entries 174, 176: one row, "5 000+ patienter" | Trustpilot | LegitScript, a thin rule between each.
-		 * The rating row's wrapper steps aside (display: contents) so the badge can sit between its two
-		 * children; phones keep the wrapper and the badge on its own row.
-		 */
-		.inner {
-			display: flex;
-			align-items: center;
-			gap: 32px;
-		}
-
-		.rating-row {
-			display: contents;
-		}
-
-		.stat {
-			order: 1;
-		}
-
-		.tp {
-			order: 2;
-		}
-
-		.cert {
-			order: 3;
-			padding-left: 32px;
-			border-left: 1px solid var(--line);
-		}
-
-		/* Same optical lift as the rating, so all three share the digits' visual middle (entry 166). */
-		.cert > * {
-			translate: 0 -4px;
-		}
-
-		/* Entry 165: the Trustpilot logo and the stars with the score on one line. */
-		.tp {
-			display: flex;
-			align-items: center;
-			gap: 14px;
-			translate: 0 -4px;
-		}
-
-		.tp-logo {
-			font-size: 1rem;
-		}
-
-		.tp-mark :global(svg) {
-			width: 22px;
-			height: 22px;
 		}
 	}
 </style>

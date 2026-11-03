@@ -792,6 +792,61 @@ const cards = [
 		transition-delay: 0s;
 	}
 
+	/*
+	 * Entry 192: the panel unrolls downward from the bar's lower edge (a clip, no fade), and the bar
+	 * itself stays put: its frosted band turns solid cream instead of cross-fading with a second
+	 * background, which is what made the old opening look like a glitchy dissolve.
+	 */
+	@media (max-width: 1023px) {
+		.header,
+		.header.is-open {
+			background: transparent;
+		}
+
+		.header.is-mobile-open::before {
+			opacity: 1;
+			background: var(--cream);
+		}
+
+		.header::before {
+			transition:
+				opacity 300ms var(--ease),
+				background-color 300ms var(--ease);
+		}
+
+		.mobile-menu {
+			opacity: 1;
+			transform: none;
+			/* Clipped to nothing at the bar's edge; the -60 px when open lets the drop shadow show. */
+			clip-path: inset(0 0 100% 0);
+			transition:
+				clip-path 420ms var(--ease),
+				visibility 0s linear 420ms;
+		}
+
+		.is-mobile-open .mobile-menu {
+			clip-path: inset(0 0 -60px 0);
+			transition:
+				clip-path 420ms var(--ease),
+				visibility 0s linear 0s;
+		}
+
+		/* The links follow a beat behind, settling into place as the panel opens. */
+		.mobile-nav {
+			translate: 0 -10px;
+			opacity: 0;
+			transition:
+				translate 420ms var(--ease),
+				opacity 300ms var(--ease);
+		}
+
+		.is-mobile-open .mobile-nav {
+			translate: 0 0;
+			opacity: 1;
+			transition-delay: 60ms;
+		}
+	}
+
 	.mobile-nav {
 		display: grid;
 		padding-block: 8px 28px;
@@ -973,6 +1028,7 @@ const cards = [
 		.row-name,
 		.burger span,
 		.mobile-menu,
+		.mobile-nav,
 		.mobile-group summary svg {
 			transition: none;
 		}

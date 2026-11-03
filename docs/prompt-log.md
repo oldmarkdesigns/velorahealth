@@ -1277,3 +1277,75 @@ Keep the lighter top band.
 ```
 Commit and push all pending changes.
 ```
+
+## 192 – Smoother mobile menu, sliding down from the top (Claude Code, 2026-11-03)
+
+```
+make the mobile nav bar dropdown open more smoothly, coming down from top. Right now there's some sort of glitchy dissolve animation
+```
+
+## 193 – A personal take on the hero's supporting text (Claude Code, 2026-11-03)
+
+```
+do a personal take on this text to be below medicinsk viktnedgång, när dieten inte räcker : Det är inte bristande vilja, det är biologi. Du får ett eget expertteam, en personlig plan och verktyg för ett livslångt resultat.
+```
+
+## 194 – Shorter hero intro (Claude Code, 2026-11-03)
+
+```
+kör bara det handlar om biologi, inte bara om vilja. Hos Velora får du ett eget vårdteam och en personlig plan, och samma team följer dig hela vägen.
+```
+
+## 195 – Mobile hero: rating above the title, statement cards below (Claude Code, 2026-11-03)
+
+[Image attached: a phone screenshot of velora.se's hero: headline, "Det är inte bristande vilja, det är biologi…", an orange "Se om du kvalificerar dig" button, and three slightly tilted white cards: "Ditt eget vårdteam / Obegränsad kontakt, hela vägen", "Gå ner 20 % i vikt i snitt / Med mindre hunger och sug", "30 dagars nöjdhetsgaranti / Nöjd eller pengarna tillbaka", then "Byt vårdgivare till Velora".]
+
+```
+On mobile, move “5 000+ patienter” and the Trustpilot badge above the hero title. Move the statement pills from the top to their former position, use the titles and copy from the attached reference image, and center-align the pills with playful tilts. Leave the desktop layout unchanged.
+```
+
+## 196 – Mobile rating laid out like velora.se's (Claude Code, 2026-11-03)
+
+[Image attached: velora.se's mobile hero: "Trustpilot" logo on its own line, then the green star boxes, "4,7", a thin divider and "5 000+ patienter" on one line, above the headline.]
+
+```
+let's do the same layout for trustpilot and 5000+ patienter as in this reference image - for mobile
+```
+
+## 197 – Keep the pills, use the reference's layout (Claude Code, 2026-11-03)
+
+```
+I mean the three statement pills: “Ditt eget vårdteam”, “Gå ner 20 % i vikt i snitt”, and “30 dagars nöjdhetsgaranti”. Keep the pills we had, but place them in the layout shown in the reference image. Don’t change their styling or turn them into cards.
+```
+
+AI went wrong: in entry 195 Claude read "use the titles and copy from the attached reference image" as rebuilding the statements as the reference's white cards with subtitles. Samuel meant the existing pills, only moved into the reference's position and arrangement.
+
+## 198 – LegitScript certification in the footer, all devices (Claude Code, 2026-11-03, mid-turn)
+
+```
+Let's place legit-script certification in the footer in all devices
+```
+
+## 199 – Reference titles and subtitles in the pills (Claude Code, 2026-11-03)
+
+```
+Use the title and subtitle from each card in the reference, but keep our existing icons and pill styling. Only change the text, not the pill form or layout.
+```
+
+## 200 – No pills or cards: a plain list in the panel (Claude Code, 2026-11-03)
+
+```
+Nah that looks like shit - let's skip the pills and cards and just list the stuff in the main card - with the same icons and texts
+```
+
+## 201 – Icons on the right so the texts line up (Claude Code, 2026-11-03)
+
+```
+let's have the icons on the right to align the texts
+```
+
+## 202 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```

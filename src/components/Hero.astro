@@ -3,6 +3,7 @@ import '@fontsource-variable/cormorant-garamond/wght.css';
 import '@fontsource-variable/cormorant-garamond/wght-italic.css';
 import CtaButton from './CtaButton.astro';
 import HeroTrustPill from './HeroTrustPill.astro';
+import RatingRow from './RatingRow.astro';
 ---
 
 <!--
@@ -36,14 +37,22 @@ import HeroTrustPill from './HeroTrustPill.astro';
 		<!-- Desktop: the content sits on a frosted, see-through card (entry 107); a plain wrapper below. -->
 		<div class="hero-card">
 		<!-- Entry 141: the hero text arrives top to bottom after the photo (load sequence in global.css). -->
-		<div data-load style="--load-delay: 250ms"><HeroTrustPill /></div>
+		<div class="hero-pill" data-load style="--load-delay: 250ms"><HeroTrustPill /></div>
+		<!-- Entry 195: phones show the rating here, above the title (the bar under the hero hides it). -->
+		<div class="hero-rating" data-load style="--load-delay: 320ms"><RatingRow /></div>
 		<h1 id="hero-title">
 			<span class="line-1" data-load style="--load-delay: 380ms">Medicinsk viktnedgång</span>
 			<span class="line-2" data-load style="--load-delay: 480ms">när dieter inte räcker</span>
 		</h1>
+		<!--
+		  Entry 193: rewritten from Samuel's draft ("Det är inte bristande vilja, det är biologi…"). Keeps
+		  the biology point but says "inte bara om vilja" (entry 137: will does play a part), and drops
+		  "livslångt resultat", a promise velora.se doesn't make. Team, plan and "hela vägen" are facts.
+		  Entry 194: Samuel's cut, without the opening "Kroppen försvarar sin vikt –".
+		-->
 		<p class="lede" data-load style="--load-delay: 600ms">
-			Velora är en svensk digital vårdgivare. Ett legitimerat vårdteam bedömer om medicinsk behandling passar dig,
-			och följer dig hela vägen.
+			Det handlar om biologi, inte bara om vilja. Hos Velora får du ett eget vårdteam och en personlig plan, och samma
+			team följer dig hela vägen.
 		</p>
 		<div class="cta-wrap" data-hero-cta data-load style="--load-delay: 720ms"><CtaButton label="Se om behandlingen passar dig" /></div>
 		</div>
@@ -140,6 +149,104 @@ import HeroTrustPill from './HeroTrustPill.astro';
 
 	.cta-wrap {
 		margin-top: 24px;
+	}
+
+	/* Entries 195, 197: on phones the pills move under the hero (TrustStrip.astro). */
+	@media (max-width: 767px) {
+		.hero-pill {
+			display: none;
+		}
+	}
+
+	/* Entry 195: phones only; tablets and desktop keep the rating in the bar under the hero. */
+	.hero-rating {
+		margin-bottom: 20px;
+	}
+
+	@media (min-width: 768px) {
+		.hero-rating {
+			display: none;
+		}
+	}
+
+	/*
+	 * Entry 196: the phone layout of velora.se's own snippet. The Trustpilot logo on its own line,
+	 * then the stars, "4,7", a thin rule and "5 000+ patienter" in plain text on one line. The link's
+	 * box steps aside (display: contents) so its logo and stars can sit on separate rows of the grid.
+	 */
+	.hero-rating :global(.rating-row) {
+		display: grid;
+		grid-template-columns: auto auto;
+		justify-content: start;
+		align-items: center;
+		gap: 8px 0;
+	}
+
+	.hero-rating :global(.tp) {
+		display: contents;
+	}
+
+	.hero-rating :global(.tp-logo) {
+		grid-column: 1 / -1;
+		grid-row: 1;
+	}
+
+	.hero-rating :global(.tp-score) {
+		grid-column: 1;
+		grid-row: 2;
+	}
+
+	.hero-rating :global(.stat) {
+		grid-column: 2;
+		grid-row: 2;
+		gap: 0.3em;
+		margin-left: 14px;
+		padding: 0 0 0 14px;
+		border-right: 0;
+		border-left: 1px solid var(--line);
+		font-size: 1rem;
+		color: var(--ink-soft);
+	}
+
+	.hero-rating :global(.figure) {
+		font-family: var(--sans);
+		font-weight: 400;
+		font-size: 1rem;
+		letter-spacing: 0;
+	}
+
+	.hero-rating :global(.plus),
+	.hero-rating :global(.unit) {
+		transform: none;
+		font-size: 1rem;
+	}
+
+	.hero-rating :global(.tp-star) {
+		width: 20px;
+		height: 20px;
+	}
+
+	.hero-rating :global(.tp-star svg) {
+		width: 14px;
+		height: 14px;
+	}
+
+	/* 320 px phones: smaller stars and gaps so the line stays inside the margins. */
+	@media (max-width: 359px) {
+		.hero-rating :global(.tp-star) {
+			width: 16px;
+			height: 16px;
+		}
+
+		.hero-rating :global(.tp-star svg) {
+			width: 11px;
+			height: 11px;
+		}
+
+		.hero-rating :global(.stat) {
+			margin-left: 10px;
+			padding-left: 10px;
+		}
 	}
 
 	/*

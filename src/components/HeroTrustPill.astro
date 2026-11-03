@@ -6,10 +6,17 @@ import { IMG } from '../data/site';
 // Frosted trust pill at the top of the hero's text stack (prompt log entries 33–35, 47).
 // "Gå ner 20 % i vikt i snitt" is Samuel's wording (entries 47, 124); velora.se states 16–25 %, so it is
 // flagged in docs/facts.md. Icons: Phosphor (light), bare, no circle.
+// Entry 199: with `detailed` (the phone panel under the hero) each pill carries velora.se's mobile
+// title and subtitle; the hero's one-row pill (tablet, desktop) keeps the short labels.
+interface Props {
+	detailed?: boolean;
+}
+
+const { detailed = false } = Astro.props;
 const items = [
-	{ label: 'Eget vårdteam', avatars: true },
-	{ label: 'Gå ner 20 % i vikt i snitt', icon: arrowDown },
-	{ label: '30 dagars nöjdhetsgaranti', icon: check },
+	{ label: 'Eget vårdteam', title: 'Ditt eget vårdteam', sub: 'Obegränsad kontakt, hela vägen', avatars: true },
+	{ label: 'Gå ner 20 % i vikt i snitt', title: 'Gå ner 20 % i vikt i snitt', sub: 'Med mindre hunger och sug', icon: arrowDown },
+	{ label: '30 dagars nöjdhetsgaranti', title: '30 dagars nöjdhetsgaranti', sub: 'Nöjd eller pengarna tillbaka', icon: check },
 ];
 // The care team's portraits stay beside the first statement (prompt log entry 34).
 const team = [IMG.mina, IMG.daniel, IMG.sandra];
@@ -28,7 +35,14 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 						</span>
 					)}
 					{item.icon && <span class="icon" aria-hidden="true" set:html={item.icon} />}
-					{item.label}
+					{detailed ? (
+						<span class="text">
+							<span class="title">{item.title}</span>
+							<span class="sub">{item.sub}</span>
+						</span>
+					) : (
+						item.label
+					)}
 				</li>
 			))
 		}
@@ -36,6 +50,21 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 </aside>
 
 <style>
+	/* Entry 199: title and subtitle stacked inside the same pill; the subtitle in the body face. */
+	.text {
+		display: grid;
+		gap: 3px;
+	}
+
+	.sub {
+		font-family: var(--sans);
+		font-weight: 400;
+		font-size: 0.8125rem;
+		line-height: 1.2;
+		letter-spacing: 0;
+		color: var(--ink-soft);
+	}
+
 	/*
 	 * One frosted pill holding all three statements (from 768 px). Phones (entries 145, 147): the
 	 * three don't fit one row at 375 px, so each statement is its own pill, stacked and as wide as its
