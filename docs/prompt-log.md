@@ -1550,3 +1550,33 @@ Do a badge icon for garanti, in different background color and icon color
 ```
 Commit and push all pending changes.
 ```
+
+## 232 – Collapsible "Kostnader som tillkommer" with a "Läs mer" / "Läs mindre" toggle (Claude Code, 2026-11-03)
+
+```
+In the pricing section, change “Det här tillkommer” to “Kostnader som tillkommer” and replace “utöver månadsavgiften” with a “Läs mer” control and a plus sign. Keep the additional costs collapsed by default, with a line below the heading. Tapping “Läs mer” should smoothly expand the costs and change the control to “Läs mindre”; tapping it again should smoothly collapse them.
+```
+
+## 233 – "Kostnader som tillkommer" as one big card button with a large plus (Claude Code, 2026-11-03)
+
+```
+Let's make the kostnader som tillkommer a big card button with only a large + icon, no läs mer
+```
+
+## 234 – Phone navbar transparent on load, background on scroll (Claude Code, 2026-11-03)
+
+```
+let the mobile navbar have no background color on load, and have it appear on scroll
+```
+
+## 235 – Full-height phone menu that scrolls when Viktmediciner is open (Claude Code, 2026-11-03, mid-turn)
+
+```
+Make the mobile nav dropdown fill the full viewport height. When Viktmediciner is expanded, let the menu scroll so every item remains reachable. Keep the rest of the menu unchanged.
+```
+
+## 236 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```

@@ -377,9 +377,23 @@ const cards = [
 			background: rgba(247, 242, 236, 0.78);
 		}
 
-		/* Entry 159: the band shows from the start, at the top of the page too (not only once scrolled). */
-		.header:not(.is-open)::before {
+		/*
+		 * Entry 234 (replaces entry 159): no band at the top of the page, so the bar sits straight on the
+		 * hero photo; the frosted band fades in once the page scrolls.
+		 */
+		.header.is-scrolled:not(.is-open)::before {
 			opacity: 1;
+		}
+	}
+
+	/* Entry 234: on phones the bar sits on the dark full-bleed photo at the top, so logo and burger go white. */
+	@media (max-width: 767px) {
+		.header:not(.is-scrolled):not(.is-open) .mark {
+			background: #fff;
+		}
+
+		.header:not(.is-scrolled):not(.is-open) .burger {
+			color: #fff;
 		}
 	}
 
@@ -852,12 +866,17 @@ const cards = [
 
 	.mobile-nav {
 		display: grid;
-		padding-block: 8px 28px;
+		/* Entry 235: clear of the phone's home indicator at the bottom of the full-height panel. */
+		padding-block: 8px calc(28px + env(safe-area-inset-bottom));
 	}
 
-	/* Tall enough to hold the open Viktmediciner group; scrolls inside on short phones. */
+	/*
+	 * Entry 235: the panel fills the rest of the screen under the 80 px bar, and scrolls inside when
+	 * the open Viktmediciner group makes it taller (dvh follows the phone's browser bars).
+	 */
 	.mobile-menu {
-		max-height: calc(100svh - 80px);
+		height: calc(100svh - 80px);
+		height: calc(100dvh - 80px);
 		overflow-y: auto;
 		overscroll-behavior: contain;
 	}

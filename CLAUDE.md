@@ -150,7 +150,7 @@ Things the brief leaves open or that are missing from the PDF. Resolve by asking
   - `docs/direction.md` – audience + medical-rule assumptions, brand principles, page outline (approved 2026-11-02)
 - Start page: `src/pages/index.astro` assembles one component per section in `src/components/` (order follows
   `docs/direction.md` §8). Shared constants (CTA label/link/note, image URLs) live in `src/data/site.ts`;
-  design tokens in `src/styles/global.css`. Client JS only in `Calculator.astro`, `Header.astro` and `Faq.astro` (plus the reveal script in `Base.astro`).
+  design tokens in `src/styles/global.css`. Client JS only in `Calculator.astro`, `Header.astro`, `Faq.astro` and `Pricing.astro` (plus the reveal script in `Base.astro`).
 - Fonts are self-hosted via `@fontsource-variable/newsreader` (section headings), `@fontsource-variable/cormorant-garamond` (hero title only) and `@fontsource-variable/manrope` (body) –
   no Google Fonts calls, consistent with the privacy story.
 - Smooth wheel scrolling via `lenis` (set up in `src/layouts/Base.astro`; skipped for reduced motion, paused while a `<dialog>` is open).

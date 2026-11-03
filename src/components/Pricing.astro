@@ -1,5 +1,6 @@
 ---
 import checkIcon from '@phosphor-icons/core/assets/light/check-light.svg?raw';
+import plusIcon from '@phosphor-icons/core/assets/light/plus-light.svg?raw';
 import { VELORA } from '../data/site';
 import CtaButton from './CtaButton.astro';
 import SwitchBlock from './SwitchBlock.astro';
@@ -69,10 +70,20 @@ const maintenance = [
 
 		<!-- What comes on top of the monthly fee: a ruled table, one row per cost. -->
 		<div class="costs" data-reveal>
-			<div class="costs-head">
-				<p class="costs-title">Det här tillkommer</p>
-				<p class="aside">utöver månadsavgiften</p>
-			</div>
+			<!--
+				Entries 232–233: one card. Its whole heading is the button: the title and a large plus, which
+				turns into a cross when open. The costs open beneath it inside the card, collapsed by default.
+				Without JS they simply show.
+			-->
+			<div class="costs-card">
+			<h3 class="costs-heading">
+				<button class="costs-toggle" type="button" id="costs-title" aria-expanded="false" aria-controls="costs-panel" data-costs-toggle>
+					<span class="costs-title">Kostnader som tillkommer</span>
+					<span class="plus" aria-hidden="true" set:html={plusIcon} />
+				</button>
+			</h3>
+			<div class="costs-panel" id="costs-panel" role="region" aria-labelledby="costs-title" data-costs-panel>
+			<div class="costs-inner">
 			<dl>
 				<div class="row">
 					<dt>Hälsokontroll <span class="when">en gång</span></dt>
@@ -92,6 +103,9 @@ const maintenance = [
 					<dd class="amount"><span class="unit">ca</span> 1 050–4 800 <span class="unit">kr/mån</span></dd>
 				</div>
 			</dl>
+			</div>
+			</div>
+			</div>
 			<!-- Entry 162: stacked on phones; side by side from 1024 px, within the table's width. -->
 			<div class="foot-pair">
 				<div class="guarantee">
@@ -235,21 +249,56 @@ const maintenance = [
 		margin: 56px auto 0;
 	}
 
-	.costs-head {
+	/* Entry 233: the extra costs as one card; the heading is a full-width button. */
+	.costs-card {
+		border-radius: var(--radius);
+		background: var(--card);
+	}
+
+	.costs-heading {
+		margin: 0;
+		font: inherit;
+	}
+
+	.costs-toggle {
 		display: flex;
+		width: 100%;
+		align-items: center;
 		justify-content: space-between;
-		align-items: baseline;
-		gap: 4px 16px;
-		flex-wrap: wrap;
-		padding-bottom: 12px;
+		gap: 16px;
+		padding: 24px;
+		border: 0;
+		border-radius: var(--radius);
+		background: none;
+		color: var(--ink);
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
 	}
 
 	.costs-title {
-		font-weight: 600;
-		font-size: 0.9375rem;
+		font-family: var(--serif);
+		font-weight: 340;
+		font-size: 1.5rem;
+		line-height: 1.15;
 	}
 
-	.aside,
+	.costs-toggle .plus {
+		display: flex;
+		flex: none;
+		color: var(--wine);
+		transition: rotate 380ms var(--ease);
+	}
+
+	.costs-toggle .plus :global(svg) {
+		width: 36px;
+		height: 36px;
+	}
+
+	.costs-toggle[aria-expanded='true'] .plus {
+		rotate: 45deg;
+	}
+
 	.when {
 		font-family: var(--serif);
 		font-style: italic;
@@ -257,8 +306,50 @@ const maintenance = [
 		color: var(--ink-soft);
 	}
 
-	.aside {
-		font-size: 0.9375rem;
+	/* Without JS the costs show, so the plus starts as a cross. */
+	:global(html:not(.js)) .costs-toggle .plus {
+		rotate: 45deg;
+	}
+
+	/*
+	 * The panel animates its height with a 0fr → 1fr grid row, so it opens and closes smoothly to its
+	 * natural height. Only once JS is running (.js) is it collapsed; without JS the costs show.
+	 */
+	.costs-panel {
+		display: grid;
+		grid-template-rows: 1fr;
+		transition:
+			grid-template-rows 420ms var(--ease),
+			opacity 420ms var(--ease),
+			visibility 0s;
+	}
+
+	/* Closed: hidden from tabbing and screen readers too, once the collapse has finished. */
+	:global(.js) .costs-panel:not(.is-open) {
+		grid-template-rows: 0fr;
+		opacity: 0;
+		visibility: hidden;
+		transition:
+			grid-template-rows 420ms var(--ease),
+			opacity 420ms var(--ease),
+			visibility 0s 420ms;
+	}
+
+	.costs-inner {
+		min-height: 0;
+		overflow: hidden;
+		padding-inline: 24px;
+	}
+
+	.costs-inner dl {
+		padding-bottom: 8px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.costs-panel,
+		.costs-toggle .plus {
+			transition: none;
+		}
 	}
 
 	dl,
@@ -420,9 +511,16 @@ const maintenance = [
 			padding: 40px;
 		}
 
+		.costs-toggle {
+			padding: 28px 32px;
+		}
+
+		.costs-inner {
+			padding-inline: 32px;
+		}
+
 		/* Name | explanation | amount, like a plan-comparison table. */
-		.row,
-		.costs-head {
+		.row {
 			display: grid;
 			grid-template-columns: minmax(0, 3fr) minmax(0, 5fr) minmax(0, 3fr);
 			column-gap: 28px;
@@ -441,17 +539,11 @@ const maintenance = [
 		.amount {
 			margin-left: 0;
 		}
-
-		.costs-head .aside {
-			grid-column: 3;
-			text-align: right;
-		}
 	}
 
 	/* Tablets: a wider amount column so "ca 1 050–4 800 kr/mån" stays on one line. */
 	@media (min-width: 768px) and (max-width: 1023px) {
-		.row,
-		.costs-head {
+		.row {
 			grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 4fr);
 		}
 	}
@@ -479,3 +571,16 @@ const maintenance = [
 		}
 	}
 </style>
+
+<script>
+	// Entries 232–233: the card's heading opens and closes the extra costs.
+	const toggle = document.querySelector<HTMLButtonElement>('[data-costs-toggle]');
+	const panel = document.querySelector<HTMLElement>('[data-costs-panel]');
+	if (toggle && panel) {
+		toggle.addEventListener('click', () => {
+			const open = toggle.getAttribute('aria-expanded') !== 'true';
+			toggle.setAttribute('aria-expanded', String(open));
+			panel.classList.toggle('is-open', open);
+		});
+	}
+</script>

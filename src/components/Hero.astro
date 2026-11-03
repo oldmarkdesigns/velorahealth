@@ -482,8 +482,19 @@ import RatingRow from './RatingRow.astro';
 			object-position: 72% 30%;
 		}
 
+		/*
+		 * Entry 234: the navbar is see-through at the top on phones, so a soft dark band behind it (fading
+		 * out by ~140 px) keeps the white logo and burger legible on the pale wall.
+		 */
 		.veil {
-			background: linear-gradient(
+			background:
+				linear-gradient(
+					to bottom,
+					rgba(20, 10, 14, 0.5) 0,
+					rgba(20, 10, 14, 0.3) 70px,
+					rgba(20, 10, 14, 0) 140px
+				),
+				linear-gradient(
 				to bottom,
 				rgba(20, 10, 14, 0.12) 0%,
 				rgba(20, 10, 14, 0.2) 30%,
