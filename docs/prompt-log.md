@@ -1000,3 +1000,50 @@ You did not add the icons in desktop for läkarmöten via video and so on
 ```
 Commit and push all pending changes.
 ```
+
+## 151 – Section on the medical basis (Claude Code, 2026-11-03)
+
+[Image attached: velora.se's two cards "Vad är det?" (GLP-1, pen photo) and "Vilka resultat får jag?" (16–25 %, loose jeans photo).]
+
+```
+Add a section explaining the medical basis of Velora’s service: how modern weight-loss medication works and how it fits with the care team’s support. Keep it clear and accessible, without making stronger claims than the source material supports.
+```
+
+## 152 – Smooth Viktmediciner dropdown on mobile (Claude Code, 2026-11-03, mid-turn)
+
+```
+Make the Viktmediciner dropdown expand and collapse smoothly. Keep the rest of the menu unchanged. In mobile
+```
+
+## 153 – Broccoli icon for "Dietist och coach" (Claude Code, 2026-11-03)
+
+```
+Use a broccoli icon for “Dietist och coach” in the service icons. Keep the other icons and layout unchanged.
+```
+
+## 154 – "Vilka resultat får jag?" card in "Den medicinska grunden" (Claude Code, 2026-11-03)
+
+```
+Great but we also need a card for Vilka resultat får jag in den medicinska grunden
+```
+
+## 155 – One image per card in "Den medicinska grunden" (Claude Code, 2026-11-03)
+
+[Images attached: a hand holding a blue injection pen against a pale wall; velora.se's "Vilka resultat får jag?" card with the loose-jeans photo.]
+
+```
+Add one image to each card in “Den medicinska grunden” so the cards are easier to distinguish. Use the attached image for “Så fungerar läkemedlet,” the team avatars for “Så stöttar vårdteamet,” and the image from Velora’s original site for “Vilka resultat får jag?”. Keep the card content and layout unchanged.
+```
+
+## 156 – Vertical line beside the "Den medicinska grunden" intro (Claude Code, 2026-11-03)
+
+```
+Add a vertical line to the left of Behandlingen vilar på två delar som hänger ihop: ett läkemedel som gör det lättare att äta mindre, och ett vårdteam som ser till att det blir rätt för just dig. just like we have for Medicinska beslut fattas av svensklegitimerade läkare,
+aldrig av en algoritm.
+```
+
+## 157 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```

@@ -235,6 +235,31 @@ const cards = [
 				burger.focus();
 			}
 		});
+		// Entry 152: Viktmediciner opens and closes smoothly. CSS can't animate <details> to its natural
+		// height in every browser (Safari), so the content's height is animated with the Web Animations
+		// API: open first, then grow from 0; on close, shrink to 0, then close.
+		const group = mobileMenu.querySelector<HTMLDetailsElement>('.mobile-group');
+		const groupBody = group?.querySelector<HTMLElement>('.mobile-sub');
+		const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+		group?.querySelector('summary')?.addEventListener('click', (e) => {
+			if (!groupBody || reduceMotion.matches) return;
+			e.preventDefault();
+			const opening = !group.open;
+			const from = opening ? 0 : groupBody.offsetHeight;
+			if (opening) group.open = true;
+			const to = opening ? groupBody.offsetHeight : 0;
+			groupBody.getAnimations().forEach((a) => a.cancel());
+			// The bottom padding animates with the height, so the closed state is truly 0 tall.
+			const shut = { height: '0px', paddingBottom: '0px', opacity: 0 };
+			const full = { height: `${opening ? to : from}px`, opacity: 1 };
+			const anim = groupBody.animate(opening ? [shut, full] : [full, shut],
+				{ duration: 380, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)' },
+			);
+			anim.onfinish = () => {
+				if (!opening) group.open = false;
+			};
+		});
+
 		// Rotating to a desktop width closes it, since the burger disappears there.
 		window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
 			if (e.matches && mobileOpen()) setMobileOpen(false);
@@ -766,7 +791,6 @@ const cards = [
 	/* Viktmediciner: a summary styled like the links, with the desktop menu's chevron. */
 	.mobile-group {
 		border-bottom: 1px solid var(--line);
-		interpolate-size: allow-keywords;
 	}
 
 	.mobile-group summary {
@@ -790,16 +814,9 @@ const cards = [
 		rotate: 180deg;
 	}
 
-	.mobile-group::details-content {
-		block-size: 0;
-		overflow: clip;
-		transition:
-			block-size 360ms var(--ease),
-			content-visibility 360ms allow-discrete;
-	}
-
-	.mobile-group[open]::details-content {
-		block-size: auto;
+	/* Height is animated by the script (entry 152): Safari can't transition a <details> to auto. */
+	.mobile-sub {
+		overflow: hidden;
 	}
 
 	.mobile-sub {
@@ -928,8 +945,7 @@ const cards = [
 		.row-name,
 		.burger span,
 		.mobile-menu,
-		.mobile-group summary svg,
-		.mobile-group::details-content {
+		.mobile-group summary svg {
 			transition: none;
 		}
 	}

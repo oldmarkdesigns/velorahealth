@@ -18,6 +18,8 @@ export const IMG = {
 	heroMedium: `${CDN}/66e29f6849a1468a576a6554/6a70ec1ce46e6779d6eafe3c_velora-hero-p-1080.avif`,
 	videoMeeting: `${CDN}/66e29f6849a1468a576a6554/689c76bcda336c55b1854d19_ef69c49a4e58c16fe3a2314467a1ece5_online-doktor.avif`,
 	// Used only in the navbar's Viktmediciner menu (entry 29), not on the page itself.
+	// velora.se's "Vilka resultat får jag?" card photo (entry 155).
+	weightLoss: `${CDN}/66e29f6849a1468a576a6554/69737da461ce6474c1f006db_fbc869c1b0130c522909afaa920c04ef_Weight_Loss_Compressed-p-1080.avif`,
 	pen: `${CDN}/66e29f6849a1468a576a6554/696900e01a3059e9a079a63e_6d03debe64c4f24446e245f138deeb35_GLP-1-pen.avif`,
 	sofa: `${CDN}/66e29f6849a1468a576a6554/6969027e389e7b077568828f_Velora-abonnemang.avif`,
 	caroline: `${CDN}/66e29f6849a1468a576a6581/6a74a6a6812506892a591912_Caroline_Velora.avif`,

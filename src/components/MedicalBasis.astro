@@ -1,0 +1,346 @@
+---
+import { IMG } from '../data/site';
+
+// The medical basis of the service (entry 151): how the medicine works and what the care team adds.
+// Every sentence restates velora.se's own FAQ and treatment steps (docs/facts.md), no stronger:
+// "minskar hungern och suget" (not "ingen hunger"), no "kliniskt bevisat" or "säkert", no drug names.
+const medicine = [
+	{
+		title: 'Kroppen försvarar sin vikt',
+		text: 'Kroppen är programmerad att återgå till sin högsta vikt. Därför är det så svårt att behålla en viktnedgång med enbart diet och träning.',
+	},
+	{
+		title: 'Mindre hunger och sug',
+		text: 'Läkemedel ur gruppen GLP-1-analoger minskar hungern och suget och hjälper dig att känna dig mätt längre. Då blir det enklare att själv bestämma över ditt ätande.',
+	},
+	{
+		title: 'Du äter som vanligt, fast mindre',
+		text: 'Viktnedgång kräver fortfarande att du äter mindre än du gör av med. Läkemedlet gör det lättare att komma dit, utan kirurgi.',
+	},
+];
+const team = [
+	{
+		title: 'Läkaren bedömer och förskriver',
+		text: 'Efter en hälsokontroll med blodprover bedömer läkaren om behandlingen passar dig, och väljer läkemedel och dos efter dina förutsättningar.',
+	},
+	{
+		title: 'Dietist och coach bygger vanorna',
+		text: 'När hungern och suget minskar är det lättare att få in hållbara och hälsosamma vanor. Din plan tas fram med stöd av dietist och coach.',
+	},
+	{
+		title: 'Samma team följer upp',
+		text: 'Regelbundna avstämningar, och du kan skriva till ditt vårdteam när som helst. Biverkningar är oftast milda och övergående, från mage och tarm i början.',
+	},
+];
+// Entry 154: what to expect, from the FAQ answer "Hur mycket kommer jag att gå ner i vikt…", with
+// its premises (large studies, depends on the medicine, varies from person to person).
+const results = [
+	{
+		title: '16–25 % på ett år',
+		text: 'Genomsnittlig viktnedgång under de första 12 månaderna i stora studier, beroende på läkemedel.',
+	},
+	{
+		title: 'Cirka 10 % på fyra månader',
+		text: 'Viktnedgången går snabbast i början av behandlingen.',
+	},
+	{
+		title: 'Målet är din målvikt',
+		text: 'För de flesta en hälsosam vikt, BMI 20–25. Resultaten varierar från person till person.',
+	},
+];
+---
+
+<section class="section" id="medicinsk-grund" aria-labelledby="basis-title">
+	<div class="container">
+		<div class="head" data-reveal>
+			<div>
+				<p class="label">Den medicinska grunden</p>
+				<h2 id="basis-title">Läkemedlet hjälper kroppen. <em>Teamet hjälper dig.</em></h2>
+			</div>
+			<p class="lede">
+				Behandlingen vilar på två delar som hänger ihop: ett läkemedel som gör det lättare att äta mindre, och ett
+				vårdteam som ser till att det blir rätt för just dig.
+			</p>
+		</div>
+
+		<div class="pair">
+			<article class="card" data-reveal aria-labelledby="basis-medicine">
+				<!-- Entry 155: one image per card, so the three are easy to tell apart. -->
+				<div class="media">
+					<img src="/images/pen-hand.webp" alt="En hand som håller en injektionspenna" width="744" height="970" loading="lazy" />
+				</div>
+				<h3 id="basis-medicine">Så fungerar läkemedlet</h3>
+				<ol role="list">
+					{
+						medicine.map((m, i) => (
+							<li>
+								<span class="num">{String(i + 1).padStart(2, '0')}</span>
+								<div>
+									<p class="item-title">{m.title}</p>
+									<p class="item-text">{m.text}</p>
+								</div>
+							</li>
+						))
+					}
+				</ol>
+			</article>
+
+			<span class="plus" aria-hidden="true">+</span>
+
+			<article class="card" data-reveal style="transition-delay: 120ms" aria-labelledby="basis-team">
+				<div class="media team-media">
+					<span class="avatars">
+						<img src={IMG.mina} alt="Mina Munktell" width="96" height="96" loading="lazy" />
+						<img src={IMG.daniel} alt="Daniel da Fonte" width="96" height="96" loading="lazy" />
+						<img src={IMG.sandra} alt="Sandra Merei" width="96" height="96" loading="lazy" />
+					</span>
+				</div>
+				<h3 id="basis-team">Så stöttar vårdteamet</h3>
+				<ol role="list">
+					{
+						team.map((m, i) => (
+							<li>
+								<span class="num">{String(i + 1).padStart(2, '0')}</span>
+								<div>
+									<p class="item-title">{m.title}</p>
+									<p class="item-text">{m.text}</p>
+								</div>
+							</li>
+						))
+					}
+				</ol>
+			</article>
+
+			<span class="plus" aria-hidden="true">=</span>
+
+			<article class="card results" data-reveal style="transition-delay: 240ms" aria-labelledby="basis-results">
+				<div class="media">
+					<img src={IMG.weightLoss} alt="En person som håller ut midjan på ett par för stora jeans" width="1080" height="720" loading="lazy" />
+				</div>
+				<h3 id="basis-results">Vilka resultat får jag?</h3>
+				<ol role="list">
+					{
+						results.map((m, i) => (
+							<li>
+								<span class="num">{String(i + 1).padStart(2, '0')}</span>
+								<div>
+									<p class="item-title">{m.title}</p>
+									<p class="item-text">{m.text}</p>
+								</div>
+							</li>
+						))
+					}
+				</ol>
+				<a class="calc-link" href="#raknare">Räkna på din egen vikt</a>
+			</article>
+		</div>
+
+		<p class="note" data-reveal>
+			Medicinska beslut fattas av legitimerade läkare. Effekt och biverkningar varierar från person till person, och
+			läkemedlet ingår inte i månadsavgiften. <a href="#faq-varfor-lakemedel">Varför läkemedel?</a>
+		</p>
+	</div>
+</section>
+
+<style>
+	.head {
+		display: grid;
+		gap: 24px;
+	}
+
+	/*
+	 * Entry 156: the same wine rule as the care team's quote ("Medicinska beslut fattas…"): 2 px, 20 px
+	 * in, and trimmed to the text so the line is exactly as tall as the words.
+	 */
+	.lede {
+		max-width: 46ch;
+		padding-left: 20px;
+		border-left: 2px solid var(--wine);
+		color: var(--ink-soft);
+		text-box: trim-both cap alphabetic;
+	}
+
+	/* Two cards joined by a "+": the medicine and the team are one treatment. */
+	.pair {
+		display: grid;
+		justify-items: center;
+		margin-top: 56px;
+	}
+
+	.card {
+		--pad-y: 32px;
+		--pad-x: 24px;
+		width: 100%;
+		padding: var(--pad-y) var(--pad-x);
+		border-radius: var(--radius);
+		background: var(--card);
+		overflow: hidden;
+	}
+
+	/* A full-bleed image band across the top of each card (entry 155), same height in all three. */
+	.media {
+		margin: calc(-1 * var(--pad-y)) calc(-1 * var(--pad-x)) 28px;
+		aspect-ratio: 16 / 9;
+		background: var(--stone);
+	}
+
+	.media > img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	/* The pen: the 16:9 band shows ~43 % of the tall photo; 28 % keeps the tip and the fingers in. */
+	.card:first-child .media > img {
+		object-position: 50% 28%;
+	}
+
+	/* The team: the three portraits on stone, overlapping like the hero pill's avatars. */
+	.team-media {
+		display: grid;
+		place-items: center;
+	}
+
+	.avatars {
+		display: flex;
+	}
+
+	.avatars img {
+		width: 88px;
+		height: 88px;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 3px solid var(--stone);
+		margin-left: -18px;
+		background: var(--card);
+	}
+
+	.avatars img:first-child {
+		margin-left: 0;
+	}
+
+	h3 {
+		font-size: 1.75rem;
+		font-weight: 340;
+	}
+
+	ol {
+		list-style: none;
+		margin: 24px 0 0;
+		padding: 0;
+	}
+
+	li {
+		display: grid;
+		grid-template-columns: 40px 1fr;
+		gap: 8px;
+		padding: 20px 0;
+		border-top: 1px solid var(--line);
+	}
+
+	li:last-child {
+		padding-bottom: 0;
+	}
+
+	.num {
+		font-family: var(--serif);
+		font-style: italic;
+		color: var(--ink-soft);
+		padding-top: 2px;
+	}
+
+	.item-title {
+		font-weight: 600;
+	}
+
+	.item-text {
+		margin-top: 4px;
+		font-size: 0.9375rem;
+		color: var(--ink-soft);
+	}
+
+	.plus {
+		display: grid;
+		place-items: center;
+		width: 48px;
+		height: 48px;
+		margin-block: -12px;
+		position: relative;
+		z-index: 1;
+		border-radius: 50%;
+		background: var(--wine);
+		color: var(--cream);
+		font-family: var(--serif);
+		font-size: 1.75rem;
+		line-height: 1;
+	}
+
+	/* The outcome card: its figures in the serif, so the numbers read first. */
+	.results .item-title {
+		font-family: var(--serif);
+		font-size: 1.375rem;
+		font-weight: 400;
+		line-height: 1.2;
+	}
+
+	.calc-link {
+		display: inline-block;
+		margin-top: 24px;
+		font-size: 0.9375rem;
+		font-weight: 600;
+		color: var(--ink);
+	}
+
+	.note {
+		margin-top: 32px;
+		max-width: 62ch;
+		font-size: 0.875rem;
+		color: var(--ink-soft);
+	}
+
+	.note a {
+		color: var(--ink);
+		font-weight: 600;
+	}
+
+	@media (min-width: 768px) {
+		.card {
+			--pad-y: 40px;
+			--pad-x: 40px;
+		}
+	}
+
+	/* Three columns are narrow on small laptops: tighter card padding. */
+	@media (min-width: 1024px) and (max-width: 1279px) {
+		.card {
+			--pad-y: 32px;
+			--pad-x: 28px;
+		}
+
+		li {
+			grid-template-columns: 32px 1fr;
+		}
+	}
+
+	/* Desktop: heading beside the intro; the cards side by side, "+" and "=" on their seams. */
+	@media (min-width: 1024px) {
+		.head {
+			grid-template-columns: 1fr 1fr;
+			align-items: end;
+			gap: 96px;
+		}
+
+		/* Entry 154: three cards, medicine + team = results. */
+		.pair {
+			grid-template-columns: minmax(0, 1fr) 0 minmax(0, 1fr) 0 minmax(0, 1fr);
+			align-items: stretch;
+			column-gap: 20px;
+			margin-top: 64px;
+		}
+
+		.plus {
+			align-self: center;
+			margin: 0 -24px;
+		}
+	}
+</style>
