@@ -3,14 +3,18 @@
 // Hemmapartner's achievements bar. Replaces the earlier drifting trust carousel.
 // - Rating ("5 000+ patienter" and Trustpilot): RatingRow.astro (sources noted there).
 // - The LegitScript/IVO certification moved to the footer (entry 198).
-// Phones (entries 195–204): the rating and the statement list both live in the hero, so this bar is
-// hidden there; it shows on tablets and desktop only.
+// Phones: the rating sits in the hero (entries 195–196), and this bar shows the three statements as a
+// plain list (entries 200–201; back here from the hero in entry 208, to keep the hero clean).
+import HeroTrustPill from './HeroTrustPill.astro';
 import RatingRow from './RatingRow.astro';
 ---
 
 <div class="bar" data-load style="--load-delay: 860ms">
 	<div class="container inner">
 		<RatingRow />
+
+		<!-- Entry 208: phones only. The three statements as a plain list, back under the hero. -->
+		<div class="hero-statements"><HeroTrustPill detailed /></div>
 
 	</div>
 </div>
@@ -25,9 +29,75 @@ import RatingRow from './RatingRow.astro';
 		gap: 20px;
 	}
 
-	/* Phones: nothing left to show here (the rating and the statements are in the hero, entry 204). */
+	/*
+	 * ---- Phones: the three statements as a plain list in one soft card (entries 200–201; under the hero again since entry 208) ----
+	 * Same icons and texts as the pills (entry 199), but no pill backgrounds, borders, shadows or
+	 * tilts: one row each, divided by hairlines.
+	 */
+	.hero-statements {
+		padding: 8px 20px;
+		border-radius: 20px;
+		background: var(--card);
+	}
+
+	.hero-statements :global(.pill) {
+		margin: 0;
+	}
+
+	.hero-statements :global(.pill ul) {
+		align-items: stretch;
+		gap: 0;
+	}
+
+	.hero-statements :global(.pill li) {
+		padding: 14px 0;
+		border: 0;
+		border-radius: 0;
+		background: none;
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		box-shadow: none;
+	}
+
+	.hero-statements :global(.pill li + li) {
+		border-top: 1px solid var(--line);
+	}
+
+	/*
+	 * Entry 201: the icons sit on the right, so every title and subtitle starts on the same left edge
+	 * (the three portraits are wider than a single badge, which pushed the first text in).
+	 */
+	.hero-statements :global(.pill li) {
+		flex-direction: row-reverse;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	.hero-statements :global(.pill .avatars),
+	.hero-statements :global(.pill .icon) {
+		margin-right: 0;
+	}
+
+	.hero-statements {
+		margin-top: 28px;
+	}
+
+	@media (min-width: 768px) {
+		.hero-statements {
+			display: none;
+		}
+	}
+
+	/* Phones: the rating is in the hero; tablets and desktop: the statements are in the hero pill. */
+	/* Entry 210: phones show the statements as the carousel in the hero, so the bar has nothing left. */
 	@media (max-width: 767px) {
 		.bar {
+			display: none;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.hero-statements {
 			display: none;
 		}
 	}

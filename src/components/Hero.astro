@@ -55,8 +55,17 @@ import RatingRow from './RatingRow.astro';
 			team följer dig hela vägen.
 		</p>
 		<div class="cta-wrap" data-hero-cta data-load style="--load-delay: 720ms"><CtaButton label="Se om behandlingen passar dig" /></div>
-		<!-- Entry 204: phones only. The three statements as a list in one card, inside the hero. -->
-		<div class="hero-statements" data-load style="--load-delay: 820ms"><HeroTrustPill detailed /></div>
+		<!--
+		  Entry 210: phones only. The three statement pills, separate, drifting past in a slow loop at
+		  the foot of the hero (two copies, so the loop has no seam); a plain swipeable row with reduced
+		  motion.
+		-->
+		<div class="hero-marquee" data-load style="--load-delay: 860ms">
+			<div class="marquee-track">
+				<HeroTrustPill />
+				<HeroTrustPill decorative />
+			</div>
+		</div>
 		</div>
 	</div>
 </section>
@@ -151,65 +160,6 @@ import RatingRow from './RatingRow.astro';
 
 	.cta-wrap {
 		margin-top: 24px;
-	}
-
-	/*
-	 * ---- Phones: the three statements as a plain list in one soft card (entries 200–201; inside the hero since entry 204) ----
-	 * Same icons and texts as the pills (entry 199), but no pill backgrounds, borders, shadows or
-	 * tilts: one row each, divided by hairlines.
-	 */
-	.hero-statements {
-		padding: 8px 20px;
-		border-radius: 20px;
-		background: var(--card);
-	}
-
-	.hero-statements :global(.pill) {
-		margin: 0;
-	}
-
-	.hero-statements :global(.pill ul) {
-		align-items: stretch;
-		gap: 0;
-	}
-
-	.hero-statements :global(.pill li) {
-		padding: 14px 0;
-		border: 0;
-		border-radius: 0;
-		background: none;
-		backdrop-filter: none;
-		-webkit-backdrop-filter: none;
-		box-shadow: none;
-	}
-
-	.hero-statements :global(.pill li + li) {
-		border-top: 1px solid var(--line);
-	}
-
-	/*
-	 * Entry 201: the icons sit on the right, so every title and subtitle starts on the same left edge
-	 * (the three portraits are wider than a single badge, which pushed the first text in).
-	 */
-	.hero-statements :global(.pill li) {
-		flex-direction: row-reverse;
-		justify-content: space-between;
-		gap: 16px;
-	}
-
-	.hero-statements :global(.pill .avatars),
-	.hero-statements :global(.pill .icon) {
-		margin-right: 0;
-	}
-
-	.hero-statements {
-		margin-top: 28px;
-	}
-
-	@media (min-width: 768px) {
-		.hero-statements {
-			display: none;
-		}
 	}
 
 	/* Entries 195, 197: on phones the pills move under the hero (TrustStrip.astro). */
@@ -507,11 +457,12 @@ import RatingRow from './RatingRow.astro';
 	 * light colours. The wash is light at the top (her face) and deepest where the text is.
 	 */
 	@media (max-width: 767px) {
-		/* Entry 204: content flows from the top, like velora.se's mobile hero, the statement card last. */
+		/*
+		 * Entry 208 (after Relivo): the photo gets the whole first screen and room to breathe; the text
+		 * sits at the bottom. The wash stays light over the upper half and deepens behind the text.
+		 */
 		.hero {
-			align-items: flex-start;
-			/* Ends with its content (the statement card) rather than filling the whole screen. */
-			min-height: 0;
+			align-items: flex-end;
 			background: #1c1416;
 		}
 
@@ -524,16 +475,17 @@ import RatingRow from './RatingRow.astro';
 		.veil {
 			background: linear-gradient(
 				to bottom,
-				rgba(20, 10, 14, 0.62) 0%,
-				rgba(20, 10, 14, 0.7) 30%,
+				rgba(20, 10, 14, 0.12) 0%,
+				rgba(20, 10, 14, 0.2) 30%,
+				rgba(20, 10, 14, 0.62) 47%,
 				rgba(20, 10, 14, 0.76) 60%,
-				rgba(20, 10, 14, 0.82) 100%
+				rgba(20, 10, 14, 0.86) 100%
 			);
 		}
 
 		.content {
 			padding-top: 112px;
-			padding-bottom: 20px;
+			padding-bottom: 40px;
 		}
 
 		.line-1,
@@ -568,6 +520,78 @@ import RatingRow from './RatingRow.astro';
 		.cta-wrap :global(.btn) {
 			background: var(--cream);
 			color: var(--wine);
+		}
+
+
+		/*
+		 * Entry 210: full-bleed and full-height on phones: no inset margin and no rounded corners, the
+		 * photo runs edge to edge under the navbar.
+		 */
+		.hero {
+			min-height: 100svh;
+			margin: 0;
+			border-radius: 0;
+		}
+
+		.content {
+			padding-bottom: 28px;
+		}
+
+		/* ---- The pill carousel (entry 210) ---- */
+		.hero-marquee {
+			margin: 28px calc(-1 * var(--gutter)) 0;
+			overflow: hidden;
+			/* Soft fade at both edges, so pills drift in and out rather than being cut. */
+			mask: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+			-webkit-mask: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+		}
+
+		.marquee-track {
+			display: flex;
+			width: max-content;
+			animation: hero-marquee 32s linear infinite;
+		}
+
+		.marquee-track :global(.pill) {
+			display: block;
+			margin: 0;
+			padding-right: 10px;
+		}
+
+		/* The desktop pills, but each on its own: one row, separate frosted pills, 10 px apart. */
+		.marquee-track :global(.pill ul) {
+			flex-direction: row;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.marquee-track :global(.pill li) {
+			white-space: nowrap;
+		}
+	}
+
+	@keyframes hero-marquee {
+		to {
+			translate: -50% 0;
+		}
+	}
+
+	@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+		.hero-marquee {
+			overflow-x: auto;
+			mask: none;
+			-webkit-mask: none;
+		}
+
+		.marquee-track {
+			animation: none;
+			padding-inline: var(--gutter);
+		}
+	}
+
+	@media (min-width: 768px) {
+		.hero-marquee {
+			display: none;
 		}
 	}
 </style>

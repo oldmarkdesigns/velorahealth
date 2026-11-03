@@ -1375,3 +1375,43 @@ Keep the dark photo behind the hero text on mobile.
 ```
 Commit and push all pending changes.
 ```
+
+## 207 – Directions for a lighter mobile hero (Claude Code, 2026-11-03)
+
+```
+Not really satisfies with the statment card. It feels bulky and unclear. Also - the se om behandlingen passar dig cta is too bulky. What direction can we take - one that is a little more different than the reference original mobile hero
+```
+
+## 208 – A cleaner phone hero, inspired by Relivo (Claude Code, 2026-11-03)
+
+[Image attached: Relivo's mobile hero: a full-screen dark photo of a woman by a window, the headline, intro and a compact "Beställ nu" button at the bottom, a small footnote, and a row of outlined tags below.]
+
+```
+I'm thinking of not having the statement cards in the hero section - to keep it cleaner. Inspired by relivos hero - where the hero image gets some space and there's more air to breathe
+```
+
+## 209 – All phone buttons hug their labels (Claude Code, 2026-11-03, mid-turn)
+
+```
+I like this direction. Keep the statement cards out of the mobile hero so the image has more room. Also make all buttons on mobile less bulky, with widths that hug their labels rather than stretching across the screen. Keep the desktop buttons unchanged.
+```
+
+## 210 – Pills as a carousel at the bottom of the hero; full-bleed, full-height hero (Claude Code, 2026-11-03)
+
+```
+Let's try and have the pills we have in desktop - but seperated - as a carousel in the bottom of the hero section - below the CTA. 
+
+Let's also remove all apdding for the hero image and let it fill width all the way - no border radius in bottom - just full vh
+```
+
+## 211 – Full-bleed hero on phones only (Claude Code, 2026-11-03, button answer)
+
+```
+Keep the full-bleed hero on phones only.
+```
+
+## 212 – Commit and push (Claude Code, 2026-11-03, button answer)
+
+```
+Commit and push all pending changes.
+```

@@ -10,9 +10,11 @@ import { IMG } from '../data/site';
 // title and subtitle; the hero's one-row pill (tablet, desktop) keeps the short labels.
 interface Props {
 	detailed?: boolean;
+	/* Entry 210: the second copy in the phone carousel's loop is decorative; screen readers skip it. */
+	decorative?: boolean;
 }
 
-const { detailed = false } = Astro.props;
+const { detailed = false, decorative = false } = Astro.props;
 const items = [
 	{ label: 'Eget vårdteam', title: 'Ditt eget vårdteam', sub: 'Obegränsad kontakt, hela vägen', avatars: true },
 	{ label: 'Gå ner 20 % i vikt i snitt', title: 'Gå ner 20 % i vikt i snitt', sub: 'Med mindre hunger och sug', icon: arrowDown },
@@ -22,7 +24,7 @@ const items = [
 const team = [IMG.mina, IMG.daniel, IMG.sandra];
 ---
 
-<aside class="pill" aria-label="Det här får du hos Velora">
+<aside class="pill" aria-label={decorative ? undefined : 'Det här får du hos Velora'} aria-hidden={decorative ? 'true' : undefined}>
 	<ul role="list">
 		{
 			items.map((item) => (
