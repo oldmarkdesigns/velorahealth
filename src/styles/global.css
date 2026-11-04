@@ -240,6 +240,43 @@ a {
 	}
 }
 
+/*
+ * Frosted hero pills: a parent's opacity below 1 stops backdrop-filter from seeing the photo, so
+ * fading the wrapper showed the pills unfrosted until the fade ended. The wrapper only rises; the
+ * frosted element itself fades (the one pill from 1024 px, each statement pill below).
+ */
+@keyframes load-rise-move {
+	from {
+		translate: 0 18px;
+	}
+}
+
+@keyframes load-fade {
+	from {
+		opacity: 0;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.js [data-load='frost'] {
+		animation-name: load-rise-move;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+	.js [data-load='frost'] .pill {
+		animation: load-fade 1000ms var(--ease) backwards;
+		animation-delay: var(--load-delay, 0ms);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) and (max-width: 1023px) {
+	.js [data-load='frost'] .pill li {
+		animation: load-fade 1000ms var(--ease) backwards;
+		animation-delay: var(--load-delay, 0ms);
+	}
+}
+
 /* Entry 219: phones and tablets get a plain fade on the hero photo, without the zoom. */
 @keyframes load-photo-fade {
 	from {

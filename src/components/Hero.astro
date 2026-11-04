@@ -40,7 +40,7 @@ import RatingRow from './RatingRow.astro';
 		<!-- Desktop: the content sits on a frosted, see-through card (entry 107); a plain wrapper below. -->
 		<div class="hero-card">
 		<!-- Entry 141: the hero text arrives top to bottom after the photo (load sequence in global.css). -->
-		<div class="hero-pill" data-load style="--load-delay: 250ms"><HeroTrustPill /></div>
+		<div class="hero-pill" data-load="frost" style="--load-delay: 250ms"><HeroTrustPill /></div>
 		<!-- Entry 195: phones show the rating here, above the title (the bar under the hero hides it). -->
 		<div class="hero-rating" data-load style="--load-delay: 320ms"><RatingRow /></div>
 		<h1 id="hero-title">
@@ -57,13 +57,17 @@ import RatingRow from './RatingRow.astro';
 			Det handlar om biologi, inte bara om vilja. Hos Velora får du ett eget vårdteam och en personlig plan, och samma
 			team följer dig hela vägen.
 		</p>
-		<div class="cta-wrap" data-hero-cta data-load style="--load-delay: 720ms"><CtaButton label="Se om behandlingen passar dig" /></div>
+		<div class="cta-wrap" data-hero-cta data-load style="--load-delay: 720ms">
+			<CtaButton label="Se om behandlingen passar dig" />
+			<!-- velora.se's own words for step 1 ("du binder dig inte till något", docs/facts.md). -->
+			<p class="cta-note">*Du binder dig inte till något</p>
+		</div>
 		<!--
 		  Entry 210: phones only. The three statement pills, separate, drifting past in a slow loop at
 		  the foot of the hero (two copies, so the loop has no seam); a plain swipeable row with reduced
 		  motion.
 		-->
-		<div class="hero-marquee" data-load style="--load-delay: 860ms">
+		<div class="hero-marquee" data-load="frost" style="--load-delay: 860ms">
 			<div class="marquee-track">
 				<HeroTrustPill />
 				<HeroTrustPill decorative />
@@ -163,6 +167,14 @@ import RatingRow from './RatingRow.astro';
 
 	.cta-wrap {
 		margin-top: 24px;
+	}
+
+	/* Small italic reassurance under the button; the hero sits on the darkened photo at every width. */
+	.cta-note {
+		margin-top: 10px;
+		font-size: 0.8125rem;
+		font-style: italic;
+		color: rgba(247, 242, 236, 0.82);
 	}
 
 	/* Entries 195, 197: on phones the pills move under the hero (TrustStrip.astro). */

@@ -46,7 +46,7 @@ Från commit-historiken och promptloggen (datumen visar när commits gjordes, in
 - Startsidan berättar en sammanhängande historia, från vad Velora är till hur det går till, vad man kan förvänta sig, vilka som står bakom och vad det kostar.
 - Tonen och den visuella identiteten är lugna och trygga, utan säljiga formuleringar.
 
-**Feedback från testare:** testarna, mina föräldrar, upplevde att informationen var väl sammanfattad och att sidan höll ihop som en berättelse.
+**Feedback från testare:** testarna, tre personer i 50–60-årsåldern, upplevde att informationen var väl sammanfattad och att sidan höll ihop som en berättelse.
 
 ## 4. Prioriteringar inom fyra timmar
 
@@ -54,6 +54,7 @@ Från commit-historiken och promptloggen (datumen visar när commits gjordes, in
 - **En version av sidan,** i linje med briefen: hellre en genomarbetad version än flera halvfärdiga. [`CLAUDE.md` §3]
 - **Höll mig inom ramarna.** Ingen teamsida eller sida med provlista byggdes. Länkarna "Läs mer om vårt team" och "vilka prover vi behöver" är inaktiverade platshållare i stället. [`direction.md`, poster 215–216]
 - **Strök nästan helt att leta nya bilder.** Jag ansåg att de befintliga bilderna är bra och har ett bra bildspråk. Undantaget var en vända där jag letade efter en herobild som passar desktop i 16:9. [egen uppgift]
+
 ## 5. Kvalitetssäkring
 
 - **Fakta mot velora.se.** Varje faktauppgift har källa och status i `facts.md`. [`facts.md`]
@@ -63,12 +64,12 @@ Från commit-historiken och promptloggen (datumen visar när commits gjordes, in
 - **Layout i mobilbredd.** Överflöde kontrollerades vid 320, 360 och 375 px upp till 1440 px efter layoutändringar, i webbläsarpanelens emulerade fönsterstorlekar. [`direction.md`, många rader märkta "Verified"]
 - **Testat på riktig telefon:** iPhone 16 Pro. [egen uppgift]
 - **Kontrast mättes** för herotexten, navbarlänkarna och annonstexten.
-- **Granskning med människor i stället för AI.** Jag gjorde ingen AI-granskning av design eller text, utan testade med familj: mina föräldrar, som jag tror är i en ålder som passar målgruppen. [egen uppgift]
+- **Granskning med människor i stället för AI.** Jag gjorde ingen AI-granskning av design eller text, utan testade med tre personer i 50–60-årsåldern, en ålder som jag tror passar målgruppen. [egen uppgift]
 
 ## 6. Avvägningar
 
 - **Två knappetiketter i stället för en.** Riktningen sa en etikett överallt, "Boka gratis bedömningssamtal". Jag valde ändå den kortare "Kom igång" i navbaren och på Velorametoden-kortet, eftersom den passar ett kompakt utrymme. Priset är att samma handling har två namn. [promptlogg 25, 92; `direction.md` §8]
-- **Hjälptexten under knappen togs bort.** Knappen lovar en bokning, men flödet börjar med frågor, och texten "Börjar med några korta frågor …" skulle förbereda besökaren på det. Jag tog bort den för en renare hero. "Kostnadsfritt" och "du binder dig inte" står kvar i steg 1 och i FAQ:n, men förväntan sätts inte längre vid knappen. [promptlogg 38; `audit.md` punkt 8]
+- **En kortare hjälptext under knappen.** Knappen lovar en bokning, men flödet börjar med frågor, och texten "Börjar med några korta frågor …" skulle förbereda besökaren på det. Jag tog bort den för en renare hero. Under heroknappen "Se om behandlingen passar dig" står nu bara "*Du binder dig inte till något", med Veloras egna ord. Att flödet börjar med frågor framgår av steg 1 och FAQ:n, men inte vid knappen. [promptlogg 38; `audit.md` punkt 8; `src/components/Hero.astro`]
 - **Patientberättelserna hamnade inte högst upp.** I granskningen ville jag flytta upp dem för att bygga förtroende tidigare. Till slut placerade jag dem efter kalkylatorn: först resultatintervallet, sedan tre verkliga personers resultat, sedan teamet bakom. En tydlig berättelse gick före tidigt förtroende. [promptlogg 4, 220; `direction.md` post 220]
 - **Ett intervall i kalkylatorn i stället för en siffra.** Ett intervall med premisser (16–25 % efter 12 månader) är mindre slagkraftigt än "−21 kg", men det är ärligt och följer den försiktiga hållningen. [promptlogg 6; `audit.md` punkt 3]
 
@@ -78,6 +79,7 @@ Från commit-historiken och promptloggen (datumen visar när commits gjordes, in
 
 **A. Visuella alternativ som var omflyttningar, inte idéer.**
 När jag bad om alternativ gav AI ofta varianter av sin första idé. Jag förkastade alla tre prislayouterna ("none of those are talking to me"). Nästa runda gick i en annan riktning: ett kvitto som visar totalkostnaden. [promptlogg 71–73; `direction.md`, "Pricing layouts explored"]
+
 **B. Text- och konverteringsval där jag gick emot AI:s rekommendation.**
 - AI rekommenderade ingen fast bokningsrad på mobil. I stället behöll jag en fast navbar på mobil som täcker hela överkanten av skärmen, medan desktop har ett svävande fast kort. [promptlogg 9, 144, 148; desktop: 42–43]
 - Jag ifrågasatte rubriken "Det handlar inte om viljestyrka" eftersom vilja och engagemang faktiskt spelar in. Den blev "biologi, inte bara om vilja". [promptlogg 137; `direction.md` post 193]
@@ -86,7 +88,7 @@ När jag bad om alternativ gav AI ofta varianter av sin första idé. Jag förka
 
 **1. Stegsektionen "Så går det till"** (länkad som "Så fungerar det" i sidfoten).
 - **Misstaget:** AI rekommenderade en bento med numrerade rutor i olika storlekar och färger, och jag lät bygga den. [promptlogg 59, 61] I praktiken var läsordningen otydlig och layouten svår att skumma.
-- **Hur jag upptäckte det:** i feedbacksessionerna kunde testpersonerna, mina föräldrar, inte avgöra i vilken ordning korten skulle läsas. De satt vid desktop. [promptlogg 213; egen uppgift]
+- **Hur jag upptäckte det:** i feedbacksessionerna kunde testpersonerna inte avgöra i vilken ordning korten skulle läsas. De satt vid desktop. [promptlogg 213; egen uppgift]
 - **Vad jag ändrade:** jag lade de fyra korten på en vågrät rad, i nummerordning, med bilden ovanför. Nu är det layouten som styr läsordningen. [promptlogg 213–214; `src/components/Steps.astro`]
 - De ursprungliga skisserna sparades inte, så utgångsläget kan bara beskrivas. [`direction.md`]
 
