@@ -156,7 +156,7 @@ These are Velora's own photographs; no AI-generated people. URLs are in `src/dat
 | Woman smiling on a sofa (`Velora-abonnemang.avif`) | Final action | Warm and everyday, no product in shot |
 | Caroline, Manga and Roger | Patient stories | The real patients behind the stories |
 | Mina, Daniel and Sandra | Care team | The real clinicians |
-| Pen and loose jeans: earlier "not used" | n/a | The pen puts the medicine first; the jeans read as a before/after shot. Entry 155: both now used at Samuel's request, one per card in "Den medicinska grunden": a pen photo Samuel supplied (`public/images/pen-hand.webp`, cropped to remove a "Zoom in" tooltip; source: velora.se's own "Vad är det?" card photo, from a phone screenshot kept in `assets/originals/references/velora-se-pen-and-jeans-2026-11-03.png`) and velora.se's own "Weight_Loss" card photo (hotlinked). Needs a line in the decision document. |
+| Pen and loose jeans: earlier "not used" | n/a | The pen puts the medicine first; the jeans read as a before/after shot. Entry 155: both now used at Samuel's request, one per card in "Den medicinska grunden": a pen photo Samuel supplied (`public/images/pen-hand.webp`, cropped to remove a "Zoom in" tooltip; source: velora.se's own "Vad är det?" card photo, from a phone screenshot kept in `assets/references/velora-se-pen-and-jeans-2026-11-03.png`) and velora.se's own "Weight_Loss" card photo (hotlinked). Needs a line in the decision document. |
 
 ## Brand as it is today (observed on velora.se and /om-oss)
 
