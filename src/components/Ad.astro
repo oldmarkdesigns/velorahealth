@@ -1,0 +1,248 @@
+---
+/*
+ * Deliverable 02: one 9:16 still (Meta Story/Reel, 1080 × 1920), exported to PNG
+ * (public/annons/velora-annons-9x16.png). Entry 243: direction C ("Tryggheten") replaces entry 140's
+ * hero copy. Same brand as the start page (cabin photo, wine, cream, Cormorant/Manrope, the pill
+ * button) but its own layout: the text sits low over the full-bleed photo on a dark overlay (entry 245;
+ * entry 244 had a solid wine field), and the proof sits between two rules.
+ * Copy lives in the pages (annons.astro, annons-b.astro). No figures and no drug names (cautious stance, docs/direction.md §3).
+ * Key content stays out of Meta's Story safe zones: ~250 px at the top, ~340 px at the bottom.
+ */
+import '../styles/global.css';
+import '@fontsource-variable/cormorant-garamond/wght.css';
+import '@fontsource-variable/cormorant-garamond/wght-italic.css';
+import arrowIcon from '@phosphor-icons/core/assets/light/arrow-right-light.svg?raw';
+import { CTA, IMG } from '../data/site';
+
+// Entry 254: the ad's markup and styles, shared by its copy versions (src/pages/annons*.astro).
+// Everything but the headline and subtitle is fixed, so versions differ only in copy.
+interface Props {
+	// Headline: the plain first line, then the italic second line.
+	title: string;
+	emphasis: string;
+	// An array puts each sentence on its own line (entry 254: version B's balanced wrap split "Det | handlar").
+	lede: string | string[];
+}
+
+const { title, emphasis, lede } = Astro.props;
+---
+
+<main class="ad" aria-label="Annons för Velora, format 9:16">
+	<div class="photo">
+		<img
+			src="/images/hero-cabin-2x.webp"
+			alt="Kvinna i en fåtölj i en trästuga, vid ett fönster mot en skogssjö, i ett videosamtal på mobilen"
+			width="3356"
+			height="1874"
+		/>
+	</div>
+	<div class="shade" aria-hidden="true"></div>
+	<span class="mark" style={`--logo: url(${IMG.logoPlum})`} role="img" aria-label="Velora"></span>
+
+	<div class="content">
+		<h1><span>{title}</span> <em>{emphasis}</em></h1>
+		<p class="lede">{Array.isArray(lede) ? lede.map((line) => <span>{line}</span>) : lede}</p>
+		<!--
+		  Entry 246: Samuel's wording. facts.md keeps "Ingen bindningstid om du vill" conditional and ties the
+		  guarantee to its terms. Entry 255: the guarantee opens with the pricing section's "30" stamp, small and
+		  in cream. Entry 256: "dagars nöjdhetsgaranti" follows the stamp, then "Ingen bindningstid".
+		-->
+		<p class="proof">
+			<span class="seal">30</span>
+			<span>dagars nöjdhetsgaranti</span>
+			<span class="dot" aria-hidden="true">·</span>
+			<span>Ingen bindningstid</span>
+		</p>
+		<p class="btn">{CTA.label} <span class="icon" set:html={arrowIcon} /></p>
+	</div>
+</main>
+
+<style>
+	:global(html),
+	:global(body) {
+		margin: 0;
+		background: #000;
+	}
+
+	/* The page-wide scrollbar gutter would take 15 px off the canvas's right edge. */
+	:global(html) {
+		scrollbar-gutter: auto;
+	}
+
+	.ad {
+		position: relative;
+		width: 1080px;
+		height: 1920px;
+		overflow: hidden;
+		background: #000;
+		color: var(--cream);
+	}
+
+	.photo {
+		position: absolute;
+		inset: 0;
+	}
+
+	/* Full bleed. Her face and the phone land in the upper half, clear of the text. */
+	.photo img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: 79% 50%;
+	}
+
+	/*
+	 * Same wordmark as the header: the plum logo recoloured with a mask. Entry 248: top left, a step larger
+	 * (68 px, from 56). Entry 249: cream, and higher (inside Meta's ~250 px top zone, at Samuel's request),
+	 * on the shade's top band.
+	 */
+	.mark {
+		position: absolute;
+		z-index: 1;
+		top: 150px;
+		left: 72px;
+		height: 68px;
+		aspect-ratio: 817 / 213;
+		background: var(--cream);
+		mask: var(--logo) center / contain no-repeat;
+		-webkit-mask: var(--logo) center / contain no-repeat;
+	}
+
+	/*
+	 * Black, as the start page's hero overlay (entries 105, 112): clear over her face, deepening in eased
+	 * steps behind the text block so cream text and the cream button read on the light rug and blanket.
+	 * Entry 249: a second, soft band at the top, behind the cream wordmark on the pale wall (as the start
+	 * page's desktop hero does behind its navbar, entry 187).
+	 */
+	.shade {
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.36) 160px, rgba(0, 0, 0, 0.12) 300px, rgba(0, 0, 0, 0) 420px),
+			linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0) 16%,
+			rgba(0, 0, 0, 0.14) 24%,
+			rgba(0, 0, 0, 0.4) 32%,
+			rgba(0, 0, 0, 0.62) 40%,
+			rgba(0, 0, 0, 0.72) 55%,
+			rgba(0, 0, 0, 0.78) 100%
+		);
+	}
+
+	/* Anchored to the bottom, padded clear of Meta's bottom safe zone. */
+	.content {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		padding: 0 72px 360px;
+	}
+
+	/* The hero title's face (Cormorant), with the italic half as the emphasis. */
+	h1 {
+		margin: 0;
+		font-family: 'Cormorant Garamond Variable', var(--serif);
+		font-size: 96px;
+		line-height: 1.02;
+		letter-spacing: -0.01em;
+		font-weight: 500;
+	}
+
+	/* Each half on its own line (entry 254), as in the start page's hero title. */
+	h1 span,
+	h1 em {
+		display: block;
+	}
+
+	h1 em {
+		font-style: italic;
+	}
+
+	.lede {
+		margin: 32px 0 0;
+		/* Entry 247: a step up from 38 px; entry 250: down to 36 px; entry 253: up to 40 px. */
+		font-size: 40px;
+		line-height: 1.4;
+		/* Entry 253: brighter than --on-dark-soft (70 %), a step below the headline's full cream. */
+		color: rgba(247, 242, 236, 0.92);
+		/* Entry 246: even lines, so the last line never holds a lone word or two. */
+		text-wrap: balance;
+	}
+
+	.lede span {
+		display: block;
+	}
+
+	.proof {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		margin: 44px 0 0;
+		padding: 26px 0;
+		border-top: 1px solid var(--line-dark);
+		border-bottom: 1px solid var(--line-dark);
+		/* Entry 250: a step up from 29 px. */
+		font-size: 33px;
+		font-weight: 500;
+		letter-spacing: 0.005em;
+	}
+
+	.dot {
+		margin: 0 4px;
+		color: var(--on-dark-soft);
+	}
+
+	/* Pricing.astro's .stamp at ad scale: a double ring (border + inset outline) around the serif "30", in cream and level. */
+	.seal {
+		flex: none;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 88px;
+		height: 88px;
+		border: 2px solid var(--cream);
+		border-radius: 50%;
+		outline: 1.5px solid var(--cream);
+		outline-offset: -8px;
+		font-family: var(--serif);
+		font-size: 38px;
+		font-weight: 400;
+		letter-spacing: -0.02em;
+		line-height: 1;
+		/*
+		 * Entry 256: the line box reserves descender space, so the digits sat 4 px above the rings' centre
+		 * (measured on the export: digits 1304–1329, rings 1277–1364). 8 px on top moves them down 4 px.
+		 */
+		padding-top: 8px;
+	}
+
+	/*
+	 * The page's pill button in its cream tone (as on wine sections), at ad scale. Not a link: it is an image.
+	 * Its own width, left-aligned (entry 246 removed "velora.se" beside it).
+	 */
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 22px;
+		margin: 52px 0 0;
+		height: 116px;
+		padding: 0 58px;
+		border-radius: 999px;
+		background: var(--cream);
+		color: var(--wine);
+		font-size: 38px;
+		font-weight: 600;
+		white-space: nowrap;
+	}
+
+	.icon {
+		display: flex;
+	}
+
+	.icon :global(svg) {
+		width: 40px;
+		height: 40px;
+	}
+
+</style>

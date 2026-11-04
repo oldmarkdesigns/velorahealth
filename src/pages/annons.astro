@@ -1,16 +1,10 @@
 ---
 /*
- * Deliverable 02: one 9:16 still (Meta Story/Reel, 1080 × 1920), entry 140. Built from the start
- * page's own tokens, fonts, photo and headline so it reads as the same brand, and exported to PNG
- * (public/annons/velora-annons-9x16.png). It mirrors the mobile hero: photo on top dissolving into
- * cream, wine text below. No figures and no drug names (cautious stance, docs/direction.md §3).
- * Key content stays out of Meta's Story safe zones: ~250 px at the top, ~340 px at the bottom.
+ * Deliverable 02, version A (the chosen ad): exported to public/annons/velora-annons-9x16.png.
+ * Layout and styling in src/components/Ad.astro. Headline from the hero lede (entry 244); subtitle is
+ * option 4 of five shorter ones (entries 251–252).
  */
-import '../styles/global.css';
-import '@fontsource-variable/cormorant-garamond/wght.css';
-import '@fontsource-variable/cormorant-garamond/wght-italic.css';
-import arrowIcon from '@phosphor-icons/core/assets/light/arrow-right-light.svg?raw';
-import { IMG } from '../data/site';
+import Ad from '../components/Ad.astro';
 ---
 
 <!doctype html>
@@ -23,146 +17,10 @@ import { IMG } from '../data/site';
 		<title>Velora – annons 9:16</title>
 	</head>
 	<body>
-		<main class="ad" aria-label="Annons för Velora, format 9:16">
-			<img
-				class="photo"
-				src="/images/hero-lake-2x.webp"
-				alt="Kvinna i en fåtölj vid ett stort fönster mot en skogssjö, i ett videosamtal på mobilen"
-				width="3358"
-				height="1874"
-			/>
-			<div class="veil" aria-hidden="true"></div>
-			<span class="mark" style={`--logo: url(${IMG.logoPlum})`} role="img" aria-label="Velora"></span>
-
-			<div class="content">
-				<h1>
-					<span class="line-1">Medicinsk viktnedgång</span>
-					<span class="line-2">när dieter inte räcker</span>
-				</h1>
-				<p class="lede">Gratis bedömningssamtal med legitimerad läkare eller sjuksköterska.</p>
-				<p class="btn">Se om behandlingen passar dig <span class="icon" set:html={arrowIcon} /></p>
-				<p class="url">velora.se</p>
-			</div>
-		</main>
+		<Ad
+			title="Det handlar om biologi,"
+			emphasis="inte bara om vilja."
+			lede="Medicinsk behandling för viktnedgång, med ett eget vårdteam som följer dig hela vägen."
+		/>
 	</body>
 </html>
-
-<style>
-	:global(html),
-	:global(body) {
-		margin: 0;
-		background: var(--cream);
-	}
-
-	/* The page-wide scrollbar gutter would take 15 px off the canvas's right edge. */
-	:global(html) {
-		scrollbar-gutter: auto;
-	}
-
-	.ad {
-		position: relative;
-		width: 1080px;
-		height: 1920px;
-		overflow: hidden;
-		background: var(--cream);
-		color: var(--ink);
-	}
-
-	/* The lakeside photo, cropped to her and the window; full bleed across the top. */
-	.photo {
-		position: absolute;
-		inset: 0 0 auto;
-		width: 100%;
-		height: 1000px;
-		object-fit: cover;
-		/* Her and the chair on the right; stops short of the photo's pale right edge. */
-		object-position: 92% 50%;
-	}
-
-	/* Dissolves into cream, as on the start page's mobile hero. */
-	.veil {
-		position: absolute;
-		inset: 0 0 auto;
-		height: 1000px;
-		background: linear-gradient(to bottom, rgba(247, 242, 236, 0) 62%, var(--cream) 100%);
-	}
-
-	/* Same wordmark as the header: the plum logo recoloured to wine with a mask. */
-	.mark {
-		position: absolute;
-		top: 260px;
-		left: 80px;
-		height: 64px;
-		aspect-ratio: 817 / 213;
-		background: var(--wine);
-		mask: var(--logo) center / contain no-repeat;
-		-webkit-mask: var(--logo) center / contain no-repeat;
-	}
-
-	.content {
-		position: absolute;
-		left: 80px;
-		right: 80px;
-		bottom: 340px;
-	}
-
-	/* The hero title, scaled up: same face, weights and two-line split. */
-	h1 {
-		margin: 0;
-		font-family: 'Cormorant Garamond Variable', var(--serif);
-		/* "Medicinsk viktnedgång" is ~8.9em wide: 100 px keeps it on one line in the 920 px column. */
-		font-size: 100px;
-		line-height: 1.05;
-		letter-spacing: -0.01em;
-		font-weight: 600;
-	}
-
-	h1 span {
-		display: block;
-	}
-
-	.line-2 {
-		font-style: italic;
-		font-weight: 500;
-		color: var(--ink-soft);
-	}
-
-	.lede {
-		margin: 36px 0 0;
-		font-size: 42px;
-		line-height: 1.35;
-	}
-
-	/* The page's wine pill button, at ad scale (not a link: it is an image). */
-	.btn {
-		display: inline-flex;
-		align-items: center;
-		gap: 24px;
-		margin: 48px 0 0;
-		height: 120px;
-		padding: 0 64px;
-		border-radius: 999px;
-		background: var(--wine);
-		color: var(--cream);
-		font-size: 42px;
-		font-weight: 600;
-		white-space: nowrap;
-	}
-
-	.icon {
-		display: flex;
-	}
-
-	.icon :global(svg) {
-		width: 44px;
-		height: 44px;
-	}
-
-	.url {
-		margin: 32px 0 0;
-		font-size: 34px;
-		font-weight: 600;
-		letter-spacing: 0.02em;
-		color: var(--ink-soft);
-	}
-</style>

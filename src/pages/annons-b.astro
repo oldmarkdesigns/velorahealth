@@ -1,0 +1,27 @@
+---
+/*
+ * Deliverable 02, version B (trial, entry 254): exported to public/annons/velora-annons-9x16-b.png.
+ * Same layout as version A (src/components/Ad.astro). Headline is the start page's hero title; the
+ * subtitle carries the biology point: "Kroppen försvarar sin vikt" is velora.se's own wording (as in
+ * MedicalBasis.astro), and "biologi, inte bara om vilja" is the hero lede (entries 137, 194).
+ */
+import Ad from '../components/Ad.astro';
+---
+
+<!doctype html>
+<html lang="sv">
+	<head>
+		<meta charset="utf-8" />
+		<!-- The ad is a fixed 1080 px canvas; phones scale it down to fit. -->
+		<meta name="viewport" content="width=1080" />
+		<meta name="robots" content="noindex, nofollow" />
+		<title>Velora – annons 9:16, version B</title>
+	</head>
+	<body>
+		<Ad
+			title="Medicinsk viktnedgång"
+			emphasis="när dieter inte räcker"
+			lede={['Kroppen försvarar sin vikt.', 'Det handlar om biologi, inte bara om vilja.']}
+		/>
+	</body>
+</html>

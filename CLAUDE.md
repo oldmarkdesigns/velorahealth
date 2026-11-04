@@ -127,9 +127,6 @@ Things the brief leaves open or that are missing from the PDF. Resolve by asking
 - **No AI-generated people that look like patients.** Any image choice needs a written motivation.
 - Site copy is **Swedish** (`lang="sv"`). Docs for this repo are in English unless written for Velora.
 - **Mobile first.** Check every change at phone width.
-- **Prompt log is a deliverable – keep it current**: at the start of every turn, append the user's new prompt to
-  `docs/prompt-log.md` verbatim (exact characters, incl. curly apostrophes) and in order; log multiple-choice answers and
-  plan approvals too. Never rewrite past entries. Record when AI suggestions are rejected or go wrong.
 - **Facts come only from `docs/facts.md`.** Add new facts there (with source URL and status) before using them.
 - Keep dependencies minimal; add one only when it clearly earns its place.
 - Respect the 4-hour budget: prefer one well-made version over breadth.
