@@ -94,7 +94,8 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 		box-shadow: none;
 	}
 
-	@media (max-width: 767px) {
+	/* Entry 246: tablets use the phone pills too. */
+	@media (max-width: 1023px) {
 		/* .pill ul, so it outranks the base `ul` rule further down. */
 		.pill ul {
 			flex-direction: column;
@@ -125,7 +126,7 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 	}
 
 	/* From 768 px: one row, a full pill. Sits on cream there, so a fine wine outline gives it its edge. */
-	@media (min-width: 768px) {
+	@media (min-width: 1024px) {
 		/* Entry 226: the pill and every item keep their content's width, so no label is cut off. */
 		.pill {
 			display: inline-block;
@@ -152,7 +153,7 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 	}
 
 	/* Solid card colour instead of frost: on the separate pills (phones) or the one pill (768 px up). */
-	@media (prefers-reduced-transparency: reduce) and (max-width: 767px) {
+	@media (prefers-reduced-transparency: reduce) and (max-width: 1023px) {
 		li {
 			background: var(--card);
 			backdrop-filter: none;
@@ -160,7 +161,7 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 		}
 	}
 
-	@media (prefers-reduced-transparency: reduce) and (min-width: 768px) {
+	@media (prefers-reduced-transparency: reduce) and (min-width: 1024px) {
 		.pill {
 			background: var(--card);
 			backdrop-filter: none;
@@ -249,10 +250,4 @@ const team = [IMG.mina, IMG.daniel, IMG.sandra];
 		margin-left: 0;
 	}
 
-	/* Tablets: tighter dividers keep the larger pill on one row in the narrower text column. */
-	@media (min-width: 768px) and (max-width: 1023px) {
-		li + li::before {
-			margin-inline: 12px;
-		}
-	}
 </style>

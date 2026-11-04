@@ -387,7 +387,8 @@ const cards = [
 	}
 
 	/* Entry 234: on phones the bar sits on the dark full-bleed photo at the top, so logo and burger go white. */
-	@media (max-width: 767px) {
+	/* Entry 246: tablets too, since they now use the phone hero. */
+	@media (max-width: 1023px) {
 		.header:not(.is-scrolled):not(.is-open) .mark {
 			background: #fff;
 		}

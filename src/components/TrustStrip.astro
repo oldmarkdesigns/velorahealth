@@ -90,7 +90,8 @@ import RatingRow from './RatingRow.astro';
 
 	/* Phones: the rating is in the hero; tablets and desktop: the statements are in the hero pill. */
 	/* Entry 210: phones show the statements as the carousel in the hero, so the bar has nothing left. */
-	@media (max-width: 767px) {
+	/* Entry 246: tablets too, since they now use the phone hero. */
+	@media (max-width: 1023px) {
 		.bar {
 			display: none;
 		}

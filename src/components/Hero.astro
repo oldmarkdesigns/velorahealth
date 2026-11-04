@@ -1,6 +1,7 @@
 ---
 import '@fontsource-variable/cormorant-garamond/wght.css';
 import '@fontsource-variable/cormorant-garamond/wght-italic.css';
+import { IMG } from '../data/site';
 import CtaButton from './CtaButton.astro';
 import HeroTrustPill from './HeroTrustPill.astro';
 import RatingRow from './RatingRow.astro';
@@ -18,16 +19,18 @@ import RatingRow from './RatingRow.astro';
 	  original velora.se photo was IMG.hero with IMG.heroSmall/heroMedium in srcset.
 	  Entries 181–183 (trial): the cabin photo, hero-cabin.webp (entry 183 version: whitewashed wood, 1678 × 937). The lake photo it replaces is
 	  hero-lake.webp / hero-lake-2x.webp (1679 × 937), kept for a quick revert.
+	  Entry 243: back to velora.se's own photo (IMG.hero), since an AI-generated person in the hero may
+	  break the brief's rule against AI people who look like patients. Crop positions left as they were.
 	-->
 	<img
 		class="photo"
 		data-load="photo"
-		src="/images/hero-cabin.webp"
-		srcset="/images/hero-cabin.webp 1678w, /images/hero-cabin-2x.webp 3356w"
+		src={IMG.hero}
+		srcset={`${IMG.heroSmall} 800w, ${IMG.heroMedium} 1080w, ${IMG.hero} 1500w`}
 		sizes="100vw"
-		alt="Kvinna i en fåtölj i en trästuga, vid ett fönster mot en skogssjö, i ett videosamtal på mobilen"
-		width="1678"
-		height="937"
+		alt="Leende kvinna i soffan som har videomöte på mobilen"
+		width="1024"
+		height="925"
 		fetchpriority="high"
 	/>
 	<!-- Desktop: a dark wash that deepens from right to left behind the text (entry 102). -->
@@ -163,7 +166,7 @@ import RatingRow from './RatingRow.astro';
 	}
 
 	/* Entries 195, 197: on phones the pills move under the hero (TrustStrip.astro). */
-	@media (max-width: 767px) {
+	@media (max-width: 1023px) {
 		.hero-pill {
 			display: none;
 		}
@@ -174,7 +177,7 @@ import RatingRow from './RatingRow.astro';
 		margin-bottom: 20px;
 	}
 
-	@media (min-width: 768px) {
+	@media (min-width: 1024px) {
 		.hero-rating {
 			display: none;
 		}
@@ -264,7 +267,7 @@ import RatingRow from './RatingRow.astro';
 	 * Tablets keep the phone layout (photo on top, text below on cream): the landscape lake photo
 	 * can't be cropped on a tall tablet screen without putting her behind the headline (entry 100).
 	 */
-	@media (min-width: 768px) {
+	@media (min-width: 1024px) {
 		.content {
 			padding-bottom: 72px;
 		}
@@ -288,6 +291,8 @@ import RatingRow from './RatingRow.astro';
 			border-radius: 20px;
 			/* Entry 112: no fill of its own; the page-wide overlay gives the text its contrast. */
 			background: none;
+			/* Entry 245: a little above centre; the horizontal position is unchanged. */
+			translate: 0 -40px;
 		}
 
 		.hero-card .line-1,
@@ -337,7 +342,7 @@ import RatingRow from './RatingRow.astro';
 	 * A compact pill (smaller type, avatars, icons and dividers) on tablets and small laptops, so it
 	 * fits the narrower card. Entry 226: from 768 px too, now that the pill hugs its labels.
 	 */
-	@media (min-width: 768px) and (max-width: 1279px) {
+	@media (min-width: 1024px) and (max-width: 1279px) {
 		.hero-card :global(.pill) {
 			padding: 8px 18px 8px 8px;
 		}
@@ -466,7 +471,8 @@ import RatingRow from './RatingRow.astro';
 	 * under a dark wash instead of fading into cream, and the text sits higher, over the photo, in
 	 * light colours. The wash is light at the top (her face) and deepest where the text is.
 	 */
-	@media (max-width: 767px) {
+	/* Entry 246: tablets (768–1023 px) follow the phone layout too. */
+	@media (max-width: 1023px) {
 		/*
 		 * Entry 208 (after Relivo): the photo gets the whole first screen and room to breathe; the text
 		 * sits at the bottom. The wash stays light over the upper half and deepens behind the text.
@@ -479,7 +485,8 @@ import RatingRow from './RatingRow.astro';
 		.photo {
 			inset: 0;
 			height: 100%;
-			object-position: 72% 30%;
+			/* Entry 244: velora.se's sofa photo; a lower x moves her right, clear of the left edge. */
+			object-position: 38% 30%;
 		}
 
 		/*
@@ -597,7 +604,7 @@ import RatingRow from './RatingRow.astro';
 		}
 	}
 
-	@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+	@media (max-width: 1023px) and (prefers-reduced-motion: reduce) {
 		.hero-marquee {
 			overflow-x: auto;
 			mask: none;
@@ -610,7 +617,7 @@ import RatingRow from './RatingRow.astro';
 		}
 	}
 
-	@media (min-width: 768px) {
+	@media (min-width: 1024px) {
 		.hero-marquee {
 			display: none;
 		}

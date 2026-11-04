@@ -523,14 +523,6 @@ I like the idea of the pricing stuff. But the white card is too messy. I still w
 Build F, but put Underhåll above the receipt in the right column. Keep the 30-day guarantee stamp on the receipt, and remove the mention of Försäkringskassan. Leave the rest of the pricing layout and wording unchanged.
 ```
 
-## 79 – Try a new hero image (Claude Code, 2026-11-02)
-
-[Image attached: person seen from behind with arms raised, running on a coastal hillside at sunset.]
-
-```
-Try this image for the hero section
-```
-
 ## 80 – Navbar links jump within the page (Claude Code, 2026-11-02)
 
 ```
@@ -647,34 +639,6 @@ Make the Underhåll price only as small as needed for the dividers in the two pr
 There has to be some nice interaction animaation for läs x berättelse hover
 ```
 
-## 97 – Write an image prompt for the hero (Claude Code, 2026-11-02)
-
-```
-The only thing I’m not fully satisfied with now is the hero image. Could you write a prompt for an image that fits Velora’s hero? I’ll generate it elsewhere and send you the result. Don’t change the site yet.
-```
-
-## 98 – Image prompt: treehouse remix of the original hero (Claude Code, 2026-11-02)
-
-```
-Write an image-generation prompt that remixes the original hero image into a warm, calm treehouse interior. Place a person on a wine-red sofa, with nature visible through large windows behind them. Keep the left side open for the hero text: no wall, just a clear view of nature through a window. Don’t change the site yet.
-```
-
-## 99 – Image prompt: lakeside cabin with person on a video call (Claude Code, 2026-11-03)
-
-[Reference image attached: portrait photo of a light-oak cabin corner with a large window onto a calm forest lake; a woven oak lounge chair with a grey throw on the right.]
-
-```
-Write a similar image-to-image prompt for the attached image. Keep its house and landscape as the reference, extending both naturally to the left to create a clear, uncluttered area for hero text. Place the chair on the right with a person seated in it, on a video call on their phone. Instead of a wine-red sofa, drape a wine-red blanket over the chair. Keep the scene warm, calm and realistic, with the person and chair clear of the text area. Don’t change the site yet.
-```
-
-## 100 – Use the lakeside image in the hero (Claude Code, 2026-11-03)
-
-[Image attached: generated from the entry 99 prompt. A woman in a cream knit sweater sits in a woven oak chair on the right with a wine-red blanket, smiling at her phone, by a large window onto a calm forest lake; open lake and sky on the left.]
-
-```
-Now use this for hero section
-```
-
 ## 101 – Sharper hero image, progressive blur on the left (Claude Code, 2026-11-03, mid-turn)
 
 ```
@@ -685,14 +649,6 @@ Cool, can we improve the hero image’s sharpness? Also, add a gradual blur that
 
 ```
 Let's do a dark overlay gradually from right to left instead
-```
-
-## 103 – New hero photo (Claude Code, 2026-11-03)
-
-[Image attached: a closer, larger render of the lakeside scene. The woman in the oak chair with a wine-red blanket, smiling at her phone, sits on the right; open lake, forest and sky on the left.]
-
-```
-Use this photo
 ```
 
 ## 104 – Remove the top fade in the hero (Claude Code, 2026-11-03, mid-turn)
@@ -749,22 +705,6 @@ remove the blur and glass effect from content card - only have a dark grey overl
 
 ```
 try a dark overlay gradually frokm top to bottom - remove the overlay for the content card
-```
-
-## 113 – Use this as the hero image (Claude Code, 2026-11-03)
-
-[Image attached: the lakeside photo of the woman in the oak chair with a wine-red blanket, on her phone.]
-
-```
-Let's use this as hero image
-```
-
-## 114 – Use this photo for the hero (Claude Code, 2026-11-03)
-
-[Image attached: a new lakeside photo, same scene: the woman in the oak chair with a wine-red blanket, on her phone, now seen from further back with a wider floor and lake.]
-
-```
-use this photo for hero
 ```
 
 ## 115 – Brighten the wine red (Claude Code, 2026-11-03)
@@ -1202,30 +1142,6 @@ Use the previous hero image that was in the original build to replace the image 
 
 ```
 Commit and push all pending changes.
-```
-
-## 181 – Try a new hero image (Claude Code, 2026-11-03)
-
-[Image attached: a closer view of the woman in the oak chair with the wine-red blanket, on her phone, in a wood-panelled cabin; a lake and pines through the window on the left.]
-
-```
-Try this image as hero image
-```
-
-## 182 – Try another hero image (Claude Code, 2026-11-03)
-
-[Image attached: the same cabin scene with darker wood, framed a little wider, the woman in the oak chair with the wine-red blanket on the right.]
-
-```
-try this one
-```
-
-## 183 – Try a third cabin hero image (Claude Code, 2026-11-03)
-
-[Image attached: the same cabin composition with whitewashed wood walls, a dark-haired woman in the oak chair with the wine-red blanket, smiling at her phone.]
-
-```
-try this
 ```
 
 ## 184 – Move the primary colour towards the blanket (Claude Code, 2026-11-03)
@@ -1729,4 +1645,34 @@ The third row shhould only be "följer dig hela vägen"
 
 ```
 Commit and push
+```
+
+## 261 – Ad version B: the site's original hero photo (Claude Code, 2026-11-04)
+
+```
+Replace the image in version B of the ad with the original hero image now used on the site. Keep the rest of the ad unchanged.
+```
+
+## 262 – Commit ad only (Claude Code, 2026-11-04, button answer)
+
+```
+Commit ad only
+```
+
+## 263 – Both ad versions: the original hero photo (Claude Code, 2026-11-04)
+
+```
+Use the original hero photo in both ad versions, including version A. Keep the copy, layout and all other styling unchanged.
+```
+
+## 264 – Commit ad only (Claude Code, 2026-11-04, button answer)
+
+```
+Commit ad only
+```
+
+## 265 – Retry push (Claude Code, 2026-11-04, button answer)
+
+```
+Retry push
 ```
