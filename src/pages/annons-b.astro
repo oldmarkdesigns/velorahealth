@@ -4,9 +4,12 @@
  * Same layout as version A (src/components/Ad.astro). Headline is the start page's hero title; the
  * subtitle carries the biology point from the hero lede (entries 137, 194), then the care team
  * (entry 258, replacing "Kroppen försvarar sin vikt"). Entry 259: line breaks set by hand, so the
- * third line is only "följer dig hela vägen."
+ * third line is only "följer dig hela vägen." Entry 261: velora.se's own hero photo (the sofa, as on the
+ * start page now) instead of the AI-generated cabin. The source is 1500 × 1355: filling 9:16 would
+ * upscale it ~1.7× and fill the frame with her face, so it sits at its own size across the top instead.
  */
 import Ad from '../components/Ad.astro';
+import { IMG } from '../data/site';
 ---
 
 <!doctype html>
@@ -23,6 +26,13 @@ import Ad from '../components/Ad.astro';
 			title="Medicinsk viktnedgång"
 			emphasis="när dieter inte räcker"
 			lede={['Det handlar om biologi, inte bara om vilja.', 'Hos Velora får du ett vårdteam som', 'följer dig hela vägen.']}
+			photo={{
+				src: IMG.hero,
+				alt: 'Leende kvinna i soffan som har videomöte på mobilen',
+				width: 1500,
+				height: 1355,
+				topLeft: 200,
+			}}
 		/>
 	</body>
 </html>

@@ -15,25 +15,49 @@ import arrowIcon from '@phosphor-icons/core/assets/light/arrow-right-light.svg?r
 import { CTA, IMG } from '../data/site';
 
 // Entry 254: the ad's markup and styles, shared by its copy versions (src/pages/annons*.astro).
-// Everything but the headline and subtitle is fixed, so versions differ only in copy.
+// Everything but the copy and the photo is fixed.
+interface Photo {
+	src: string;
+	alt: string;
+	width: number;
+	height: number;
+	// Cover crop position (CSS object-position), for a photo that fills the canvas.
+	position?: string;
+	// Or, for a photo too square to fill 9:16 without heavy upscaling: shown at its own size across the
+	// top, shifted left by this many px, fading into the dark canvas below.
+	topLeft?: number;
+}
+
+// Version A's photo: the cabin scene (entries 243–245).
+const cabin: Photo = {
+	src: '/images/hero-cabin-2x.webp',
+	alt: 'Kvinna i en fåtölj i en trästuga, vid ett fönster mot en skogssjö, i ett videosamtal på mobilen',
+	width: 3356,
+	height: 1874,
+	position: '79% 50%',
+};
+
 interface Props {
 	// Headline: the plain first line, then the italic second line.
 	title: string;
 	emphasis: string;
 	// An array puts each sentence on its own line (entry 254: version B's balanced wrap split "Det | handlar").
 	lede: string | string[];
+	photo?: Photo;
 }
 
-const { title, emphasis, lede } = Astro.props;
+const { title, emphasis, lede, photo = cabin } = Astro.props;
 ---
 
 <main class="ad" aria-label="Annons för Velora, format 9:16">
 	<div class="photo">
 		<img
-			src="/images/hero-cabin-2x.webp"
-			alt="Kvinna i en fåtölj i en trästuga, vid ett fönster mot en skogssjö, i ett videosamtal på mobilen"
-			width="3356"
-			height="1874"
+			src={photo.src}
+			alt={photo.alt}
+			width={photo.width}
+			height={photo.height}
+			class:list={{ top: photo.topLeft !== undefined }}
+			style={photo.topLeft !== undefined ? `--left: -${photo.topLeft}px` : `--position: ${photo.position}`}
 		/>
 	</div>
 	<div class="shade" aria-hidden="true"></div>
@@ -83,12 +107,22 @@ const { title, emphasis, lede } = Astro.props;
 		inset: 0;
 	}
 
-	/* Full bleed. Her face and the phone land in the upper half, clear of the text. */
+	/* Full bleed. Her face and the phone land in the upper half, clear of the text; framing per photo. */
 	.photo img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		object-position: 79% 50%;
+		object-position: var(--position);
+	}
+
+	/* Entry 261: native size, no upscaling; its lower edge dissolves into the canvas under the overlay. */
+	.photo img.top {
+		width: auto;
+		height: auto;
+		max-width: none;
+		margin-left: var(--left);
+		mask: linear-gradient(to bottom, #000 70%, transparent 100%);
+		-webkit-mask: linear-gradient(to bottom, #000 70%, transparent 100%);
 	}
 
 	/*
