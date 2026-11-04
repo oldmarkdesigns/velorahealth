@@ -1710,3 +1710,11 @@ For both ad versions, place “dagars nöjdhetsgaranti” immediately after the 
 ```
 Commit and push
 ```
+
+## 258 – Ad version B: team sentence instead of "Kroppen försvarar sin vikt" (Claude Code, 2026-11-04)
+
+```
+For this version, update the subtitle: remove “Kroppen försvarar sin vikt” and add “Hos Velora får du ett vårdteam som följer dig hela vägen” after “Det handlar om biologi, inte bara om vilja”. Leave the rest unchanged.
+```
+
+(Attached: the current version B export, velora-annons-9x16-b.png.)
