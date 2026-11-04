@@ -2,7 +2,7 @@
 /*
  * Deliverable 02: one 9:16 still (Meta Story/Reel, 1080 × 1920), exported to PNG
  * (public/annons/velora-annons-9x16.png). Entry 243: direction C ("Tryggheten") replaces entry 140's
- * hero copy. Same brand as the start page (cabin photo, wine, cream, Cormorant/Manrope, the pill
+ * hero copy. Same brand as the start page (hero photo, wine, cream, Cormorant/Manrope, the pill
  * button) but its own layout: the text sits low over the full-bleed photo on a dark overlay (entry 245;
  * entry 244 had a solid wine field), and the proof sits between two rules.
  * Copy lives in the pages (annons.astro, annons-b.astro). No figures and no drug names (cautious stance, docs/direction.md §3).
@@ -15,50 +15,22 @@ import arrowIcon from '@phosphor-icons/core/assets/light/arrow-right-light.svg?r
 import { CTA, IMG } from '../data/site';
 
 // Entry 254: the ad's markup and styles, shared by its copy versions (src/pages/annons*.astro).
-// Everything but the copy and the photo is fixed.
-interface Photo {
-	src: string;
-	alt: string;
-	width: number;
-	height: number;
-	// Cover crop position (CSS object-position), for a photo that fills the canvas.
-	position?: string;
-	// Or, for a photo too square to fill 9:16 without heavy upscaling: shown at its own size across the
-	// top, shifted left by this many px, fading into the dark canvas below.
-	topLeft?: number;
-}
-
-// Version A's photo: the cabin scene (entries 243–245).
-const cabin: Photo = {
-	src: '/images/hero-cabin-2x.webp',
-	alt: 'Kvinna i en fåtölj i en trästuga, vid ett fönster mot en skogssjö, i ett videosamtal på mobilen',
-	width: 3356,
-	height: 1874,
-	position: '79% 50%',
-};
-
+// Everything but the copy is fixed. Entry 263: both versions use velora.se's own hero photo (IMG.hero,
+// the woman on the sofa, 1500 × 1355), as the start page does, instead of the AI-generated cabin.
 interface Props {
 	// Headline: the plain first line, then the italic second line.
 	title: string;
 	emphasis: string;
 	// An array puts each sentence on its own line (entry 254: version B's balanced wrap split "Det | handlar").
 	lede: string | string[];
-	photo?: Photo;
 }
 
-const { title, emphasis, lede, photo = cabin } = Astro.props;
+const { title, emphasis, lede } = Astro.props;
 ---
 
 <main class="ad" aria-label="Annons för Velora, format 9:16">
 	<div class="photo">
-		<img
-			src={photo.src}
-			alt={photo.alt}
-			width={photo.width}
-			height={photo.height}
-			class:list={{ top: photo.topLeft !== undefined }}
-			style={photo.topLeft !== undefined ? `--left: -${photo.topLeft}px` : `--position: ${photo.position}`}
-		/>
+		<img src={IMG.hero} alt="Leende kvinna i soffan som har videomöte på mobilen" width="1500" height="1355" />
 	</div>
 	<div class="shade" aria-hidden="true"></div>
 	<span class="mark" style={`--logo: url(${IMG.logoPlum})`} role="img" aria-label="Velora"></span>
@@ -107,20 +79,14 @@ const { title, emphasis, lede, photo = cabin } = Astro.props;
 		inset: 0;
 	}
 
-	/* Full bleed. Her face and the phone land in the upper half, clear of the text; framing per photo. */
+	/*
+	 * Entry 261: the photo is near-square, so filling 9:16 would upscale it ~1.7× and fill the frame with
+	 * her face. It sits at its own size across the top instead, 200 px left so she's just right of centre,
+	 * and its lower edge dissolves into the canvas under the overlay.
+	 */
 	.photo img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		object-position: var(--position);
-	}
-
-	/* Entry 261: native size, no upscaling; its lower edge dissolves into the canvas under the overlay. */
-	.photo img.top {
-		width: auto;
-		height: auto;
 		max-width: none;
-		margin-left: var(--left);
+		margin-left: -200px;
 		mask: linear-gradient(to bottom, #000 70%, transparent 100%);
 		-webkit-mask: linear-gradient(to bottom, #000 70%, transparent 100%);
 	}
