@@ -3,7 +3,8 @@
  * Deliverable 02, version B (trial, entry 254): exported to public/annons/velora-annons-9x16-b.png.
  * Same layout as version A (src/components/Ad.astro). Headline is the start page's hero title; the
  * subtitle carries the biology point from the hero lede (entries 137, 194), then the care team
- * (entry 258, replacing "Kroppen försvarar sin vikt").
+ * (entry 258, replacing "Kroppen försvarar sin vikt"). Entry 259: line breaks set by hand, so the
+ * third line is only "följer dig hela vägen."
  */
 import Ad from '../components/Ad.astro';
 ---
@@ -21,7 +22,7 @@ import Ad from '../components/Ad.astro';
 		<Ad
 			title="Medicinsk viktnedgång"
 			emphasis="när dieter inte räcker"
-			lede={['Det handlar om biologi, inte bara om vilja.', 'Hos Velora får du ett vårdteam som följer dig hela vägen.']}
+			lede={['Det handlar om biologi, inte bara om vilja.', 'Hos Velora får du ett vårdteam som', 'följer dig hela vägen.']}
 		/>
 	</body>
 </html>
