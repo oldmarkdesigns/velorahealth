@@ -78,6 +78,10 @@ const stories = [
 	</ul>
 	<div class="container">
 		<p class="footnote">Berättelserna är enskilda personers erfarenheter. Resultat varierar från person till person.</p>
+		<!-- 2026-11-05: velora.se's full list of stories, as an outline button centred under the section. -->
+		<div class="more" data-reveal>
+			<a class="secondary" href={`${VELORA}/patientberattelser`}>Läs fler patientberättelser</a>
+		</div>
 	</div>
 </section>
 
@@ -93,6 +97,34 @@ const stories = [
 		display: none;
 		font-weight: 600;
 		font-size: 0.9375rem;
+	}
+
+	.more {
+		display: flex;
+		justify-content: center;
+		margin-top: 40px;
+	}
+
+	/* The outline button from "Läs mer om vårt team" (Team.astro): CtaButton's height and type, no arrow. */
+	.secondary {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 52px;
+		padding: 0 26px;
+		border: 1px solid var(--wine);
+		border-radius: 999px;
+		color: var(--wine);
+		font-weight: 600;
+		font-size: 0.9375rem;
+		letter-spacing: 0.005em;
+		text-decoration: none;
+		white-space: nowrap;
+		transition: background-color 240ms var(--ease);
+	}
+
+	.secondary:hover {
+		background: rgba(82, 19, 36, 0.06);
 	}
 
 	/* Entry 161: no swipe row any more. Below 1024 px the stories stack, one full-width card each. */

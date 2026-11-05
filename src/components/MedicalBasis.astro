@@ -1,5 +1,5 @@
 ---
-import { IMG } from '../data/site';
+import { IMG, VELORA } from '../data/site';
 
 // Built on "Så går det till" (entry 151; retitled in entry 213): how the two parts of the treatment,
 // the medicine and the care team, take the patient towards results.
@@ -140,6 +140,11 @@ const results = [
 			Medicinska beslut fattas av legitimerade läkare. Effekt och biverkningar varierar från person till person, och
 			läkemedlet ingår inte i månadsavgiften. <a href="#faq-varfor-lakemedel">Varför läkemedel?</a>
 		</p>
+
+		<!-- 2026-11-05: a way on to velora.se's treatment page, centred like the other sections' buttons. -->
+		<div class="more" data-reveal>
+			<a class="secondary" href={`${VELORA}/behandling`}>Läs mer om behandlingen</a>
+		</div>
 	</div>
 </section>
 
@@ -303,6 +308,34 @@ const results = [
 	.note a {
 		color: var(--ink);
 		font-weight: 600;
+	}
+
+	.more {
+		display: flex;
+		justify-content: center;
+		margin-top: 40px;
+	}
+
+	/* The outline button from "Läs mer om vårt team" (Team.astro): CtaButton's height and type, no arrow. */
+	.secondary {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 52px;
+		padding: 0 26px;
+		border: 1px solid var(--wine);
+		border-radius: 999px;
+		color: var(--wine);
+		font-weight: 600;
+		font-size: 0.9375rem;
+		letter-spacing: 0.005em;
+		text-decoration: none;
+		white-space: nowrap;
+		transition: background-color 240ms var(--ease);
+	}
+
+	.secondary:hover {
+		background: rgba(82, 19, 36, 0.06);
 	}
 
 	@media (min-width: 768px) {

@@ -1,4 +1,4 @@
-# Process
+# Beslutsunderlag, designmotivering & Process
 
 ---
 
@@ -13,7 +13,17 @@ Jag började med research och en skriftlig riktning, inte med kod:
 
 **Varför den ordningen:** jag tror på att utgå från liknande tjänster, där kända och beprövade mönster fungerar bra, och utifrån dem se vad som kan förbättras i den befintliga versionen. Jag är också alltid noggrann med att sätta upp ramar för ett projekt innan jag sätter igång, eftersom det sparar mycket tid.
 
-## 2. Arbetsordning
+## 2. Utgångsläge: vad som fungerade mindre bra på dagens sida
+
+Mina iakttagelser om dagens startsida gällde både mobil och desktop, men handlade främst om vad som visas och i vilken ordning.
+
+- **Heron saknar ett tydligt nästa steg,** förutom "Kom igång" i navbaren. [promptlogg 4]
+- **Viktkalkylatorn är texttung** och visar en enda siffra, utan att förklara premisserna eller tidsperioden. [promptlogg 4]
+- **Kortmodulerna berättar inte,** utan listar fakta. "3 enkla steg", "Visste du att" och liknande är textkort utan bilder. [promptlogg 4; `docs/audit.md`]
+- **"Alltid med Velora" och "Byt till en bättre vårdgivare"** upprepar varandra. [promptlogg 4]
+- **Sektionerna liknar varandra.** Många sektioner är uppbyggda på ett liknande sätt genom hela startsidan, vilket gjorde att sidan för mig kändes något repetitiv och aningen ostrukturerad. [egen uppgift]
+
+## 3. Arbetsordning
 
 Från commit-historiken och promptloggen (datumen visar när commits gjordes, inte arbetade timmar):
 
@@ -37,7 +47,31 @@ Från commit-historiken och promptloggen (datumen visar när commits gjordes, in
 - **Premiumpasset.** Det första bygget kändes för likt originalet, så jag valde att ta större visuella risker. [promptlogg 11]
 - **En bokningsknapp i heron,** formulerad som en testbar hypotes. [`direction.md` §9]
 
-## 3. Målgrupp: antaganden och hur de påverkade designen
+## 4. Varumärkesprinciper
+
+Riktningen sammanfattas i fyra principer. Var och en gäller visuellt uttryck, verbalt uttryck och ton.
+
+**1. Förstådd, inte såld till.** Övervikt handlar inte bara om vilja.
+- **Visuellt:** Verkliga människor i vardagen, inte kroppar eller vågar.
+- **Verbalt:** Tilltala besökaren med "du", skriv korta meningar och undvik utropstecken och säljord.
+- **Ton:** Lugn och respektfull.
+
+**2. Visa, lova inte.** Varje påstående har ett belägg.
+- **Visuellt:** Namngivna läkare och certifieringar som lugna fakta.
+- **Verbalt:** Intervall med premisser, inte en enda siffra.
+- **Ton:** Saklig och öppen.
+
+**3. Lugnt är premium.** Färre element, mer luft.
+- **Visuellt:** Burgundy som signal, inte som bakgrund.
+- **Verbalt:** Stor rubrik, lite text, sedan beläggen.
+- **Ton:** Trygg, aldrig påträngande.
+
+**4. Vården är produkten.** Ett vårdteam och en väg, inte ett läkemedel.
+- **Visuellt:** Människan och teamet i centrum.
+- **Verbalt:** Berättelsen följer vägen genom behandlingen.
+- **Ton:** Omtänksam och kunnig.
+
+## 5. Målgrupp: antaganden och hur de påverkade designen
 
 **Mitt antagande:** en stor del av besökarna är något äldre, ungefär 35–59 år, vilket är åldrarna i patientberättelserna på velora.se. För dem väger tydlighet, tillit, professionalism och transparens tyngst. [`direction.md` §2]
 
@@ -48,14 +82,7 @@ Från commit-historiken och promptloggen (datumen visar när commits gjordes, in
 
 **Feedback från testare:** testarna, tre personer i 50–60-årsåldern, upplevde att informationen var väl sammanfattad och att sidan höll ihop som en berättelse.
 
-## 4. Prioriteringar inom fyra timmar
-
-- **Tid:** jag lade fyra timmar på research och bygge. Uppsättning och dokumentation räknade jag inte in. [egen uppgift] Commits sträcker sig över 2–4 november.
-- **En version av sidan,** i linje med briefen: hellre en genomarbetad version än flera halvfärdiga. [`CLAUDE.md` §3]
-- **Höll mig inom ramarna.** Ingen teamsida eller sida med provlista byggdes. Länkarna "Läs mer om vårt team" och "vilka prover vi behöver" är inaktiverade platshållare i stället. [`direction.md`, poster 215–216]
-- **Strök nästan helt att leta nya bilder.** Jag ansåg att de befintliga bilderna är bra och har ett bra bildspråk. Undantaget var en vända där jag letade efter en herobild som passar desktop i 16:9. [egen uppgift]
-
-## 5. Kvalitetssäkring
+## 6. Kvalitetssäkring
 
 - **Fakta mot velora.se.** Varje faktauppgift har källa och status i `facts.md`. [`facts.md`]
 - **Kontrollerade om AI hade hittat på något.** Jag frågade om påståendena under "Trygg vård" var verkliga. De kontrollerades mot /integritetspolicy och /om-oss, och en formulering stramades upp för att stämma med källan. [promptlogg 213; `direction.md` post 213]
@@ -66,25 +93,24 @@ Från commit-historiken och promptloggen (datumen visar när commits gjordes, in
 - **Kontrast mättes** för herotexten, navbarlänkarna och annonstexten.
 - **Granskning med människor i stället för AI.** Jag gjorde ingen AI-granskning av design eller text, utan testade med tre personer i 50–60-årsåldern, en ålder som jag tror passar målgruppen. [egen uppgift]
 
-## 6. Avvägningar
+## 7. Avvägningar
 
 - **Två knappetiketter i stället för en.** Riktningen sa en etikett överallt, "Boka gratis bedömningssamtal". Jag valde ändå den kortare "Kom igång" i navbaren och på Velorametoden-kortet, eftersom den passar ett kompakt utrymme. Priset är att samma handling har två namn. [promptlogg 25, 92; `direction.md` §8]
-- **En kortare hjälptext under knappen.** Knappen lovar en bokning, men flödet börjar med frågor, och texten "Börjar med några korta frågor …" skulle förbereda besökaren på det. Jag tog bort den för en renare hero. Under heroknappen "Se om behandlingen passar dig" står nu bara "*Du binder dig inte till något", med Veloras egna ord. Att flödet börjar med frågor framgår av steg 1 och FAQ:n, men inte vid knappen. [promptlogg 38; `audit.md` punkt 8; `src/components/Hero.astro`]
 - **Patientberättelserna hamnade inte högst upp.** I granskningen ville jag flytta upp dem för att bygga förtroende tidigare. Till slut placerade jag dem efter kalkylatorn: först resultatintervallet, sedan tre verkliga personers resultat, sedan teamet bakom. En tydlig berättelse gick före tidigt förtroende. [promptlogg 4, 220; `direction.md` post 220]
 - **Ett intervall i kalkylatorn i stället för en siffra.** Ett intervall med premisser (16–25 % efter 12 månader) är mindre slagkraftigt än "−21 kg", men det är ärligt och följer den försiktiga hållningen. [promptlogg 6; `audit.md` punkt 3]
 
-## 7. Styrning av AI
+## 8. Styrning av AI
 
 ### Där jag gick emot AI (övergripande exempel)
 
 **A. Visuella alternativ som var omflyttningar, inte idéer.**
-När jag bad om alternativ gav AI ofta varianter av sin första idé. Jag förkastade alla tre prislayouterna ("none of those are talking to me"). Nästa runda gick i en annan riktning: ett kvitto som visar totalkostnaden. [promptlogg 71–73; `direction.md`, "Pricing layouts explored"]
+När jag bad om alternativ gav AI ofta varianter av sin första idé. Jag förkastade alla tre prislayouterna. Nästa runda gick i en annan riktning: ett kvitto som visar totalkostnaden. [promptlogg 71–73; `direction.md`, "Pricing layouts explored"]
 
 **B. Text- och konverteringsval där jag gick emot AI:s rekommendation.**
 - AI rekommenderade ingen fast bokningsrad på mobil. I stället behöll jag en fast navbar på mobil som täcker hela överkanten av skärmen, medan desktop har ett svävande fast kort. [promptlogg 9, 144, 148; desktop: 42–43]
 - Jag ifrågasatte rubriken "Det handlar inte om viljestyrka" eftersom vilja och engagemang faktiskt spelar in. Den blev "biologi, inte bara om vilja". [promptlogg 137; `direction.md` post 193]
 
-### Två tillfällen då AI hade fel
+### Ett tillfälle då AI hade fel
 
 **1. Stegsektionen "Så går det till"** (länkad som "Så fungerar det" i sidfoten).
 - **Misstaget:** AI rekommenderade en bento med numrerade rutor i olika storlekar och färger, och jag lät bygga den. [promptlogg 59, 61] I praktiken var läsordningen otydlig och layouten svår att skumma.
@@ -92,23 +118,33 @@ När jag bad om alternativ gav AI ofta varianter av sin första idé. Jag förka
 - **Vad jag ändrade:** jag lade de fyra korten på en vågrät rad, i nummerordning, med bilden ovanför. Nu är det layouten som styr läsordningen. [promptlogg 213–214; `src/components/Steps.astro`]
 - De ursprungliga skisserna sparades inte, så utgångsläget kan bara beskrivas. [`direction.md`]
 
-**2. Sektionen "Visste du att?" kom inte med.**
-- **Misstaget:** jag ville behålla sektionen från velora.se, eftersom den förklarar behandlingen och att viktnedgång inte bara handlar om motivation. Jag bad om förslag och om att behålla det mesta av innehållet, men AI fick inte med sektionen på sidan. [promptlogg 128, 130]
-- **Hur jag upptäckte det:** jag märkte att den saknades och frågade vad som hänt med den. [promptlogg 135]
-- **Vad jag ändrade:** jag lät bygga den och placerade den under "Ditt vårdteam". [promptlogg 136; `direction.md` poster 128–136]
-
-## 8. Vad jag hade tittat på och utvecklat härnäst
+## 9. Vad jag hade tittat på och utvecklat härnäst
 
 - **En ny Om Velora-sida.** Den befintliga /om-oss beskriver mest processen och säger lite om Veloras historia och vision. Jag vill ha en sida som känns mer genuin och som handlar om tanken bakom Velora snarare än om processen. Länken "Läs mer om vårt team", som i dag är en inaktiverad platshållare, skulle leda hit.
 - **Tydligare information om vilka prover som behövs** inför en behandling. Länken "vilka prover vi behöver", som i dag är en inaktiverad platshållare, skulle leda hit.
 - **En förklaring av vad det innebär att byta till Velora** som vårdgivare, och vad man kan förvänta sig av Velora.
 
-## 9. Avslutande kommentarer
+## 10. Avslutande kommentarer
 
-Startsidan skulle få fler att boka ett samtal, få besökaren att känna sig trygg och ge ett genomarbetat intryck, samtidigt. Så här styrde de tre målen mina val:
+Briefen ställer tre krav på startsidan. Så här svarar jag på dem:
 
-- **Fler bokningar:** bokningsknappen ligger i heron, och en kortare "Kom igång" finns kvar i navbaren på alla skärmar. Sidan leder fram till samtalet steg för steg i stället för att trycka på.
-- **Trygghet:** allt på sidan bygger på det som står på velora.se. Resultat visas som intervall med sina premisser, kostnaden visas i sin helhet, och verkliga patienter och namngivna vårdgivare får synas.
-- **Ett genomarbetat intryck:** lugn ton, färre element per vy, en redaktionell typografi och Veloras egna foton. Plommonfärgen används för att markera det viktiga, inte som bakgrund överallt.
+- **Konvertera** *(Varje procentenhet fler som går vidare till att boka ett möte spelar roll.)*
+  - Call to actions finns genom startsidans olika sektioner, så att bokningen alltid finns nära till hands.
+  - Jag formulerade om "Se om du kvalificerar dig" till "Se om behandlingen passar dig", eftersom den nya formuleringen har en mjukare och tryggare ton.
+- **Skapa förtroende** *(Det handlar om hälsa och vikt. Ton och trygghet väger lika tungt som layouten.)*
+  - En strukturerad och tydlig röd tråd genom sidan, som pedagogiskt visar hur behandlingen går till och vad andra patienter säger, så att besökaren får hopp om att börja och nå liknande resultat.
+  - En egen sektion förklarar hur hälsouppgifterna skyddas.
+  - Siffran i kalkylatorn visar både ett intervall och ett tidsperspektiv.
+  - Tonen är lugn, utan säljiga formuleringar.
+  - Sidan planterar idén om att kunna läsa mer om vårdteamet och om Velora, dess historia och vision. Jag tror att det i längden bidrar till ett högre förtroende.
+- **Kännas premium** *(Något du själv skulle lita på med din hälsa, inte ännu en annons.)*
+  - Färre element per vy och Veloras egna foton.
+  - Typografin är ett medvetet val. Rubriken i heron är satt i Cormorant Garamond, en Garamond med kalligrafisk kursiv, som ger sidan en klassisk och redaktionell känsla. Kursiven används som en ändrad röst, inte som en ändrad färg.
+  - Ett återhållsamt färgsystem: kräm och sten som bas, burgundy bara som signal för det viktiga och rosa som tyst yta.
+  - Lugn rörelse: mjuk scroll, en samordnad laddningssekvens och rörelser som tar hänsyn till reducerad rörelse.
+  - En hero i full höjd, som hos Oura och Relivo. På mobil går bilden kant i kant.
+  - Detaljer i interaktionen: kalkylatorns reglage glider mjukt, berättelsekorten mörknar vid hover och navbaren göms när man scrollar nedåt.
+  - Ett enhetligt ikonspråk med tunna Phosphor-ikoner i en och samma vikt.
+  - Annonsen har samma typsnitt, färger och lugna ton som startsidan, så att de känns som samma varumärke.
 
-Målen drar ibland åt olika håll, och då har jag oftast valt förtroende före säljtryck, till exempel ett ärligt intervall i kalkylatorn i stället för en enda slagkraftig siffra (se §6).
+**Förväntad effekt.** Jag förväntar mig framför allt att besökaren förstår Velora som tjänst och helheten i behandlingen. Den förståelsen bygger tillit, och tillit leder till bättre konvertering. Att bokningen finns nära till hands genom hela sidan hjälper till, men är sekundärt. Det är en hypotes, inte ett resultat, eftersom sidan inte är testad med riktig trafik. Jag skulle mäta det med ett A/B-test mot dagens startsida, med andelen som klickar vidare till `/kom-igang` som huvudmått och scrolldjup som stödmått.
