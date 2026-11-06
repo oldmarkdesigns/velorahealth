@@ -60,7 +60,7 @@ import RatingRow from './RatingRow.astro';
 		<div class="cta-wrap" data-hero-cta data-load style="--load-delay: 720ms">
 			<CtaButton label="Se om behandlingen passar dig" />
 			<!-- velora.se's own words for step 1 ("du binder dig inte till något", docs/facts.md). -->
-			<p class="cta-note">*Du binder dig inte till något</p>
+			<p class="cta-note">Du binder dig inte till något</p>
 		</div>
 		<!--
 		  Entry 210: phones only. The three statement pills, separate, drifting past in a slow loop at
@@ -172,6 +172,7 @@ import RatingRow from './RatingRow.astro';
 	/* Small italic reassurance under the button; the hero sits on the darkened photo at every width. */
 	.cta-note {
 		margin-top: 10px;
+		padding-left: 14px;
 		font-size: 0.8125rem;
 		font-style: italic;
 		color: rgba(247, 242, 236, 0.82);

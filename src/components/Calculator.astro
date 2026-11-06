@@ -2,6 +2,7 @@
 // Range + premises, never a single promise. Figures from velora.se FAQ:
 // ~10 % in the first 4 months, 16–25 % over the first 12 months (study averages).
 const DEFAULT_WEIGHT = 100;
+import CtaButton from './CtaButton.astro';
 ---
 
 <section class="section dark" id="raknare" aria-labelledby="calc-title">
@@ -36,9 +37,16 @@ const DEFAULT_WEIGHT = 100;
 				</div>
 			</dl>
 
-			<button type="button" class="premises-open" aria-haspopup="dialog" aria-controls="premises" data-premises-open>
-				Vad bygger siffrorna på?
-			</button>
+			<!--
+			  2026-11-05: a white booking button beside the premises button, at the moment the numbers feel
+			  personal (replaces the text line under the result). wrap-reverse puts it on top on phones.
+			-->
+			<div class="actions">
+				<button type="button" class="premises-open" aria-haspopup="dialog" aria-controls="premises" data-premises-open>
+					Vad bygger siffrorna på?
+				</button>
+				<CtaButton size="sm" tone="cream" label="Boka gratis bedömningssamtal" />
+			</div>
 
 			<dialog class="premises" id="premises" aria-labelledby="premises-title" data-premises data-lenis-prevent>
 				<div class="sheet">
@@ -387,7 +395,6 @@ const DEFAULT_WEIGHT = 100;
 		display: inline-flex;
 		align-items: center;
 		gap: 10px;
-		margin-top: 40px;
 		min-height: 44px;
 		padding: 0 20px;
 		border: 1px solid var(--line);
@@ -399,6 +406,19 @@ const DEFAULT_WEIGHT = 100;
 		transition:
 			background-color 240ms var(--ease),
 			border-color 240ms var(--ease);
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap-reverse;
+		align-items: center;
+		gap: 12px;
+		margin-top: 40px;
+	}
+
+	/* White, as the hero's button on the darkened photo (the cream tone's hover is white too). */
+	.actions :global(.cta.cream .btn) {
+		background: #fff;
 	}
 
 	.premises-open::before {

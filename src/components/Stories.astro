@@ -1,6 +1,7 @@
 ---
 import arrowIcon from '@phosphor-icons/core/assets/light/arrow-right-light.svg?raw';
 import { IMG, VELORA } from '../data/site';
+import CtaButton from './CtaButton.astro';
 
 // The hover arrow on "Läs …s berättelse" is the Phosphor icon used as a mask (entry 84).
 const arrowMask = `url("data:image/svg+xml,${encodeURIComponent(arrowIcon)}")`;
@@ -78,9 +79,13 @@ const stories = [
 	</ul>
 	<div class="container">
 		<p class="footnote">Berättelserna är enskilda personers erfarenheter. Resultat varierar från person till person.</p>
-		<!-- 2026-11-05: velora.se's full list of stories, as an outline button centred under the section. -->
+		<!--
+		  2026-11-05: velora.se's full list of stories as an outline button, paired with the booking button
+		  as in the care team section. wrap-reverse puts the booking button on top when they stack.
+		-->
 		<div class="more" data-reveal>
 			<a class="secondary" href={`${VELORA}/patientberattelser`}>Läs fler patientberättelser</a>
+			<CtaButton label="Se om behandlingen passar dig" />
 		</div>
 	</div>
 </section>
@@ -101,8 +106,15 @@ const stories = [
 
 	.more {
 		display: flex;
+		flex-wrap: wrap-reverse;
 		justify-content: center;
+		align-items: center;
+		gap: 12px;
 		margin-top: 40px;
+	}
+
+	.more :global(.cta) {
+		justify-items: center;
 	}
 
 	/* The outline button from "Läs mer om vårt team" (Team.astro): CtaButton's height and type, no arrow. */

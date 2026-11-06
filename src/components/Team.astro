@@ -38,8 +38,10 @@ const team = [
 		<!-- Entry 216: a secondary "Läs mer om vårt team" to its left. A placeholder: no team page to link to yet. -->
 		<div class="team-cta" data-reveal>
 			<a class="secondary" role="link" aria-disabled="true">Läs mer om vårt team</a>
-			<CtaButton />
+			<CtaButton label="Boka gratis bedömningssamtal" />
 		</div>
+		<!-- 2026-11-05: under the pair rather than inside the button, so the two buttons stay level. -->
+		<p class="team-note" data-reveal>Första mötet är med legitimerad läkare eller sjuksköterska, via video</p>
 	</div>
 </section>
 
@@ -165,6 +167,13 @@ const team = [
 			padding: 0 24px;
 			font-size: 0.9375rem;
 		}
+	}
+
+	.team-note {
+		margin-top: 12px;
+		text-align: center;
+		font-size: 0.875rem;
+		color: var(--ink-soft);
 	}
 
 	.team-cta :global(.cta) {
