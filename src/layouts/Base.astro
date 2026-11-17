@@ -1,4 +1,5 @@
 ---
+import Analytics from '@vercel/analytics/astro';
 import '../styles/global.css';
 
 interface Props {
@@ -43,6 +44,7 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site);
 	<body>
 		<a class="skip-link" href="#main">Hoppa till innehållet</a>
 		<slot />
+		<Analytics />
 		<script>
 			import Lenis from 'lenis';
 
